@@ -30,22 +30,20 @@ function init() {
   function createGrid(playerStartPosition) {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      cell.textContent = i
+      //cell.textContent = i
       grid.appendChild(cell)
       cell.id = i
       cells.push(cell)
       
-      // * render maze with css
+      // * Render maze with css
       if (mazeArray.includes(Number(cell.id))) {
         cell.classList.add(mazeClass)
       }
 
-      // * render pellets with css 
+      // * Render pellets with css 
       if (!mazeArray.includes(Number(cell.id))) {
-        // ? do i create HTML element I inject or do I just assign with reference to a css class on the cell itself. child vs sibling approach
-        // cell.classList.add(pelletClass)
         pelletArray.push(cell)
-        createPellets(pelletArray)
+        createPellets()
       }
     }
     
@@ -62,23 +60,20 @@ function init() {
     cells[position].classList.remove(playerClass)
   }
 
-  // * Create pellets
-  function createPellets(pelletArray) {
+  // * Create pellets and super pellets
+  function createPellets() {
     pelletArray.forEach(pellet => {
+      // ! inject HTML element vs adding css class. if you inject html element you can assign a score attrbute and make it equal the elements score
       pellet.classList.add(pelletClass)
-      console.log(pellet.id)
       if (pellet.id % 28 === 0) {
         pellet.classList.add(superPelletClass)
       }
     })
   }
  
-  // // * Remove pellets
-  // function removePellet(playerCurrentPosition, pelletArray) {
-  //   if (playerCurrentPosition === Number(pelletArray.indexOf())) {
-  //     console.log('eaten')
-  //     pelletArray.indexOf().classList.remove(pelletClass)
-  //   }
+  // ! Remove pellets WIP
+  // function removePellet(position) {
+  //   pelletArray[position].classList.remove(pelletClass)
   // }
 
   function handleKeyUp(event) {
@@ -135,7 +130,21 @@ function init() {
     }
 
     addPlayer(playerCurrentPosition)
+
+    // ? pellet  collision logic 
+
+    pelletArray.forEach(pellet => {
+      if (playerCurrentPosition === Number(pellet.id)) {
+        //removePellet(playerCurrentPosition)
+        console.log('Nom')
+        //pelletArray.classList.remove(pelletClass)
+      }
+    })
+    
+
+    
   }
+
 
   // * Call functions
   createGrid(playerStartPosition) 

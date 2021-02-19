@@ -56,7 +56,7 @@ body {
 }
 
 .grid div.player {
-  background-image: url('../assets/images/player.png');
+  background-image: url('../assets/images/crying-emoji.gif');
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
