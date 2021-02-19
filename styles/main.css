@@ -36,14 +36,21 @@ body {
   width: 5%;
 }
 
-.grid div.player {
-  background-image: url('../assets/images/player.png');
+.grid div.maze-wall {
+  background-color: rgb(136, 66, 19);
+  border: none;
+}
+
+.grid div.pellet {
+  background-image: url('../assets/images/coin.gif');
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
 }
 
-.grid div.maze {
-  background-color: rgb(95, 95, 95);
-  border: none;
+.grid div.player {
+  background-image: url('../assets/images/player.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
 }
