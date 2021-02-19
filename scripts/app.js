@@ -2,27 +2,27 @@ function init() {
   // * Global Variables
   const grid = document.querySelector('.grid')
 
-  //Grid width
+  // * Grid variables
   const width = 20
   const cellCount = width * width
   const cells = []
-  
+  const mazeClass = 'maze-wall'
+  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,128,131,133,134,136,137,139,140,148,151,159,160,161,162,163,164,165,166,168,169,170,171,173,174,175,176,177,178,179,200,201,202,203,204,206,208,209,210,211,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,247,248,249,250,251,252,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,327,328,329,330,331,332,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399]
 
+  // * Player Variables
   const playerClass = 'player'
   const playerStartPosition = 369
   let playerCurrentPosition = 369
   let playerDirection = 'right'
 
-
-  const score = 0
+  // * Game state/logic variables
+  // let score = 0
+  // let lives = 3
   
-
-  const mazeClass = 'maze-wall'
-  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,128,131,133,134,136,137,139,140,148,151,159,160,161,162,163,164,165,166,168,169,170,171,173,174,175,176,177,178,179,200,201,202,203,204,206,208,209,210,211,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,247,248,249,250,251,252,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,327,328,329,330,331,332,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399]
-
   // ? const ghostHome = [129,130,149,150]
 
   const pelletClass = 'pellet'
+  const superPelletClass = 'super-pellet'
   const pelletArray = []
 
 
@@ -66,6 +66,10 @@ function init() {
   function createPellets(pelletArray) {
     pelletArray.forEach(pellet => {
       pellet.classList.add(pelletClass)
+      console.log(pellet.id)
+      if (pellet.id % 28 === 0) {
+        pellet.classList.add(superPelletClass)
+      }
     })
   }
  
@@ -107,14 +111,18 @@ function init() {
 
     if (playerDirection === 'right' && playerCurrentPosition % width !== width - 1 && !mazeArray.includes(playerRelativePositionRight)) {
       playerCurrentPosition++
+      console.log('Moving right')
     } else if (playerDirection === 'left' && playerCurrentPosition % width !== 0 && !mazeArray.includes(playerRelativePositionLeft)) {
       playerCurrentPosition--
+      console.log('Moving left')
     } else if (playerDirection === 'up' && playerCurrentPosition >= width && !mazeArray.includes(playerRelativePositionUp)) {
       playerCurrentPosition -= width
+      console.log('Moving up')
     } else if (playerDirection === 'down' && playerCurrentPosition + width <= width * width - 1 && !mazeArray.includes(playerRelativePositionDown)) {
       playerCurrentPosition += width
+      console.log('Moving down')
     } else {
-      console.log('wall!')
+      console.log('Ouch! Wall!')
     }
 
     // * gateway logic
@@ -129,11 +137,11 @@ function init() {
     addPlayer(playerCurrentPosition)
   }
 
-  // * Event listeners
-  document.addEventListener('keyup', handleKeyUp)
-
   // * Call functions
   createGrid(playerStartPosition) 
+
+  // * Event listeners
+  document.addEventListener('keyup', handleKeyUp)
 
   // * Start timers
   const playerDirectionState = setInterval(movePlayer, 200)

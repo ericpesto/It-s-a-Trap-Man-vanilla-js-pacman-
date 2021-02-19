@@ -48,6 +48,13 @@ body {
   cursor: pointer;
 }
 
+.grid div.super-pellet {
+  background-image: url('../assets/images/gem.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
 .grid div.player {
   background-image: url('../assets/images/player.png');
   background-repeat: no-repeat;
