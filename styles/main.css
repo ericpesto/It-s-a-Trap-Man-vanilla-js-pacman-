@@ -43,6 +43,6 @@ body {
   cursor: pointer;
 }
 
-.grid div.terrain {
+.grid div.maze {
   background-color: red;
 }
