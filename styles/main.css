@@ -30,7 +30,7 @@ body {
 }
 
 .grid div {
-  border: 1px solid lightgrey;
+  border: 1px solid rgba(211, 211, 211, 0.212);
   flex-grow: 1;
   height: 5%;
   width: 5%;
@@ -44,5 +44,6 @@ body {
 }
 
 .grid div.maze {
-  background-color: red;
+  background-color: rgb(95, 95, 95);
+  border: none;
 }
