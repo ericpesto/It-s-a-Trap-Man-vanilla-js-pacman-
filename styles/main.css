@@ -24,8 +24,8 @@ body {
   flex-wrap: wrap;
   height: 100%;
   justify-content: center;
-  height: 900px;
-  width: 900px;
+  height: 60vmax;
+  width: 60vmax;
   background-color: #fafafa;
 }
 
@@ -38,13 +38,15 @@ body {
 
 .grid div.maze-wall {
   background-color: rgb(136, 66, 19);
-  border: none;
+  border: 0.5px solid grey;
+  border-radius: 5px;
 }
 
 .grid div.pellet {
   background-image: url('../assets/images/coin.gif');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 90%;
+  background-position: center;
   cursor: pointer;
 }
 
@@ -52,6 +54,8 @@ body {
   background-image: url('../assets/images/gem.gif');
   background-repeat: no-repeat;
   background-size: contain;
+  background-size: 60%;
+  background-position: center;
   cursor: pointer;
 }
 
