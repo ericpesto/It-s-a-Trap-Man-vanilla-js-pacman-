@@ -57,7 +57,6 @@ function init() {
     const playerRelativePositionUp = playerCurrentPosition - width
     const playerRelativePositionDown = playerCurrentPosition + width
 
-    //(!mazeArray.includes(playerRelativePositionLeft) || !mazeArray.includes(playerRelativePositionRight) || !mazeArray.includes(playerRelativePositionUp) || !mazeArray.includes(playerRelativePositionDown))
 
     removePlayer(playerCurrentPosition)
 
@@ -83,6 +82,15 @@ function init() {
       console.log('INVALID KEY')
       
     }
+
+    if (playerCurrentPosition === 199) {
+      playerCurrentPosition = 180
+    } else if (playerCurrentPosition === 180) {
+      playerCurrentPosition = 199
+    } else {
+      console.log('nothing')
+    }
+
 
 
     // console.log('left', playerRelativePositionLeft, mazeArray.includes(playerRelativePositionLeft))
