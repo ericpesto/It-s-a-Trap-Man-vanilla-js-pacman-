@@ -15,6 +15,7 @@ function init() {
   const pelletClass = 'pellet'
   const superPelletClass = 'super-pellet'
   const pelletArray = []
+  const pelletsEaten = []
 
 
   // * Player Variables
@@ -24,7 +25,7 @@ function init() {
   let playerDirection = 'right'
 
   // * Game state/logic variables
-  // let score = 0
+  let score = 0
   // let lives = 3
 
 
@@ -80,9 +81,16 @@ function init() {
   }
  
   // ! Remove pellets WIP
-  // function removePellet(position) {
-  //   pelletArray[position].classList.remove(pelletClass)
-  // }
+  function removePellet(position) {
+    pelletArray.forEach(pellet => {
+      if (position === Number(pellet.id)) {
+        console.log('Nom')
+        pellet.classList.remove(pelletClass)
+        score += 20
+        console.log('SCORE ->', score)
+      }
+    })
+  }
 
   function handleKeyUp(event) {
     const key = event.keyCode
@@ -132,7 +140,7 @@ function init() {
       // console.log('Ouch! Wall!')
     }
 
-    // * gateway logic
+    // * Gateway logic
     if (playerCurrentPosition === portalRight) {
       playerCurrentPosition = portalLeft
       // console.log('Player traveled through portal')
@@ -142,17 +150,23 @@ function init() {
     }
 
     addPlayer(playerCurrentPosition)
+    removePellet(playerCurrentPosition)
 
-    // ? pellet  collision logic 
+    // ? pellet  collision logic , sort of works
 
-    pelletArray.forEach(pellet => {
-      if (playerCurrentPosition === Number(pellet.id)) {
-        //removePellet(playerCurrentPosition)
-        console.log('Nom')
-        //pelletArray.classList.remove(pelletClass)
-      }
-    })
+    // pelletArray.forEach(pellet => {
+    //   if (playerCurrentPosition === Number(pellet.id)) {
+    //     console.log('Nom')
+    //     pellet.classList.remove(pelletClass)
+    //     score += 20
+    //     console.log('SCORE ->', score)
+    //   }
+    // })
   }
+
+
+
+  
 
 
   // * Call functions

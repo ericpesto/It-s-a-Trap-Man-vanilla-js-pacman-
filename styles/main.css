@@ -26,7 +26,7 @@ body {
   justify-content: center;
   height: 60vmax;
   width: 60vmax;
-  background-color: #fafafa;
+  background-color: rgba(0, 128, 0, 0.541);
 }
 
 .grid div {
@@ -48,7 +48,6 @@ body {
 }
 
 .grid div.pellet {
-  background-color: rgba(0, 128, 0, 0.541);
   background-image: url('../assets/images/coin-4.gif');
   background-repeat: no-repeat;
   background-size: 50%;
