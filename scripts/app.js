@@ -1,6 +1,8 @@
 function init() {
   // * Global Variables
   const grid = document.querySelector('.grid')
+  const cell = document.querySelectorAll('.grid-item')
+  
 
   // * Grid variables
   const width = 20
@@ -38,6 +40,7 @@ function init() {
       //cell.textContent = i
       grid.appendChild(cell)
       cell.id = i
+      //cell.classList.add('grid-item')
       cells.push(cell)
       
       // * Render maze with css
@@ -167,6 +170,7 @@ function init() {
     removePellet(playerCurrentPosition)
     
   }
+  
   
 
   // * Call functions
