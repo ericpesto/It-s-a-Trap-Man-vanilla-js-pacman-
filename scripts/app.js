@@ -1,7 +1,6 @@
 function init() {
   // * Global Variables
   const grid = document.querySelector('.grid')
-  const cell = document.querySelectorAll('.grid-item')
   
 
   // * Grid variables
@@ -30,7 +29,7 @@ function init() {
   // * Game state/logic variables
   let score = 0
   // let lives = 3
-
+  
 
 
   // * Make Grid
@@ -56,11 +55,13 @@ function init() {
       // * Render pellets with css 
       if (!mergedMazeAndGhostHomeArray.includes(Number(cell.id))) {
         pelletArray.push(cell)
-        createPellets()
+        createPellets(pelletArray)
       }
     }
     
     addPlayer(playerStartPosition)
+    //will add ghosts here too
+    
   }
 
   // * Add player to grid on move
@@ -74,41 +75,54 @@ function init() {
   }
 
   // * Create pellets and super pellets
+  // ! CSS APPROACH NOT WORKING FOR SCORE, but html approach fucked up the grid
   function createPellets() {
     pelletArray.forEach(pellet => {
-      // ! inject HTML element vs adding css class. if you inject html element you can assign a score attrbute and make it equal the elements score. or you can use attributes on the grid divs themselves too
-      pellet.classList.add(pelletClass)
       if (pellet.id % 28 === 0) {
         pellet.classList.add(superPelletClass)
+        pellet.setAttribute('data-score', 100)
+      } else {
+        pellet.classList.add(pelletClass)
+        pellet.setAttribute('data-score', 20)
       }
     })
   }
  
-  // ! Remove pellets WIP
+  // ! Remove pellets WIP, pellets are removed visually atm
   function removePellet(position) {
     pelletArray.forEach(pellet => {
       if (position === Number(pellet.id)) {
         //console.log('Nom')
-        pellet.classList.remove(pelletClass)
-        // ! create array for pelets eaten
-        pellet.classList.add(pelletEatenClass)
+        
+        if (pellet.id % 28 === 0) {
+          pellet.classList.remove(superPelletClass)
+          pellet.classList.add(pelletEatenClass)
+        } else {
+          pellet.classList.remove(pelletClass)
+          pellet.classList.add(pelletEatenClass)
+        }
+        // * create array for pelets eaten and contain score in attrbute
         pelletsEatenArray.push(pellet)
-        // score = pelletsEaten.length
-        // console.log('SCORE ->', score)
-        // ! BUG: score adds every time the setInterval timer runs
+        // ! BUG: score adds every time the setInterval timer runs, and add to itself even when player is 'stuck' against wall. Need a way to evluate score sepetate from the movement timer. i just wanna count the amoung if items that contain the class 'pellet eaten'
       }
-
-      // score = pelletsEatenArray.length      
-      // console.log('SCORE ->', score)
-      // console.log('pelletsEaten -> ', pelletsEaten)
-      // console.log('pelletsEaten Length -> ', pelletsEaten.length)
     })
   }
 
 
+  // * Pellet eaten function
+  function handleScore() {
+    //const numberOfPelletsEaten = pelletsEatenArray.length
+    //console.log(numberOfPelletsEaten)
+    pelletsEatenArray.forEach(pellet => {
+      if (pellet.classList.contains('pellet-eaten')) {
+        console.log('pellet value ->', Number(pellet.getAttribute('data-score'))) 
+        score += Number(pellet.getAttribute('data-score'))
+        console.log('Score ->', score) 
+      }
+    })   
+  }
+
   
-
-
   function handleKeyUp(event) {
     const key = event.keyCode
 
@@ -166,11 +180,10 @@ function init() {
       // console.log('Player traveled through portal')
     }
 
-    addPlayer(playerCurrentPosition)
+    handleScore()
     removePellet(playerCurrentPosition)
-    
+    addPlayer(playerCurrentPosition)
   }
-  
   
 
   // * Call functions
@@ -181,7 +194,6 @@ function init() {
 
   // * Start timers
   const playerDirectionState = setInterval(movePlayer, 300)
-
 }
 
 window.addEventListener('DOMContentLoaded', init)
