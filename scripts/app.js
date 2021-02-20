@@ -16,7 +16,7 @@ function init() {
   const superPelletClass = 'super-pellet'
   const pelletEatenClass = 'pellet-eaten'
   const pelletArray = []
-  const pelletsEaten = []
+  const pelletsEatenArray = []
 
 
   // * Player Variables
@@ -81,21 +81,30 @@ function init() {
     })
   }
  
-  // * Remove pellets WIP
+  // ! Remove pellets WIP
   function removePellet(position) {
     pelletArray.forEach(pellet => {
       if (position === Number(pellet.id)) {
-        console.log('Nom')
+        //console.log('Nom')
         pellet.classList.remove(pelletClass)
         // ! create array for pelets eaten
         pellet.classList.add(pelletEatenClass)
-        pelletsEaten.push(pellet)
-        score = pelletsEaten.length
-        console.log('SCORE ->', score)
+        pelletsEatenArray.push(pellet)
+        // score = pelletsEaten.length
+        // console.log('SCORE ->', score)
         // ! BUG: score adds every time the setInterval timer runs
       }
+
+      // score = pelletsEatenArray.length      
+      // console.log('SCORE ->', score)
+      // console.log('pelletsEaten -> ', pelletsEaten)
+      // console.log('pelletsEaten Length -> ', pelletsEaten.length)
     })
   }
+
+
+  
+
 
   function handleKeyUp(event) {
     const key = event.keyCode
@@ -156,13 +165,9 @@ function init() {
 
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
-
+    
   }
-
-
-
   
-
 
   // * Call functions
   createGrid(playerStartPosition) 
