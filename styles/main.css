@@ -64,6 +64,10 @@ body {
   cursor: pointer;
 }
 
+.grid div.pellet-eaten {
+  background-color: rgba(255, 105, 180, 0.637);
+}
+
 .grid div.player {
   background-image: url('../assets/images/curious-emoji.gif');
   background-repeat: no-repeat;

@@ -14,6 +14,7 @@ function init() {
 
   const pelletClass = 'pellet'
   const superPelletClass = 'super-pellet'
+  const pelletEatenClass = 'pellet-eaten'
   const pelletArray = []
   const pelletsEaten = []
 
@@ -72,7 +73,7 @@ function init() {
   // * Create pellets and super pellets
   function createPellets() {
     pelletArray.forEach(pellet => {
-      // ! inject HTML element vs adding css class. if you inject html element you can assign a score attrbute and make it equal the elements score
+      // ! inject HTML element vs adding css class. if you inject html element you can assign a score attrbute and make it equal the elements score. or you can use attributes on the grid divs themselves too
       pellet.classList.add(pelletClass)
       if (pellet.id % 28 === 0) {
         pellet.classList.add(superPelletClass)
@@ -80,14 +81,18 @@ function init() {
     })
   }
  
-  // ! Remove pellets WIP
+  // * Remove pellets WIP
   function removePellet(position) {
     pelletArray.forEach(pellet => {
       if (position === Number(pellet.id)) {
         console.log('Nom')
         pellet.classList.remove(pelletClass)
-        score += 20
+        // ! create array for pelets eaten
+        pellet.classList.add(pelletEatenClass)
+        pelletsEaten.push(pellet)
+        score = pelletsEaten.length
         console.log('SCORE ->', score)
+        // ! BUG: score adds every time the setInterval timer runs
       }
     })
   }
@@ -152,16 +157,6 @@ function init() {
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
 
-    // ? pellet  collision logic , sort of works
-
-    // pelletArray.forEach(pellet => {
-    //   if (playerCurrentPosition === Number(pellet.id)) {
-    //     console.log('Nom')
-    //     pellet.classList.remove(pelletClass)
-    //     score += 20
-    //     console.log('SCORE ->', score)
-    //   }
-    // })
   }
 
 
