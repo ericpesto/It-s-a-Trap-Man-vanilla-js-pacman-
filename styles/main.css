@@ -66,8 +66,11 @@ body {
 }
 
 .grid div.player {
-  background-image: url('../assets/images/crying-emoji.gif');
+  background-image: url('../assets/images/curious-emoji.gif');
   background-repeat: no-repeat;
   background-size: contain;
+  background-size: 100%;
+  z-index: 999;
+  overflow: visible;
   cursor: pointer;
 }

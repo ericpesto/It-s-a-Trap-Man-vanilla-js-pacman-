@@ -162,7 +162,7 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
 
   // * Start timers
-  const playerDirectionState = setInterval(movePlayer, 220)
+  const playerDirectionState = setInterval(movePlayer, 300)
 
 }
 
