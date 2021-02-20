@@ -59,7 +59,7 @@ body {
   background-image: url('../assets/images/green-diamond.gif');
   background-repeat: no-repeat;
   background-size: contain;
-  background-size: 80%;
+  background-size: 85%;
   background-position: center;
   cursor: pointer;
 }
@@ -68,8 +68,7 @@ body {
   background-image: url('../assets/images/curious-emoji.gif');
   background-repeat: no-repeat;
   background-size: contain;
-  background-size: 100%;
-  z-index: 999;
-  overflow: visible;
+  background-position: center;
+  background-size: 105%;
   cursor: pointer;
 }
