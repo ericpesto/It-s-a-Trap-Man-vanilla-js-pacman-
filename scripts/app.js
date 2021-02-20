@@ -41,20 +41,17 @@ function init() {
       // each ghost has uniqe behaviour/target tile based on player position
     },
     scatter() {
-      //targets specific tile in the corner of maze, never changes
+      // targets specific tile in the corner of maze, never changes
     }, 
     frightened() {
-      //instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
+      // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
 
-      //if player eats frightened ghost, they will endter eaten mode
+      // if player eats frightened ghost, they will endter eaten mode
     }, 
     eaten() {
-      //ghost targets ghost home/starting position
+      // ghost targets ghost home/starting position
       // once home they revert to scatter or chase mode
     }
-
-
-
   }
 
 
@@ -69,35 +66,46 @@ function init() {
       cells.push(cell)
       
       // * Render maze with css
-      if (mazeArray.includes(Number(cell.id))) {
-        cell.classList.add(mazeClass)
-      }
+      // if (mazeArray.includes(Number(cell.id))) {
+      //   cell.classList.add(mazeClass)
+      // }
+      renderMaze(cell)
 
       // * Render ghostHome with css
-      if (ghostHomeArray.includes(Number(cell.id))) {
-        cell.classList.add(ghostHomeClass)
-      }
+      // if (ghostHomeArray.includes(Number(cell.id))) {
+      //   cell.classList.add(ghostHomeClass)
+      // }
+      renderGhostHome(cell)
 
       // * Render pellets with css 
-      if (!mergedMazeAndGhostHomeArray.includes(Number(cell.id))) {
-        pelletArray.push(cell)
-        createPellets(pelletArray)
-      }
+      // if (!mergedMazeAndGhostHomeArray.includes(Number(cell.id))) {
+      //   pelletArray.push(cell)
+      //   createPellets(pelletArray)
+      // }
+      renderPellets(cell)
     }
     
     addPlayer(playerStartPosition)
     //will add ghosts here too
-    
   }
 
-  // * Add player to grid on move
-  function addPlayer(position) {
-    cells[position].classList.add(playerClass)
+  function renderMaze(cell) {
+    if (mazeArray.includes(Number(cell.id))) {
+      cell.classList.add(mazeClass)
+    }
   }
 
-  // * Remove player from grid on move
-  function removePlayer(position) {
-    cells[position].classList.remove(playerClass)
+  function renderGhostHome(cell) {
+    if (ghostHomeArray.includes(Number(cell.id))) {
+      cell.classList.add(ghostHomeClass)
+    }
+  }
+
+  function renderPellets(cell) {
+    if (!mergedMazeAndGhostHomeArray.includes(Number(cell.id))) {
+      pelletArray.push(cell)
+      createPellets(pelletArray)
+    }
   }
 
   // * Create pellets and super pellets
@@ -129,11 +137,20 @@ function init() {
         }
         // * create array for pelets eaten and contain score in attrbute
         pelletsEatenArray.push(pellet)
-        // ! BUG: score adds every time the setInterval timer runs, and add to itself even when player is 'stuck' against wall. Need a way to evluate score sepetate from the movement timer. i just wanna count the amoung if items that contain the class 'pellet eaten'
+        // ! BUG: score adds every time the setInterval timer runs, and add to itself even when player is 'stuck' against wall. Need a way to evluate score sepetate from the movement timer. i just wanna count the amoung if items that contain the class 'pellet eaten'. need to switch off class once player enters grid, otherwise contion will always ring true. need to make pallet value 0 as soon as entered?
       }
     })
   }
 
+  // * Add player to grid on move
+  function addPlayer(position) {
+    cells[position].classList.add(playerClass)
+  }
+
+  // * Remove player from grid on move
+  function removePlayer(position) {
+    cells[position].classList.remove(playerClass)
+  }
 
   // * Pellet eaten function
   function handleScore() {
@@ -206,7 +223,7 @@ function init() {
       // console.log('Player traveled through portal')
     }
 
-    handleScore()
+    handleScore(score)
     removePellet(playerCurrentPosition)
     addPlayer(playerCurrentPosition)
   }
