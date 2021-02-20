@@ -31,6 +31,32 @@ function init() {
   // let lives = 3
   
 
+  // * Ghosts
+  // ? four ghosts as individual objects, each with uniq behaviours stored as methods that can be called back with conditoinal logic based on player movement.
+  const char = {
+    name: 'Char',
+    className: 'char',
+    chase() {
+      // targets a target tile is clculated everytime before a decsiion to move is made
+      // each ghost has uniqe behaviour/target tile based on player position
+    },
+    scatter() {
+      //targets specific tile in the corner of maze, never changes
+    }, 
+    frightened() {
+      //instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
+
+      //if player eats frightened ghost, they will endter eaten mode
+    }, 
+    eaten() {
+      //ghost targets ghost home/starting position
+      // once home they revert to scatter or chase mode
+    }
+
+
+
+  }
+
 
   // * Make Grid
   function createGrid(playerStartPosition) {
@@ -80,10 +106,10 @@ function init() {
     pelletArray.forEach(pellet => {
       if (pellet.id % 28 === 0) {
         pellet.classList.add(superPelletClass)
-        pellet.setAttribute('data-score', 100)
+        pellet.setAttribute('data-score', 50)
       } else {
         pellet.classList.add(pelletClass)
-        pellet.setAttribute('data-score', 20)
+        pellet.setAttribute('data-score', 10)
       }
     })
   }
@@ -115,9 +141,9 @@ function init() {
     //console.log(numberOfPelletsEaten)
     pelletsEatenArray.forEach(pellet => {
       if (pellet.classList.contains('pellet-eaten')) {
-        console.log('pellet value ->', Number(pellet.getAttribute('data-score'))) 
+        //console.log('pellet value ->', Number(pellet.getAttribute('data-score'))) 
         score += Number(pellet.getAttribute('data-score'))
-        console.log('Score ->', score) 
+        //console.log('Score ->', score) 
       }
     })   
   }
