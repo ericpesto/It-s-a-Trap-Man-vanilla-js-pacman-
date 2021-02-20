@@ -48,18 +48,19 @@ body {
 }
 
 .grid div.pellet {
-  background-image: url('../assets/images/coin.gif');
+  background-color: rgba(0, 128, 0, 0.541);
+  background-image: url('../assets/images/coin-4.gif');
   background-repeat: no-repeat;
-  background-size: 90%;
+  background-size: 50%;
   background-position: center;
   cursor: pointer;
 }
 
 .grid div.super-pellet {
-  background-image: url('../assets/images/gem.gif');
+  background-image: url('../assets/images/green-diamond.gif');
   background-repeat: no-repeat;
   background-size: contain;
-  background-size: 60%;
+  background-size: 80%;
   background-position: center;
   cursor: pointer;
 }

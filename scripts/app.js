@@ -90,18 +90,18 @@ function init() {
     // * player movement logic
     if (key === 39) {
       playerDirection = 'right'
-      console.log('player pressed right')
+      // console.log('player pressed right')
     } else if (key === 37) {
       playerDirection = 'left'
-      console.log('player pressed left')
+      // console.log('player pressed left')
     } else if (key === 38) {
       playerDirection = 'up'
-      console.log('player pressed up')
+      // console.log('player pressed up')
     } else if (key === 40) {
       playerDirection = 'down'
-      console.log('player pressed down')
+      // console.log('player pressed down')
     } else {
-      console.log('invalid key')
+      // console.log('invalid key')
     }
   }
 
@@ -118,27 +118,27 @@ function init() {
 
     if (playerDirection === 'right' && playerCurrentPosition % width !== width - 1 && !mergedMazeAndGhostHomeArray.includes(playerRelativePositionRight)) {
       playerCurrentPosition++
-      console.log('Moved right')
+      // console.log('Moved right')
     } else if (playerDirection === 'left' && playerCurrentPosition % width !== 0 && !mergedMazeAndGhostHomeArray.includes(playerRelativePositionLeft)) {
       playerCurrentPosition--
-      console.log('Moved left')
+      // console.log('Moved left')
     } else if (playerDirection === 'up' && playerCurrentPosition >= width && !mergedMazeAndGhostHomeArray.includes(playerRelativePositionUp)) {
       playerCurrentPosition -= width
-      console.log('Moved up')
+      // console.log('Moved up')
     } else if (playerDirection === 'down' && playerCurrentPosition + width <= width * width - 1 && !mergedMazeAndGhostHomeArray.includes(playerRelativePositionDown)) {
       playerCurrentPosition += width
-      console.log('Moved down')
+      // console.log('Moved down')
     } else {
-      console.log('Ouch! Wall!')
+      // console.log('Ouch! Wall!')
     }
 
     // * gateway logic
     if (playerCurrentPosition === portalRight) {
       playerCurrentPosition = portalLeft
-      console.log('Player traveled through portal')
+      // console.log('Player traveled through portal')
     } else if (playerCurrentPosition === portalLeft) {
       playerCurrentPosition = portalRight
-      console.log('Player traveled through portal')
+      // console.log('Player traveled through portal')
     }
 
     addPlayer(playerCurrentPosition)
@@ -162,7 +162,7 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
 
   // * Start timers
-  const playerDirectionState = setInterval(movePlayer, 200)
+  const playerDirectionState = setInterval(movePlayer, 220)
 
 }
 
