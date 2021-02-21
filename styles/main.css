@@ -80,3 +80,12 @@ body {
   background-size: 105%;
   cursor: pointer;
 }
+
+.grid div.char {
+  background-image: url('../assets/images/char-1.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-size: 110%;
+  cursor: pointer;
+}

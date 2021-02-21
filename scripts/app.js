@@ -62,7 +62,11 @@ function init() {
       // ghost targets ghost home/starting position
       // once home they revert to scatter or chase mode
     },
-    add() {
+    add(startingPosition) {
+      console.log('char added')
+      console.log(startingPosition)
+      cells[startingPosition].classList.add(char.className)
+
 
     },
     remove() {
@@ -84,8 +88,11 @@ function init() {
       createPellets(cell)
       createSuperPellets(cell)
     }
+
+    // * initiate player and ghosts here
     addPlayer(playerStartPosition)
-    // will add ghosts initial position here too
+    char.add(char.startingPosition)
+    
   }
   
   function addMaze(gridIndex) {
