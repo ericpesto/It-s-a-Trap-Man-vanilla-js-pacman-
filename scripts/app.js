@@ -15,7 +15,6 @@ function init() {
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
   const superPelletLocations = [84,95,276,263]
-  let superPelletsArray = []
   const playerTrack = mazeArray.concat(ghostHomeArray)
   const pelletTrack = mazeArray.concat(ghostHomeArray, portalLocations, superPelletLocations)
 
@@ -23,7 +22,10 @@ function init() {
   const superPelletClass = 'super-pellet'
   const pelletEatenClass = 'pellet-eaten'
   const pellets = []
-  const pelletsEaten = []
+  //const pelletsEaten = []
+  const superPellets = []
+  //const superPelletsEaten = []
+  
 
 
 
@@ -36,7 +38,7 @@ function init() {
   // * Game state/logic variables
   let score = 0
   // let lives = 3
-  // let scoreArray = 0
+
   
 
   // * Ghosts
@@ -80,46 +82,53 @@ function init() {
       cell.id = i
       cells.push(cell)
       
-      renderMaze(cell)
-      renderGhostHome(cell)
-      renderPellets(cell)
-      renderSuperPellets(cell)
-      //renderSuperPellets
+      addMaze(cell)
+      addGhostHome(cell)
+      createPellets(cell)
+      createSuperPellets(cell)
     }
     addPlayer(playerStartPosition)
     // will add ghosts initial position here too
   }
   
   
-  function renderMaze(gridIndex) {
+  function addMaze(gridIndex) {
     if (mazeArray.includes(Number(gridIndex.id))) {
       gridIndex.classList.add(mazeClass)
     }
   }
 
-  function renderGhostHome(gridIndex) {
+  function addGhostHome(gridIndex) {
     if (ghostHomeArray.includes(Number(gridIndex.id))) {
       gridIndex.classList.add(ghostHomeClass)
     }
   }
 
-  function renderPellets(gridIndex) {
+  function createPellets(gridIndex) {
     if (!pelletTrack.includes(Number(gridIndex.id))) {
       pellets.push(gridIndex)
       addPellets()
     }
   }
 
-  function renderSuperPellets(gridIndex) {
+  function createSuperPellets(gridIndex) {
     if (superPelletLocations.includes(Number(gridIndex.id))) {
-      gridIndex.classList.add(superPelletClass)
+      superPellets.push(gridIndex)
+      addSuperPellets()
     }
   }
-
-  // * add pellets and super pellets to grid
+  
+  // * add pellets to grid
   function addPellets() {
     pellets.forEach(pellet => {
       pellet.classList.add(pelletClass)
+    })
+  }
+
+  // * add super pellets to grid
+  function addSuperPellets() {
+    superPellets.forEach(superPellet => {
+      superPellet.classList.add(superPelletClass)
     })
   }
 
@@ -141,7 +150,7 @@ function init() {
         pellet.classList.add(pelletEatenClass)
         pellet.setAttribute('data-score', 10)
         // * create array for pelets eaten and contain score in attrbute
-        pelletsEaten.push(pellet)
+        //pelletsEaten.push(pellet)
       }
     })
   }
@@ -149,36 +158,18 @@ function init() {
   // * Remove super pellet
 
   function removeSuperPellet(playerPosition) {
-    superPelletsArray = document.getElementsByClassName(superPelletClass)
-    console.log('superPelletArray', superPelletsArray)
-    console.log('superPelletLocations', superPelletLocations)
+    //console.log(superPellets)
+    superPellets.forEach(superPellet => {
+      if (playerPosition === Number(superPellet.id)) {
+        superPellet.classList.remove(superPelletClass)
+        superPellet.classList.add(pelletEatenClass)
+        superPellet.setAttribute('data-score', 50)
 
-
-    superPelletLocations.forEach((superPelletLocation, superPelletArray)  => {
-      console.log(superPelletLocation)
-      if (playerPosition === superPelletLocation.id) {
-        console.log('SUPER EATEN!!!')
-        superPelletArray.classList.remove(superPelletClass)
-        superPelletArray.classList.add(pelletEatenClass)
-        superPelletArray.setAttribute('data-score', 10)
+        //superPelletsEaten.push(superPellet)
       }
     })
-
-  
-
-
-    // for (let i = 0; i < superPelletArray.length; i++) {
-    // if (playerPosition === superPelletArray[i].id) {
-    //   superPelletArray[i].classList.remove(superPelletClass)
-    //   superPelletArray[i].classList.add(pelletEatenClass)
-    //   superPelletArray[i].setAttribute('data-score', 10)
-    // }
-    // superPelletArray.concat(superPelletArray[i])
-    // console.log('after push ->', superPelletArray)
-    // ! I could push each pellet element in super pellet array
-    // }
-    //console.log('after push ->', superPelletArray)
   }
+
 
   // * Handle Score (workaround to account for playermovement behavour related to set interval)
   function handleScore() {
