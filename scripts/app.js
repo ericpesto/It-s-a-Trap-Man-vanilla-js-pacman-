@@ -3,7 +3,6 @@ function init() {
   const grid = document.querySelector('.grid')
   const scoreDisplay = document.querySelector('.score')
   
-
   // * Grid variables
   const width = 20
   const cellCount = width * width
@@ -23,13 +22,8 @@ function init() {
   const pelletEatenClass = 'pellet-eaten'
   const superPelletEatenClass = 'super-pellet-eaten'
   const pellets = []
-  //const pelletsEaten = []
   const superPellets = []
-  //const superPelletsEaten = []
   
-
-
-
   // * Player Variables
   const playerClass = 'player'
   const playerStartPosition = 369
@@ -93,7 +87,6 @@ function init() {
     addPlayer(playerStartPosition)
     // will add ghosts initial position here too
   }
-  
   
   function addMaze(gridIndex) {
     if (mazeArray.includes(Number(gridIndex.id))) {
@@ -167,8 +160,7 @@ function init() {
     })
   }
 
-
-  // * Handle Score (workaround to account for playermovement behavour related to set interval, work really well for both pellet and superpellets now)
+  // * Handle Score (workaround to account for playermovement behavour related to set interval, works really well for both pellet and superpellets now)
   function handleScore() {
     const eatenPellets = document.getElementsByClassName(pelletEatenClass)
     const numberOfPelletsEaten = eatenPellets.length
@@ -182,11 +174,10 @@ function init() {
     scoreDisplay.innerText = score
   }
 
-
   function handleKeyUp(event) {
     const key = event.keyCode
 
-    // * player movement logic
+    // * player direction logic
     if (key === 39) {
       playerDirection = 'right'
       console.log('player pressed right')
@@ -229,7 +220,8 @@ function init() {
       console.log('Ouch! Wall!')
     }
 
-    // * Gateway logic
+    // * Gateway logic 
+    // ? BONUS: Add two more gateways and have player come out of random one?
     if (playerCurrentPosition === portalLocations[1]) {
       playerCurrentPosition = portalLocations[0]
       console.log('Player traveled through portal')
@@ -240,7 +232,7 @@ function init() {
 
     console.log('playerPosition ->', playerCurrentPosition)
 
-    // * WHERE MOST FUNCTION WILL BE CALLED
+    // * WHERE MOST FUNCTIONs WILL BE CALLED
 
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
