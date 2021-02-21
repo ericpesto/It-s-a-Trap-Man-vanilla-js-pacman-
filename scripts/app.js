@@ -21,6 +21,7 @@ function init() {
   const pelletsEaten = []
 
 
+
   // * Player Variables
   const playerClass = 'player'
   const playerStartPosition = 369
@@ -28,7 +29,7 @@ function init() {
   let playerDirection = 'right'
 
   // * Game state/logic variables
-  let score = 0
+  const score = 0
   // let lives = 3
   // let scoreArray = 0
   
@@ -85,25 +86,25 @@ function init() {
   }
   
   
-  function renderMaze(cell) {
-    if (mazeArray.includes(Number(cell.id))) {
-      cell.classList.add(mazeClass)
+  function renderMaze(gridIndex) {
+    if (mazeArray.includes(Number(gridIndex.id))) {
+      gridIndex.classList.add(mazeClass)
     }
   }
 
-  function renderGhostHome(cell) {
-    if (ghostHomeArray.includes(Number(cell.id))) {
-      cell.classList.add(ghostHomeClass)
+  function renderGhostHome(gridIndex) {
+    if (ghostHomeArray.includes(Number(gridIndex.id))) {
+      gridIndex.classList.add(ghostHomeClass)
     }
   }
 
-  function renderPellets(cell) {
-    if (!playerTrack.includes(Number(cell.id))) {
-      pellets.push(cell)
-      addPellets(pellets)
+  function renderPellets(gridIndex) {
+    if (!playerTrack.includes(Number(gridIndex.id))) {
+      pellets.push(gridIndex)
+      addPellets()
     }
   }
-
+  
   // * add pellets and super pellets to grid
   function addPellets() {
     pellets.forEach(pellet => {
@@ -146,10 +147,25 @@ function init() {
     })
   }
 
+
+
+
   // ! handle Score WIP
-  // function handleScore() {
-  // create array of pellets eated. then get data-value of each and sum together for total score.
-  // }
+
+
+  function handleScore(total) {
+    // create array of pellets eated. then get data-value of each and sum together for total score.
+    const eatenPellets = document.getElementsByClassName(pelletEatenClass)
+    console.log('eaten ellets ->', eatenPellets)
+    const pelletValue = eatenPellets[0].getAttribute('data-score')
+  
+
+    console.log('pellet value ->', pelletValue)
+
+    total += Number(pelletValue)
+    console.log('total', total)
+    return total 
+  }
   
   function handleKeyUp(event) {
     const key = event.keyCode
@@ -213,9 +229,8 @@ function init() {
 
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
-    //handleScore()
+    handleScore(score)
     // ! remove char
-
     
   }
   
