@@ -21,6 +21,7 @@ function init() {
   const pelletClass = 'pellet'
   const superPelletClass = 'super-pellet'
   const pelletEatenClass = 'pellet-eaten'
+  const superPelletEatenClass = 'super-pellet-eaten'
   const pellets = []
   //const pelletsEaten = []
   const superPellets = []
@@ -37,6 +38,8 @@ function init() {
 
   // * Game state/logic variables
   let score = 0
+  const pelletScoreValue = 10
+  const superPelletScoreValue = 50
   // let lives = 3
 
   
@@ -142,41 +145,39 @@ function init() {
     cells[position].classList.remove(playerClass)
   }
 
-  // * Remove pellet, and output pelletsEaten array
+  // * Remove pellet on player movement
   function removePellet(playerPosition) {
     pellets.forEach(pellet => {
       if (playerPosition === Number(pellet.id)) {
         pellet.classList.remove(pelletClass)
         pellet.classList.add(pelletEatenClass)
-        pellet.setAttribute('data-score', 10)
-        // * create array for pelets eaten and contain score in attrbute
-        //pelletsEaten.push(pellet)
+        //pellet.setAttribute('data-score', pelletScoreValue)
       }
     })
   }
 
-  // * Remove super pellet
-
+  // * Remove super pellet on player movement
   function removeSuperPellet(playerPosition) {
-    //console.log(superPellets)
     superPellets.forEach(superPellet => {
       if (playerPosition === Number(superPellet.id)) {
         superPellet.classList.remove(superPelletClass)
-        superPellet.classList.add(pelletEatenClass)
-        superPellet.setAttribute('data-score', 50)
-
-        //superPelletsEaten.push(superPellet)
+        superPellet.classList.add(superPelletEatenClass)
+        //superPellet.setAttribute('data-score', superPelletScoreValue)
       }
     })
   }
 
 
-  // * Handle Score (workaround to account for playermovement behavour related to set interval)
+  // * Handle Score (workaround to account for playermovement behavour related to set interval, work really well for both pellet and superpellets now)
   function handleScore() {
     const eatenPellets = document.getElementsByClassName(pelletEatenClass)
     const numberOfPelletsEaten = eatenPellets.length
+
+    const eatenSuperPellets = document.getElementsByClassName(superPelletEatenClass)
+    const numberOfSuperPelletsEaten = eatenSuperPellets.length
+
     console.log('pellets eaten ->', numberOfPelletsEaten)
-    score = numberOfPelletsEaten * 10
+    score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue)
     console.log('score', score)
     scoreDisplay.innerText = score
   }
