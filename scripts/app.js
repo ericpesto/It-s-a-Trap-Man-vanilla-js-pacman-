@@ -43,7 +43,7 @@ function init() {
   // let lives = 3
 
   
-
+  // ! Do I make a ghost class or individual objects for each ghost?
   // * Ghosts
   // ? four ghosts as individual objects, each with uniq behaviours stored as methods that can be called back with conditoinal logic based on player movement.
   const char = {
