@@ -1,6 +1,7 @@
 function init() {
   // * Global Variables
   const grid = document.querySelector('.grid')
+  const scoreDisplay = document.querySelector('.score')
   
 
   // * Grid variables
@@ -14,9 +15,9 @@ function init() {
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
   const superPelletLocations = [84,95,276,263]
+  let superPelletsArray = []
   const playerTrack = mazeArray.concat(ghostHomeArray)
   const pelletTrack = mazeArray.concat(ghostHomeArray, portalLocations, superPelletLocations)
-  //const regularPelletTrack = playerTrack.concat(superPelletLocations)
 
   const pelletClass = 'pellet'
   const superPelletClass = 'super-pellet'
@@ -82,6 +83,8 @@ function init() {
       renderMaze(cell)
       renderGhostHome(cell)
       renderPellets(cell)
+      renderSuperPellets(cell)
+      //renderSuperPellets
     }
     addPlayer(playerStartPosition)
     // will add ghosts initial position here too
@@ -106,7 +109,13 @@ function init() {
       addPellets()
     }
   }
-  
+
+  function renderSuperPellets(gridIndex) {
+    if (superPelletLocations.includes(Number(gridIndex.id))) {
+      gridIndex.classList.add(superPelletClass)
+    }
+  }
+
   // * add pellets and super pellets to grid
   function addPellets() {
     pellets.forEach(pellet => {
@@ -137,6 +146,39 @@ function init() {
     })
   }
 
+  // * Remove super pellet
+
+  function removeSuperPellet(playerPosition) {
+    superPelletsArray = document.getElementsByClassName(superPelletClass)
+    console.log('superPelletArray', superPelletsArray)
+    console.log('superPelletLocations', superPelletLocations)
+
+
+    superPelletLocations.forEach((superPelletLocation, superPelletArray)  => {
+      console.log(superPelletLocation)
+      if (playerPosition === superPelletLocation.id) {
+        console.log('SUPER EATEN!!!')
+        superPelletArray.classList.remove(superPelletClass)
+        superPelletArray.classList.add(pelletEatenClass)
+        superPelletArray.setAttribute('data-score', 10)
+      }
+    })
+
+  
+
+
+    // for (let i = 0; i < superPelletArray.length; i++) {
+    // if (playerPosition === superPelletArray[i].id) {
+    //   superPelletArray[i].classList.remove(superPelletClass)
+    //   superPelletArray[i].classList.add(pelletEatenClass)
+    //   superPelletArray[i].setAttribute('data-score', 10)
+    // }
+    // superPelletArray.concat(superPelletArray[i])
+    // console.log('after push ->', superPelletArray)
+    // ! I could push each pellet element in super pellet array
+    // }
+    //console.log('after push ->', superPelletArray)
+  }
 
   // * Handle Score (workaround to account for playermovement behavour related to set interval)
   function handleScore() {
@@ -145,6 +187,7 @@ function init() {
     console.log('pellets eaten ->', numberOfPelletsEaten)
     score = numberOfPelletsEaten * 10
     console.log('score', score)
+    scoreDisplay.innerText = score
   }
 
 
@@ -209,6 +252,7 @@ function init() {
 
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
+    removeSuperPellet(playerCurrentPosition)
     handleScore()
     // ! remove char   
   }
