@@ -43,8 +43,8 @@ function init() {
   const char = {
     name: 'Char',
     className: 'char',
-    startingPosition: 21,
-    currentPosition: 21,
+    startingPosition: 130,
+    currentPosition: 130,
     targetPosition: 229,
     chase() {
       // targets a target tile is clculated everytime before a decsiion to move is made
@@ -53,7 +53,7 @@ function init() {
     scatter() {
       // targets specific tile in the corner of maze, never changes
     }, 
-    frightened() {
+    frightned() {
       // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
 
       // if player eats frightened ghost, they will endter eaten mode
@@ -62,14 +62,18 @@ function init() {
       // ghost targets ghost home/starting position
       // once home they revert to scatter or chase mode
     },
-    add(startingPosition) {
+    add(position) {
       console.log('char added')
-      console.log(startingPosition)
-      cells[startingPosition].classList.add(char.className)
-
-
+      console.log(position)
+      cells[position].classList.add(char.className)
     },
     remove() {
+
+    },
+    move() {
+      // determine direction options with random? (nahh too easy)
+      // use some sort of method to find shortest possible route to target
+ 
 
     }
   }
@@ -209,7 +213,7 @@ function init() {
     const playerRelativePositionDown = playerCurrentPosition + width
 
     removePlayer(playerCurrentPosition)
-    // ! add char
+    //char.remove(char.currentPosition)
 
     if (playerDirection === 'right' && playerCurrentPosition % width !== width - 1 && !playerTrack.includes(playerRelativePositionRight)) {
       playerCurrentPosition++
@@ -241,14 +245,25 @@ function init() {
 
     // * WHERE MOST FUNCTIONs WILL BE CALLED
 
+
+    //char.add(char.currentPosition)
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
     removeSuperPellet(playerCurrentPosition)
-    handleScore()
-    // ! remove char   
+    handleScore() 
+    gridCoordinates(playerCurrentPosition) 
   }
   
-  
+  function gridCoordinates(position) {
+    const positionX = position % width
+    //console.log('positionX ->', positionX)
+    const positionY = position / width
+    //console.log('positionY ->', positionY)
+    let positionCoordinates = []
+    positionCoordinates = positionCoordinates.concat(positionX, positionY)
+    console.log('positionCoordinates(x,y) ->', positionCoordinates)
+
+  }
 
   // * Call functions
   createGrid(playerStartPosition) 
