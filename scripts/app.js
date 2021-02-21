@@ -12,7 +12,11 @@ function init() {
   const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,128,131,133,134,136,137,139,140,148,151,159,160,161,162,163,164,165,166,168,169,170,171,173,174,175,176,177,178,179,200,201,202,203,204,206,208,209,210,211,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,247,248,249,250,251,252,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,327,328,329,330,331,332,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
   const ghostHomeArray = [129,130,149,150]
   const ghostHomeClass = 'ghost-home'
+  const portalLocations = [180,199]
+  const superPelletLocations = [84,95,276,263]
   const playerTrack = mazeArray.concat(ghostHomeArray)
+  const pelletTrack = mazeArray.concat(ghostHomeArray, portalLocations, superPelletLocations)
+  //const regularPelletTrack = playerTrack.concat(superPelletLocations)
 
   const pelletClass = 'pellet'
   const superPelletClass = 'super-pellet'
@@ -29,7 +33,7 @@ function init() {
   let playerDirection = 'right'
 
   // * Game state/logic variables
-  const score = 0
+  let score = 0
   // let lives = 3
   // let scoreArray = 0
   
@@ -70,17 +74,15 @@ function init() {
   function createGrid(playerStartPosition) {
     for (let i = 0; i < cellCount; i++) {
       cell = document.createElement('div')
-      cell.textContent = i
+      //cell.textContent = i
       grid.appendChild(cell)
       cell.id = i
-      //cell.classList.add('grid-item')
       cells.push(cell)
       
       renderMaze(cell)
       renderGhostHome(cell)
       renderPellets(cell)
     }
-    //console.log(cells)
     addPlayer(playerStartPosition)
     // will add ghosts initial position here too
   }
@@ -99,7 +101,7 @@ function init() {
   }
 
   function renderPellets(gridIndex) {
-    if (!playerTrack.includes(Number(gridIndex.id))) {
+    if (!pelletTrack.includes(Number(gridIndex.id))) {
       pellets.push(gridIndex)
       addPellets()
     }
@@ -108,11 +110,7 @@ function init() {
   // * add pellets and super pellets to grid
   function addPellets() {
     pellets.forEach(pellet => {
-      if (pellet.id % 28 === 0) {
-        pellet.classList.add(superPelletClass)
-      } else {
-        pellet.classList.add(pelletClass)
-      }
+      pellet.classList.add(pelletClass)
     })
   }
 
@@ -130,17 +128,9 @@ function init() {
   function removePellet(playerPosition) {
     pellets.forEach(pellet => {
       if (playerPosition === Number(pellet.id)) {
-        if (pellet.id % 28 === 0) {
-          pellet.classList.remove(superPelletClass)
-          pellet.classList.add(pelletEatenClass)
-          pellet.setAttribute('data-score', 50)
-          //pellet.removeAttribute('data-score')
-        } else {
-          pellet.classList.remove(pelletClass)
-          pellet.classList.add(pelletEatenClass)
-          pellet.setAttribute('data-score', 10)
-          //pellet.removeAttribute('data-score')
-        }
+        pellet.classList.remove(pelletClass)
+        pellet.classList.add(pelletEatenClass)
+        pellet.setAttribute('data-score', 10)
         // * create array for pelets eaten and contain score in attrbute
         pelletsEaten.push(pellet)
       }
@@ -148,25 +138,16 @@ function init() {
   }
 
 
-
-
-  // ! handle Score WIP
-
-
-  function handleScore(total) {
-    // create array of pellets eated. then get data-value of each and sum together for total score.
+  // * Handle Score (workaround to account for playermovement behavour related to set interval)
+  function handleScore() {
     const eatenPellets = document.getElementsByClassName(pelletEatenClass)
-    console.log('eaten ellets ->', eatenPellets)
-    const pelletValue = eatenPellets[0].getAttribute('data-score')
-  
-
-    console.log('pellet value ->', pelletValue)
-
-    total += Number(pelletValue)
-    console.log('total', total)
-    return total 
+    const numberOfPelletsEaten = eatenPellets.length
+    console.log('pellets eaten ->', numberOfPelletsEaten)
+    score = numberOfPelletsEaten * 10
+    console.log('score', score)
   }
-  
+
+
   function handleKeyUp(event) {
     const key = event.keyCode
 
@@ -194,9 +175,6 @@ function init() {
     const playerRelativePositionUp = playerCurrentPosition - width
     const playerRelativePositionDown = playerCurrentPosition + width
 
-    const portalLeft = 180
-    const portalRight = 199
-
     removePlayer(playerCurrentPosition)
     // ! add char
 
@@ -217,21 +195,22 @@ function init() {
     }
 
     // * Gateway logic
-    if (playerCurrentPosition === portalRight) {
-      playerCurrentPosition = portalLeft
+    if (playerCurrentPosition === portalLocations[1]) {
+      playerCurrentPosition = portalLocations[0]
       console.log('Player traveled through portal')
-    } else if (playerCurrentPosition === portalLeft) {
-      playerCurrentPosition = portalRight
+    } else if (playerCurrentPosition === portalLocations[0]) {
+      playerCurrentPosition = portalLocations[1]
       console.log('Player traveled through portal')
     }
 
     console.log('playerPosition ->', playerCurrentPosition)
 
+    // * WHERE MOST FUNCTION WILL BE CALLED
+
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
-    handleScore(score)
-    // ! remove char
-    
+    handleScore()
+    // ! remove char   
   }
   
   
@@ -247,3 +226,6 @@ function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init)
+
+
+//NEED TO ADD SUPERPELLETS AND GHOSTS

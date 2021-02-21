@@ -65,7 +65,7 @@ body {
 }
 
 .grid div.pellet-eaten {
-  background-color: rgba(0, 128, 0, 0.541);
+  background-color: rgba(0, 128, 0, 0);
 }
 
 .grid div.player {
