@@ -17,8 +17,8 @@ function init() {
   const pelletClass = 'pellet'
   const superPelletClass = 'super-pellet'
   const pelletEatenClass = 'pellet-eaten'
-  const pelletArray = []
-  const pelletsEatenArray = []
+  const pellets = []
+  const pelletsEaten = []
 
 
   // * Player Variables
@@ -28,7 +28,7 @@ function init() {
   let playerDirection = 'right'
 
   // * Game state/logic variables
-  const score = 0
+  let score = 0
   // let lives = 3
   // let scoreArray = 0
   
@@ -99,21 +99,18 @@ function init() {
 
   function renderPellets(cell) {
     if (!mergedMazeAndGhostHomeArray.includes(Number(cell.id))) {
-      pelletArray.push(cell)
-      addPellets(pelletArray)
+      pellets.push(cell)
+      addPellets(pellets)
     }
   }
 
   // * Create pellets and super pellets
-  // ! CSS APPROACH NOT WORKING FOR SCORE, html approach messed up the grid
   function addPellets() {
-    pelletArray.forEach(pellet => {
+    pellets.forEach(pellet => {
       if (pellet.id % 28 === 0) {
         pellet.classList.add(superPelletClass)
-        //pellet.setAttribute('data-score', 50)
       } else {
         pellet.classList.add(pelletClass)
-        //pellet.setAttribute('data-score', 10)
       }
     })
   }
@@ -128,12 +125,10 @@ function init() {
     cells[position].classList.remove(playerClass)
   }
 
-  // ! Remove pellets WIP, pellets are removed visually atm
+  // * Remove pellet
   function removePellet(playerPosition) {
-    pelletArray.forEach(pellet => {
+    pellets.forEach(pellet => {
       if (playerPosition === Number(pellet.id)) {
-      // console.log('Nom')
-        
         if (pellet.id % 28 === 0) {
           pellet.classList.remove(superPelletClass)
           pellet.classList.add(pelletEatenClass)
@@ -146,26 +141,46 @@ function init() {
           //pellet.removeAttribute('data-score')
         }
         // * create array for pelets eaten and contain score in attrbute
-        pelletsEatenArray.push(pellet)
-        // ! BUG: score adds every time the setInterval timer runs, and add to itself even when player is 'stuck' against wall. Need a way to evluate score sepetate from the movement timer. i just wanna count the amoung if items that contain the class 'pellet eaten'. need to switch off class once player enters grid, otherwise contion will always ring true. need to make pallet value 0 as soon as entered?
+        pelletsEaten.push(pellet)
       }
     })
+  }
+
+  // ! handle Score WIP
+  function handleScore() {
+    const eatenPellets = document.querySelectorAll('.pellet-eaten')
+    //const pelletValue = eatenPellets[0].getAttribute('data-score')
+
+
+    for (let i = 0; i < eatenPellets.length; i++) {
+      console.log('eaten pellets ->', eatenPellets[i])
+      const pelletValue = Number(eatenPellets[i].getAttribute('data-score'))
+      
+      console.log('pellet', pelletValue)
+    }
+    //console.log('score', score)
+
+
+
+
+
+
+    // eatenPellets.forEach(pellet => {
+    //   console.log(pellet)
+    //   if (pellet.classList.contains(superPelletClass)) {
+    //     console.log('super berry eaten!')
+    //   }
+    // }) 
   
 
 
-  }
+    console.log('pelletsEaten ->', eatenPellets.length)
 
-  // * handle Score
-  function handleScore(total) {
-    const eatenPellets = document.getElementsByClassName(pelletEatenClass)
-    const pelletValue = eatenPellets[0].getAttribute('data-score')
-    
+    //console.log('pellet value ->', pelletValue)
 
-    console.log('pellet value ->', pelletValue)
-
-    total += Number(pelletValue)
-    console.log('total', total)
-    return total 
+    //score = score += Number(pelletValue)
+    //console.log('total', score)
+    return score
   }
   
   function handleKeyUp(event) {
@@ -174,18 +189,18 @@ function init() {
     // * player movement logic
     if (key === 39) {
       playerDirection = 'right'
-      // console.log('player pressed right')
+      console.log('player pressed right')
     } else if (key === 37) {
       playerDirection = 'left'
-      // console.log('player pressed left')
+      console.log('player pressed left')
     } else if (key === 38) {
       playerDirection = 'up'
-      // console.log('player pressed up')
+      console.log('player pressed up')
     } else if (key === 40) {
       playerDirection = 'down'
-      // console.log('player pressed down')
+      console.log('player pressed down')
     } else {
-      // console.log('invalid key')
+      console.log('invalid key')
     }
   }
 
@@ -203,28 +218,30 @@ function init() {
 
     if (playerDirection === 'right' && playerCurrentPosition % width !== width - 1 && !mergedMazeAndGhostHomeArray.includes(playerRelativePositionRight)) {
       playerCurrentPosition++
-      // console.log('Moved right')
+      console.log('Moving right')
     } else if (playerDirection === 'left' && playerCurrentPosition % width !== 0 && !mergedMazeAndGhostHomeArray.includes(playerRelativePositionLeft)) {
       playerCurrentPosition--
-      // console.log('Moved left')
+      console.log('Moving left')
     } else if (playerDirection === 'up' && playerCurrentPosition >= width && !mergedMazeAndGhostHomeArray.includes(playerRelativePositionUp)) {
       playerCurrentPosition -= width
-      // console.log('Moved up')
+      console.log('Moving up')
     } else if (playerDirection === 'down' && playerCurrentPosition + width <= width * width - 1 && !mergedMazeAndGhostHomeArray.includes(playerRelativePositionDown)) {
       playerCurrentPosition += width
-      // console.log('Moved down')
+      console.log('Moving down')
     } else {
-      // console.log('Ouch! Wall!')
+      console.log('Ouch! Wall!')
     }
 
     // * Gateway logic
     if (playerCurrentPosition === portalRight) {
       playerCurrentPosition = portalLeft
-      // console.log('Player traveled through portal')
+      console.log('Player traveled through portal')
     } else if (playerCurrentPosition === portalLeft) {
       playerCurrentPosition = portalRight
-      // console.log('Player traveled through portal')
+      console.log('Player traveled through portal')
     }
+
+    console.log('playerPosition ->', playerCurrentPosition)
 
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
@@ -233,6 +250,7 @@ function init() {
 
     
   }
+  
   
 
   // * Call functions
