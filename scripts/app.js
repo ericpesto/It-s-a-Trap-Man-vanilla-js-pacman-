@@ -140,10 +140,49 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
 
+      function getNextMoveCoordinates(nextCell) {
+        return [Math.floor(nextCell % width), nextCell / width]
+      }
+
       if (!mazeArray.includes(char.currentPosition + direction)) {
         cells[char.currentPosition].classList.remove(char.className)
-        char.currentPosition += direction
+
+        const charCoordinates = [char.positionX(), char.positionY()]
+        console.log(charCoordinates)
+        const playerCoordinates = [player.positionX(), player.positionY()]
+        const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
+        console.log('next tile ->', charNextMoveCoordinates)
+
+        const closerX = function() {
+          if ((charNextMoveCoordinates[0] - playerCoordinates[0]) > (charCoordinates[0] - playerCoordinates[0])) {
+            return true
+          } else {
+            return false
+          }
+        }
+
+        const closerY = function() {
+          if ((charNextMoveCoordinates[1] - playerCoordinates[1]) > (charCoordinates[1] - playerCoordinates[1])) {
+            return true
+          } else {
+            return false
+          }
+        }
+
+
+        if (closerY() || closerX()) {
+          char.currentPosition += direction
+          char.add(char.currentPosition)
+          console.log('closer')
+        } else {
+          char.add(char.currentPosition)
+          direction = directions[Math.floor(Math.random() * directions.length)]
+        }
+
+        //char.currentPosition += direction
         cells[char.currentPosition].classList.add(char.className)
+      } else {
+        direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
 
@@ -165,7 +204,7 @@ function init() {
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
       cell = document.createElement('div')
-      //cell.textContent = i
+      cell.textContent = i
       grid.appendChild(cell)
       cell.id = i
       cells.push(cell)
@@ -287,7 +326,7 @@ function init() {
 
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 200)
+  const charMovement = setInterval(char.move, 50)
 }
 
 window.addEventListener('DOMContentLoaded', init)
