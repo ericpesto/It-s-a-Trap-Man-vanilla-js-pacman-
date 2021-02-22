@@ -37,6 +37,12 @@ function init() {
     currentPosition: 369,
     direction: 'right',
     class: 'player',
+    positionX: function() {
+      return Math.floor(player.currentPosition % width)
+    },
+    positionY: function() {
+      return player.currentPosition / width
+    },
     add(position) {
       cells[position].classList.add(player.class)
     },
@@ -44,6 +50,9 @@ function init() {
       cells[position].classList.remove(player.class)
     }
   }
+
+  console.log(player.positionX())
+  console.log(player.positionY())
 
   // * Ghosts
   // ? four ghosts as individual objects, each with uniq behaviours stored as methods that can be called back with conditoinal logic based on player movement.
@@ -280,6 +289,9 @@ function init() {
     removePellet(player.currentPosition)
     removeSuperPellet(player.currentPosition)
     handleScore() 
+
+    console.log(player.positionX())
+    console.log(player.positionY())
   }
 
   // * Call functions
