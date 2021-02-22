@@ -74,9 +74,9 @@ function init() {
       console.log('char removed')
       cells[position].classList.remove(char.className)
     },
-    move() {
+    move(cells) {
       const directions = [-1, +1, -width, +width]
-      let direction = directions[Math.ceil(Math.random() * directions.length)]
+      let direction = directions[Math.floor(Math.random() * directions.length)]
 
       if (!cells[char.currentPosition + direction].classList.contains(mazeClass)) {
         cells[char.currentPosition].classList.remove(char.className)
@@ -274,7 +274,7 @@ function init() {
     removeSuperPellet(playerCurrentPosition)
     handleScore() 
     gridCoordinates(playerCurrentPosition) 
-    char.move()
+    char.move(cells)
   }
 
   // * Call functions
