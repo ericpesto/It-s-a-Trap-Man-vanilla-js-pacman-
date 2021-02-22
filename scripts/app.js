@@ -23,12 +23,6 @@ function init() {
   const superPelletEatenClass = 'super-pellet-eaten'
   const pellets = []
   const superPellets = []
-  
-  // * Player Variables
-  const playerClass = 'player'
-  const playerStartPosition = 369
-  let playerCurrentPosition = 369
-  let playerDirection = 'right'
 
   // * Game state/logic variables
   let score = 0
@@ -36,18 +30,77 @@ function init() {
   const superPelletScoreValue = 50
   // let lives = 3
 
+  let player = {
+    name: 'Dave', //make it so user can add name to personalise experience
+    startPosition: 369,
+    currentPosition: 369,
+    direction: 'right',
+    class: 'player',
+    add(position) {
+      cells[position].classList.add(player.class)
+    },
+    remove(position){
+      cells[position].classList.remove(player.class)
+    },
+    move() {
+      const playerRelativePositionLeft = player.currentPosition - 1
+      const playerRelativePositionRight = player.currentPosition + 1
+      const playerRelativePositionUp = player.currentPosition - width
+      const playerRelativePositionDown = player.currentPosition + width
+  
+      player.remove(player.currentPosition)
+  
+      if (player.direction === 'right' && player.currentPosition % width !== width - 1 && !playerTrack.includes(playerRelativePositionRight)) {
+        player.currentPosition++
+        //console.log('Moving right')
+      } else if (player.direction === 'left' && player.currentPosition % width !== 0 && !playerTrack.includes(playerRelativePositionLeft)) {
+        player.currentPosition--
+        //console.log('Moving left')
+      } else if (player.direction === 'up' && player.currentPosition >= width && !playerTrack.includes(playerRelativePositionUp)) {
+        player.currentPosition -= width
+        //console.log('Moving up')
+      } else if (player.direction === 'down' && player.currentPosition + width <= width * width - 1 && !playerTrack.includes(playerRelativePositionDown)) {
+        player.currentPosition += width
+        //console.log('Moving down')
+      } else {
+        //console.log('Ouch! Wall!')
+      }
+      //console.log('playerPosition ->', playerCurrentPosition)
+  
+      // * Gateway logic 
+      // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
+      if (player.currentPosition === portalLocations[1]) {
+        player.currentPosition = portalLocations[0]
+        console.log('Player traveled through portal')
+      } else if (player.currentPosition === portalLocations[0]) {
+        player.currentPosition = portalLocations[1]
+        console.log('Player traveled through portal')
+      }
+  
+      // ! inititalize functions dependent on player movement here
+      player.add(player.currentPosition)
+      removePellet(player.currentPosition)
+      removeSuperPellet(player.currentPosition)
+      handleScore() 
+      //player.coordinates() 
+      //char.coordinates()
+    }
+  }
 
 
-  // ! Do I make a ghost class or individual objects for each ghost?
+
+  console.log('player x', player.coordinates)
+
+
   // * Ghosts
   // ? four ghosts as individual objects, each with uniq behaviours stored as methods that can be called back with conditoinal logic based on player movement.
-
   const char = {
     name: 'Char',
     className: 'char',
     startingPosition: 130,
     currentPosition: 130,
-    targetPosition: playerCurrentPosition,
+    targetPosition: 21,
+    //ghost coordinates here.
     chase() {
       // targets a target tile is clculated everytime before a decsiion to move is made
       // each ghost has uniqe behaviour/target tile based on player position
@@ -73,22 +126,50 @@ function init() {
       console.log('char removed')
       cells[position].classList.remove(char.className)
     },
+    coordinates() {
+      const positionX = Math.floor(char.currentPosition % width)
+      const positionY = char.currentPosition / width
+      let coordinates = []
+      coordinates = coordinates.concat(positionX, positionY)
+      //console.log('Char: positionCoordinates(x,y) ->', coordinates)
+      return coordinates
+    },
     move() {
-      const directions = [-1, +1, -width, +width]
-      let direction = directions[Math.floor(Math.random() * directions.length)]
+      // const ghostRelativePositionLeft = position - 1
+      // //console.log('ghostRelativePositionLeft wall?', mazeArray.includes(ghostRelativePositionLeft))
+      // const ghostRelativePositionRight = position + 1
+      // //console.log('ghostRelativePositionRight wall?', mazeArray.includes(ghostRelativePositionRight))
+      // const ghostRelativePositionUp = position - width
+      // //console.log('ghostRelativePositionUp wall?', mazeArray.includes(ghostRelativePositionUp))
+      // const ghostRelativePositionDown = position + width
+      // //console.log('ghostRelativePositionDown wall?', mazeArray.includes(ghostRelativePositionDown))
+      
+      // // const ghostDirections = [-1, +1, -width, +width]
+      // // let ghostDirection = ghostDirections[Math.floor(Math.random() * ghostDirections.length)]
+      // // console.log('ghostDirection', ghostDirection)
 
-      if (!mazeArray.includes(char.currentPosition + direction)) {
-        cells[char.currentPosition].classList.remove(char.className)
-        char.currentPosition += direction
-        cells[char.currentPosition].classList.add(char.className)
-      } else {
-        direction = directions[Math.ceil(Math.random() * directions.length)]
-      }
+      // const directions = [-1, +1, -width, +width]
+      // let direction = directions[Math.floor(Math.random() * directions.length)]
+
+      // if (!mazeArray.includes(ghostRelativePositionUp)) {
+      //   console.log('char moved up')
+      //   cells[position].classList.remove(char.className)
+      //   position -= width
+      //   cells[position].classList.add(char.className)
+      //   //add char class
+      // } 
+      
+      // if (!mazeArray.includes(ghostRelativePositionRight)) {
+      //   console.log('char moved right')
+      //   cells[position].classList.remove(char.className)
+      //   position += 1
+      //   cells[position].classList.add(char.className)
+      // }
     }
   }
   
   // * Make Grid
-  function createGrid(playerStartPosition) {
+  function createGrid() {
     for (let i = 0; i < cellCount; i++) {
       cell = document.createElement('div')
       //cell.textContent = i
@@ -103,7 +184,7 @@ function init() {
     }
 
     // * initiate player and ghosts here
-    addPlayer(playerStartPosition)
+    player.add(player.startPosition)
     char.add(char.startingPosition)
     
   }  
@@ -148,15 +229,6 @@ function init() {
     })
   }
 
-  // * Add player to grid on move
-  function addPlayer(position) {
-    cells[position].classList.add(playerClass)
-  }
-  
-  // * Remove player from grid on move
-  function removePlayer(position) {
-    cells[position].classList.remove(playerClass)
-  }
 
   // * Remove pellet on player movement
   function removePellet(playerPosition) {
@@ -199,88 +271,30 @@ function init() {
 
     // * player direction logic
     if (key === 39) {
-      playerDirection = 'right'
+      player.direction = 'right'
       console.log('player pressed right')
     } else if (key === 37) {
-      playerDirection = 'left'
+      player.direction = 'left'
       console.log('player pressed left')
     } else if (key === 38) {
-      playerDirection = 'up'
+      player.direction = 'up'
       console.log('player pressed up')
     } else if (key === 40) {
-      playerDirection = 'down'
+      player.direction = 'down'
       console.log('player pressed down')
     } else {
       console.log('invalid key')
     }
   }
 
-  function movePlayer() {
-    const playerRelativePositionLeft = playerCurrentPosition - 1
-    const playerRelativePositionRight = playerCurrentPosition + 1
-    const playerRelativePositionUp = playerCurrentPosition - width
-    const playerRelativePositionDown = playerCurrentPosition + width
-
-    removePlayer(playerCurrentPosition)
-
-    if (playerDirection === 'right' && playerCurrentPosition % width !== width - 1 && !playerTrack.includes(playerRelativePositionRight)) {
-      playerCurrentPosition++
-      //console.log('Moving right')
-    } else if (playerDirection === 'left' && playerCurrentPosition % width !== 0 && !playerTrack.includes(playerRelativePositionLeft)) {
-      playerCurrentPosition--
-      //console.log('Moving left')
-    } else if (playerDirection === 'up' && playerCurrentPosition >= width && !playerTrack.includes(playerRelativePositionUp)) {
-      playerCurrentPosition -= width
-      //console.log('Moving up')
-    } else if (playerDirection === 'down' && playerCurrentPosition + width <= width * width - 1 && !playerTrack.includes(playerRelativePositionDown)) {
-      playerCurrentPosition += width
-      //console.log('Moving down')
-    } else {
-      //console.log('Ouch! Wall!')
-    }
-
-    // * Gateway logic 
-    // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
-    if (playerCurrentPosition === portalLocations[1]) {
-      playerCurrentPosition = portalLocations[0]
-      console.log('Player traveled through portal')
-    } else if (playerCurrentPosition === portalLocations[0]) {
-      playerCurrentPosition = portalLocations[1]
-      console.log('Player traveled through portal')
-    }
-
-    //console.log('playerPosition ->', playerCurrentPosition)
-
-    // inititalize functions dependent on player movement
-    addPlayer(playerCurrentPosition)
-    removePellet(playerCurrentPosition)
-    removeSuperPellet(playerCurrentPosition)
-    handleScore() 
-    handleCoordinates(playerCurrentPosition) 
-  }
-
-  // * handle cooordinates
-
-  function handleCoordinates(position) {
-    const positionX = position % width
-    //console.log('positionX ->', positionX)
-    const positionY = position / width
-    //console.log('positionY ->', positionY)
-    let positionCoordinates = []
-    positionCoordinates = positionCoordinates.concat(positionX, positionY)
-    //console.log('positionCoordinates(x,y) ->', positionCoordinates)
-    return positionCoordinates
-  }
-
   // * Call functions
-  createGrid(playerStartPosition) 
+  createGrid(player.startPositiontartPosition) 
   
-
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
 
   // * Start timers
-  const playerMovement = setInterval(movePlayer, 300)
+  const playerMovement = setInterval(player.move, 300)
   const charMovement = setInterval(char.move, 200)
 }
 
