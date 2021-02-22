@@ -48,6 +48,50 @@ function init() {
     },
     remove(position){
       cells[position].classList.remove(player.class)
+    },
+    move() {
+      const playerRelativePositionLeft = player.currentPosition - 1
+      const playerRelativePositionRight = player.currentPosition + 1
+      const playerRelativePositionUp = player.currentPosition - width
+      const playerRelativePositionDown = player.currentPosition + width
+  
+      player.remove(player.currentPosition)
+  
+      if (player.direction === 'right' && player.currentPosition % width !== width - 1 && !playerTrack.includes(playerRelativePositionRight)) {
+        player.currentPosition++
+        //console.log('Moving right')
+      } else if (player.direction === 'left' && player.currentPosition % width !== 0 && !playerTrack.includes(playerRelativePositionLeft)) {
+        player.currentPosition--
+        //console.log('Moving left')
+      } else if (player.direction === 'up' && player.currentPosition >= width && !playerTrack.includes(playerRelativePositionUp)) {
+        player.currentPosition -= width
+        //console.log('Moving up')
+      } else if (player.direction === 'down' && player.currentPosition + width <= width * width - 1 && !playerTrack.includes(playerRelativePositionDown)) {
+        player.currentPosition += width
+        //console.log('Moving down')
+      } else {
+        //console.log('Ouch! Wall!')
+      }
+      //console.log('playerPosition ->', playerCurrentPosition)
+  
+      // * Gateway logic 
+      // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
+      if (player.currentPosition === portalLocations[1]) {
+        player.currentPosition = portalLocations[0]
+        console.log('Player traveled through portal')
+      } else if (player.currentPosition === portalLocations[0]) {
+        player.currentPosition = portalLocations[1]
+        console.log('Player traveled through portal')
+      }
+  
+      // ! inititalize functions dependent on player movement here
+      player.add(player.currentPosition)
+      removePellet(player.currentPosition)
+      removeSuperPellet(player.currentPosition)
+      handleScore() 
+  
+      console.log(player.positionX())
+      console.log(player.positionY())
     }
   }
 
@@ -249,51 +293,6 @@ function init() {
     }
   }
 
-  function playerMove() {
-    const playerRelativePositionLeft = player.currentPosition - 1
-    const playerRelativePositionRight = player.currentPosition + 1
-    const playerRelativePositionUp = player.currentPosition - width
-    const playerRelativePositionDown = player.currentPosition + width
-
-    player.remove(player.currentPosition)
-
-    if (player.direction === 'right' && player.currentPosition % width !== width - 1 && !playerTrack.includes(playerRelativePositionRight)) {
-      player.currentPosition++
-      //console.log('Moving right')
-    } else if (player.direction === 'left' && player.currentPosition % width !== 0 && !playerTrack.includes(playerRelativePositionLeft)) {
-      player.currentPosition--
-      //console.log('Moving left')
-    } else if (player.direction === 'up' && player.currentPosition >= width && !playerTrack.includes(playerRelativePositionUp)) {
-      player.currentPosition -= width
-      //console.log('Moving up')
-    } else if (player.direction === 'down' && player.currentPosition + width <= width * width - 1 && !playerTrack.includes(playerRelativePositionDown)) {
-      player.currentPosition += width
-      //console.log('Moving down')
-    } else {
-      //console.log('Ouch! Wall!')
-    }
-    //console.log('playerPosition ->', playerCurrentPosition)
-
-    // * Gateway logic 
-    // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
-    if (player.currentPosition === portalLocations[1]) {
-      player.currentPosition = portalLocations[0]
-      console.log('Player traveled through portal')
-    } else if (player.currentPosition === portalLocations[0]) {
-      player.currentPosition = portalLocations[1]
-      console.log('Player traveled through portal')
-    }
-
-    // ! inititalize functions dependent on player movement here
-    player.add(player.currentPosition)
-    removePellet(player.currentPosition)
-    removeSuperPellet(player.currentPosition)
-    handleScore() 
-
-    console.log(player.positionX())
-    console.log(player.positionY())
-  }
-
   // * Call functions
   createGrid(player.startPositiontartPosition) 
   
@@ -301,7 +300,7 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
 
   // * Start timers
-  const playerMovement = setInterval(playerMove, 300)
+  const playerMovement = setInterval(player.move, 300)
   const charMovement = setInterval(char.move, 200)
 }
 
