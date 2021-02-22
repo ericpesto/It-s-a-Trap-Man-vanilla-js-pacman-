@@ -76,20 +76,29 @@ body {
   background-color: rgba(0, 128, 0, 0);
 }
 
-.grid div.player {
-  background-image: url('../assets/images/curious-emoji.gif');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-size: 105%;
-  cursor: pointer;
-}
-
 .grid div.char {
   background-image: url('../assets/images/char-1.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   background-size: 110%;
+  cursor: pointer;
+}
+
+.grid div.noa {
+  background-image: url('../assets/images/teacher.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-size: 110%;
+  cursor: pointer;
+}
+
+.grid div.player {
+  background-image: url('../assets/images/curious-emoji.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-size: 105%;
   cursor: pointer;
 }

@@ -9,7 +9,7 @@ function init() {
   const cells = []
   let cell 
   const mazeClass = 'maze-wall'
-  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,128,131,133,134,136,137,139,140,148,151,159,160,161,162,163,164,165,166,168,169,170,171,173,174,175,176,177,178,179,200,201,202,203,204,206,208,209,210,211,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,247,248,249,250,251,252,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,327,328,329,330,331,332,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
+  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,133,134,136,137,139,140,159,160,161,162,163,164,165,166,173,174,175,176,177,178,179,200,201,202,203,204,206,208,209,210,211,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,247,248,249,250,251,252,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,327,328,329,330,331,332,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
   const ghostHomeArray = [129,130,149,150]
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
@@ -37,12 +37,6 @@ function init() {
     currentPosition: 369,
     direction: 'right',
     class: 'player',
-    positionX: function() {
-      return player.currentPosition % width
-    },
-    positionY: function() {
-      return player.currentPosition / width
-    },
     add(position) {
       cells[position].classList.add(player.class)
     },
@@ -100,13 +94,6 @@ function init() {
     className: 'char',
     startingPosition: 150,
     currentPosition: 150,
-    targetPosition: 21,
-    positionX: function() {
-      return char.currentPosition % width
-    },
-    positionY: function() {
-      return char.currentPosition / width
-    },
     //ghost coordinates here.
     chase() {
       // targets a target tile is clculated everytime before a decsiion to move is made
@@ -134,60 +121,92 @@ function init() {
       cells[position].classList.remove(char.className)
     },
     move() {
-      //console.log('CHAR ->',char.positionX(), char.positionY())
-      //console.log('PLAYER ->', player.positionX(), player.positionY())
-
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      
-      // function getNextMoveCoordinates(nextCell) {
-      //   return [Math.floor(nextCell % width), nextCell / width]
-      // }
-
       if (!mazeArray.includes(char.currentPosition + direction)) {
-        console.log(direction)
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
         cells[char.currentPosition].classList.add(char.className)
-  
-      //   const charCoordinates = [char.positionX(), char.positionY()]
-      //   //console.log(charCoordinates)
-      //   const playerCoordinates = [player.positionX(), player.positionY()]
-      //   const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
-      //   //console.log('next tile ->', charNextMoveCoordinates)
-  
-      //   const closerX = function() {
-      //     if ((charNextMoveCoordinates[0] - playerCoordinates[0]) > (charCoordinates[0] - playerCoordinates[0])) {
-      //       return true
-      //     } else {
-      //       return false
-      //     }
-      //   }
-  
-      //   const closerY = function() {
-      //     if ((charNextMoveCoordinates[1] - playerCoordinates[1]) > (charCoordinates[1] - playerCoordinates[1])) {
-      //       return true
-      //     } else {
-      //       return false
-      //     }
-      //   }
-  
-  
-      //   if (closerY() || closerX()) {
-      //     char.currentPosition += direction
-      //     char.add(char.currentPosition)
-      //     //console.log('closer')
-      //   } else {
-      //     char.add(char.currentPosition)
-      //     direction = directions[Math.floor(Math.random() * directions.length)]
-      //   }
-  
-      //   //char.currentPosition += direction
-      //   cells[char.currentPosition].classList.add(char.className)
-       } else {
-         direction = directions[Math.floor(Math.random() * directions.length)]
+      } else {
+        direction = directions[Math.floor(Math.random() * directions.length)]
       }
+
+      //detect collision with player
+      if (cells[char.currentPosition].classList.contains(player.class)) {
+        // remove player life
+        // send player back to starting position.
+        // if player life is less that 3, game over
+        console.log('char caught player')
+      }
+
+      // sort out logic for when superpellet eaten
+
+      // * Gateway logic 
+      // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
+      // if (char.currentPosition === portalLocations[1]) {
+      //   char.currentPosition = portalLocations[0]
+      //   console.log('Player traveled through portal')
+      // } else if (char.currentPosition === portalLocations[0]) {
+      //   char.currentPosition = portalLocations[1]
+      //   console.log('Player traveled through portal')
+      // }
+
+    }
+  }
+  
+  const noa = {
+    name: 'Noa',
+    className: 'noa',
+    startingPosition: 129,
+    currentPosition: 129,
+    //ghost coordinates here.
+    chase() {
+      // targets a target tile is clculated everytime before a decsiion to move is made
+      // each ghost has uniqe behaviour/target tile based on player position
+    },
+    scatter() {
+      // targets specific tile in the corner of maze, never changes
+    }, 
+    frightned() {
+      // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
+
+      // if player eats frightened ghost, they will endter eaten mode
+    }, 
+    eaten() {
+      // ghost targets ghost home/starting position
+      // once home they revert to scatter or chase mode
+    },
+    add(position) {
+      console.log('noa added')
+      //console.log(position)
+      cells[position].classList.add(noa.className)
+    },
+    remove(position) {
+      console.log('noa removed')
+      cells[position].classList.remove(noa.className)
+    },
+    move() {
+      const directions = [-1, +1, -width, +width]
+      let direction = directions[Math.floor(Math.random() * directions.length)]
+      
+      if (!mazeArray.includes(noa.currentPosition + direction)) {
+        cells[noa.currentPosition].classList.remove(noa.className)
+        noa.currentPosition += direction
+        cells[noa.currentPosition].classList.add(noa.className)
+      } else {
+        direction = directions[Math.floor(Math.random() * directions.length)]
+      }
+
+      //detect collision with player
+      if (cells[noa.currentPosition].classList.contains(player.class)) {
+        // remove player life
+        // send player back to starting position.
+        // if player life is less that 3, game over
+        console.log('noa caught player')
+      }
+
+      // sort out logic for when superpellet eaten
 
       // * Gateway logic 
       // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
@@ -203,8 +222,6 @@ function init() {
     }
   }
 
-  
-  
   // * Make Grid
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
@@ -223,6 +240,7 @@ function init() {
     // * initiate player and ghosts here
     player.add(player.startPosition)
     char.add(char.startingPosition)
+    noa.add(noa.startingPosition)
   
   }  
 
@@ -308,18 +326,18 @@ function init() {
     // * player direction logic
     if (key === 39) {
       player.direction = 'right'
-      console.log('player pressed right')
+      //console.log('player pressed right')
     } else if (key === 37) {
       player.direction = 'left'
-      console.log('player pressed left')
+      //console.log('player pressed left')
     } else if (key === 38) {
       player.direction = 'up'
-      console.log('player pressed up')
+      //console.log('player pressed up')
     } else if (key === 40) {
       player.direction = 'down'
-      console.log('player pressed down')
+      //console.log('player pressed down')
     } else {
-      console.log('invalid key')
+      //console.log('invalid key')
     }
   }
 
@@ -332,6 +350,7 @@ function init() {
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
   const charMovement = setInterval(char.move, 300)
+  const noaMovement = setInterval(noa.move, 300)
 }
 
 window.addEventListener('DOMContentLoaded', init)
