@@ -74,7 +74,7 @@ function init() {
       console.log('char removed')
       cells[position].classList.remove(char.className)
     },
-    move(cells) {
+    move() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
 
@@ -87,6 +87,19 @@ function init() {
       }
 
     }
+    // move(cells) {
+    //   const directions = [-1, +1, -width, +width]
+    //   let direction = directions[Math.floor(Math.random() * directions.length)]
+
+    //   if (!cells[char.currentPosition + direction].classList.contains(mazeClass)) {
+    //     cells[char.currentPosition].classList.remove(char.className)
+    //     char.currentPosition += direction
+    //     cells[char.currentPosition].classList.add(char.className)
+    //   } else {
+    //     direction = directions[Math.ceil(Math.random() * directions.length)]
+    //   }
+
+    // }
   }
   
   // * Make Grid
@@ -274,7 +287,7 @@ function init() {
     removeSuperPellet(playerCurrentPosition)
     handleScore() 
     gridCoordinates(playerCurrentPosition) 
-    char.move(cells)
+    char.move()
   }
 
   // * Call functions
