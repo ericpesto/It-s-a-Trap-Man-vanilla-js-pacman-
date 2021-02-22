@@ -14,6 +14,7 @@ function init() {
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
   const superPelletLocations = [84,95,276,263]
+  const ghostTrack = mazeArray
   const playerTrack = mazeArray.concat(ghostHomeArray)
   const pelletTrack = mazeArray.concat(ghostHomeArray, portalLocations, superPelletLocations)
 
@@ -36,16 +37,18 @@ function init() {
   const superPelletScoreValue = 50
   // let lives = 3
 
-  
+
+
   // ! Do I make a ghost class or individual objects for each ghost?
   // * Ghosts
   // ? four ghosts as individual objects, each with uniq behaviours stored as methods that can be called back with conditoinal logic based on player movement.
+
   const char = {
     name: 'Char',
     className: 'char',
     startingPosition: 130,
     currentPosition: 130,
-    targetPosition: 229,
+    targetPosition: playerCurrentPosition,
     chase() {
       // targets a target tile is clculated everytime before a decsiion to move is made
       // each ghost has uniqe behaviour/target tile based on player position
@@ -64,20 +67,28 @@ function init() {
     },
     add(position) {
       console.log('char added')
-      console.log(position)
+      //console.log(position)
       cells[position].classList.add(char.className)
     },
-    remove() {
-
+    remove(position) {
+      console.log('char removed')
+      cells[position].classList.remove(char.className)
     },
     move() {
-      // determine direction options with random? (nahh too easy)
-      // use some sort of method to find shortest possible route to target
- 
+      const directions = [-1, +1, -width, +width]
+      let direction = directions[Math.ceil(Math.random() * directions.length)]
+
+      if (!cells[char.currentPosition + direction].classList.contains(mazeClass)) {
+        cells[char.currentPosition].classList.remove(char.className)
+        char.currentPosition += direction
+        cells[char.currentPosition].classList.add(char.className)
+      } else {
+        direction = directions[Math.ceil(Math.random() * directions.length)]
+      }
 
     }
   }
-
+  
   // * Make Grid
   function createGrid(playerStartPosition) {
     for (let i = 0; i < cellCount; i++) {
@@ -97,8 +108,8 @@ function init() {
     addPlayer(playerStartPosition)
     char.add(char.startingPosition)
     
-  }
-  
+  }  
+
   function addMaze(gridIndex) {
     if (mazeArray.includes(Number(gridIndex.id))) {
       gridIndex.classList.add(mazeClass)
@@ -185,6 +196,17 @@ function init() {
     scoreDisplay.innerText = score
   }
 
+  function gridCoordinates(position) {
+    const positionX = position % width
+    //console.log('positionX ->', positionX)
+    const positionY = position / width
+    //console.log('positionY ->', positionY)
+    let positionCoordinates = []
+    positionCoordinates = positionCoordinates.concat(positionX, positionY)
+    console.log('positionCoordinates(x,y) ->', positionCoordinates)
+    return positionCoordinates
+  }
+
   function handleKeyUp(event) {
     const key = event.keyCode
 
@@ -241,7 +263,7 @@ function init() {
       console.log('Player traveled through portal')
     }
 
-    console.log('playerPosition ->', playerCurrentPosition)
+    //console.log('playerPosition ->', playerCurrentPosition)
 
     // * WHERE MOST FUNCTIONs WILL BE CALLED
 
@@ -252,21 +274,12 @@ function init() {
     removeSuperPellet(playerCurrentPosition)
     handleScore() 
     gridCoordinates(playerCurrentPosition) 
-  }
-  
-  function gridCoordinates(position) {
-    const positionX = position % width
-    //console.log('positionX ->', positionX)
-    const positionY = position / width
-    //console.log('positionY ->', positionY)
-    let positionCoordinates = []
-    positionCoordinates = positionCoordinates.concat(positionX, positionY)
-    console.log('positionCoordinates(x,y) ->', positionCoordinates)
-
+    char.move()
   }
 
   // * Call functions
   createGrid(playerStartPosition) 
+  
 
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
