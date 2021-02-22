@@ -30,9 +30,9 @@ function init() {
   const superPelletScoreValue = 50
   // let lives = 3
 
-
-  let player = {
-    name: 'Dave', //make it so user can add name to personalise experience
+  // * Player object
+  const player = {
+    name: 'Dave', // ! make it so user can add name to personalise experience
     startPosition: 369,
     currentPosition: 369,
     direction: 'right',
@@ -89,14 +89,9 @@ function init() {
       removePellet(player.currentPosition)
       removeSuperPellet(player.currentPosition)
       handleScore() 
-  
-      console.log(player.positionX())
-      console.log(player.positionY())
     }
   }
 
-  console.log(player.positionX())
-  console.log(player.positionY())
 
   // * Ghosts
   // ? four ghosts as individual objects, each with uniq behaviours stored as methods that can be called back with conditoinal logic based on player movement.
@@ -106,6 +101,12 @@ function init() {
     startingPosition: 130,
     currentPosition: 130,
     targetPosition: 21,
+    positionX: function() {
+      return Math.floor(char.currentPosition % width)
+    },
+    positionY: function() {
+      return char.currentPosition / width
+    },
     //ghost coordinates here.
     chase() {
       // targets a target tile is clculated everytime before a decsiion to move is made
@@ -132,45 +133,30 @@ function init() {
       console.log('char removed')
       cells[position].classList.remove(char.className)
     },
-    coordinates() {
-      const positionX = Math.floor(char.currentPosition % width)
-      const positionY = char.currentPosition / width
-      let coordinates = []
-      coordinates = coordinates.concat(positionX, positionY)
-      //console.log('Char: positionCoordinates(x,y) ->', coordinates)
-      return coordinates
-    },
     move() {
-      // const ghostRelativePositionLeft = position - 1
-      // //console.log('ghostRelativePositionLeft wall?', mazeArray.includes(ghostRelativePositionLeft))
-      // const ghostRelativePositionRight = position + 1
-      // //console.log('ghostRelativePositionRight wall?', mazeArray.includes(ghostRelativePositionRight))
-      // const ghostRelativePositionUp = position - width
-      // //console.log('ghostRelativePositionUp wall?', mazeArray.includes(ghostRelativePositionUp))
-      // const ghostRelativePositionDown = position + width
-      // //console.log('ghostRelativePositionDown wall?', mazeArray.includes(ghostRelativePositionDown))
-      
-      // // const ghostDirections = [-1, +1, -width, +width]
-      // // let ghostDirection = ghostDirections[Math.floor(Math.random() * ghostDirections.length)]
-      // // console.log('ghostDirection', ghostDirection)
+      console.log('CHAR ->',char.positionX(), char.positionY())
+      console.log('PLAYER ->', player.positionX(), player.positionY())
 
-      // const directions = [-1, +1, -width, +width]
-      // let direction = directions[Math.floor(Math.random() * directions.length)]
+      const directions = [-1, +1, -width, +width]
+      let direction = directions[Math.floor(Math.random() * directions.length)]
 
-      // if (!mazeArray.includes(ghostRelativePositionUp)) {
-      //   console.log('char moved up')
-      //   cells[position].classList.remove(char.className)
-      //   position -= width
-      //   cells[position].classList.add(char.className)
-      //   //add char class
-      // } 
-      
-      // if (!mazeArray.includes(ghostRelativePositionRight)) {
-      //   console.log('char moved right')
-      //   cells[position].classList.remove(char.className)
-      //   position += 1
-      //   cells[position].classList.add(char.className)
-      // }
+      if (!mazeArray.includes(char.currentPosition + direction)) {
+        cells[char.currentPosition].classList.remove(char.className)
+        char.currentPosition += direction
+        cells[char.currentPosition].classList.add(char.className)
+      }
+
+
+
+      // char coordinates
+      // player coordinates
+      // char next coordinates
+
+      //determine closer x
+      //determine closer y
+
+
+
     }
   }
 
