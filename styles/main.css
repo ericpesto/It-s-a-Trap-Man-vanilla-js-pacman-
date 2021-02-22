@@ -14,7 +14,7 @@ body {
 
 
 .grid-wrapper {
-  min-height: 95vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -87,6 +87,24 @@ body {
 
 .grid div.noa {
   background-image: url('../assets/images/teacher.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-size: 110%;
+  cursor: pointer;
+}
+
+.grid div.jos {
+  background-image: url('../assets/images/mage.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-size: 110%;
+  cursor: pointer;
+}
+
+.grid div.guy {
+  background-image: url('../assets/images/guy.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

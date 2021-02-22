@@ -9,7 +9,7 @@ function init() {
   const cells = []
   let cell 
   const mazeClass = 'maze-wall'
-  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,133,134,136,137,139,140,159,160,161,162,163,164,165,166,173,174,175,176,177,178,179,200,201,202,203,204,206,208,209,210,211,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,247,248,249,250,251,252,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,327,328,329,330,331,332,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
+  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,127,132,133,134,136,137,139,140,159,160,161,162,163,164,165,166,173,174,175,176,177,178,179,200,201,202,203,204,206,208,209,210,211,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,247,248,249,250,251,252,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
   const ghostHomeArray = [129,130,149,150]
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
@@ -222,6 +222,142 @@ function init() {
     }
   }
 
+
+  const jos = {
+    name: 'Jos',
+    className: 'jos',
+    startingPosition: 130,
+    currentPosition: 130,
+    //ghost coordinates here.
+    chase() {
+      // targets a target tile is clculated everytime before a decsiion to move is made
+      // each ghost has uniqe behaviour/target tile based on player position
+    },
+    scatter() {
+      // targets specific tile in the corner of maze, never changes
+    }, 
+    frightned() {
+      // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
+
+      // if player eats frightened ghost, they will endter eaten mode
+    }, 
+    eaten() {
+      // ghost targets ghost home/starting position
+      // once home they revert to scatter or chase mode
+    },
+    add(position) {
+      console.log('jos added')
+      //console.log(position)
+      cells[position].classList.add(jos.className)
+    },
+    remove(position) {
+      console.log('jos removed')
+      cells[position].classList.remove(jos.className)
+    },
+    move() {
+      const directions = [-1, +1, -width, +width]
+      let direction = directions[Math.floor(Math.random() * directions.length)]
+      
+      if (!mazeArray.includes(jos.currentPosition + direction)) {
+        cells[jos.currentPosition].classList.remove(jos.className)
+        jos.currentPosition += direction
+        cells[jos.currentPosition].classList.add(jos.className)
+      } else {
+        direction = directions[Math.floor(Math.random() * directions.length)]
+      }
+
+      //detect collision with player
+      if (cells[jos.currentPosition].classList.contains(player.class)) {
+        // remove player life
+        // send player back to starting position.
+        // if player life is less that 3, game over
+        console.log('jos caught player')
+      }
+
+      // sort out logic for when superpellet eaten
+
+      // * Gateway logic 
+      // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
+      // if (char.currentPosition === portalLocations[1]) {
+      //   char.currentPosition = portalLocations[0]
+      //   console.log('Player traveled through portal')
+      // } else if (char.currentPosition === portalLocations[0]) {
+      //   char.currentPosition = portalLocations[1]
+      //   console.log('Player traveled through portal')
+      // }
+
+
+    }
+  }
+
+
+  const guy = {
+    name: 'Guy',
+    className: 'guy',
+    startingPosition: 149,
+    currentPosition: 149,
+    //ghost coordinates here.
+    chase() {
+      // targets a target tile is clculated everytime before a decsiion to move is made
+      // each ghost has uniqe behaviour/target tile based on player position
+    },
+    scatter() {
+      // targets specific tile in the corner of maze, never changes
+    }, 
+    frightned() {
+      // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
+
+      // if player eats frightened ghost, they will endter eaten mode
+    }, 
+    eaten() {
+      // ghost targets ghost home/starting position
+      // once home they revert to scatter or chase mode
+    },
+    add(position) {
+      console.log('guy added')
+      //console.log(position)
+      cells[position].classList.add(guy.className)
+    },
+    remove(position) {
+      console.log('guy removed')
+      cells[position].classList.remove(guy.className)
+    },
+    move() {
+      const directions = [-1, +1, -width, +width]
+      let direction = directions[Math.floor(Math.random() * directions.length)]
+      
+      if (!mazeArray.includes(guy.currentPosition + direction)) {
+        cells[guy.currentPosition].classList.remove(guy.className)
+        guy.currentPosition += direction
+        cells[guy.currentPosition].classList.add(guy.className)
+      } else {
+        direction = directions[Math.floor(Math.random() * directions.length)]
+      }
+
+      //detect collision with player
+      if (cells[guy.currentPosition].classList.contains(player.class)) {
+        // remove player life
+        // send player back to starting position.
+        // if player life is less that 3, game over
+        console.log('guy caught player')
+      }
+
+      // sort out logic for when superpellet eaten
+
+      // * Gateway logic 
+      // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
+      // if (char.currentPosition === portalLocations[1]) {
+      //   char.currentPosition = portalLocations[0]
+      //   console.log('Player traveled through portal')
+      // } else if (char.currentPosition === portalLocations[0]) {
+      //   char.currentPosition = portalLocations[1]
+      //   console.log('Player traveled through portal')
+      // }
+
+
+    }
+  }
+
   // * Make Grid
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
@@ -241,6 +377,8 @@ function init() {
     player.add(player.startPosition)
     char.add(char.startingPosition)
     noa.add(noa.startingPosition)
+    jos.add(jos.startingPosition)
+    guy.add(guy.startingPosition)
   
   }  
 
@@ -351,6 +489,8 @@ function init() {
   const playerMovement = setInterval(player.move, 300)
   const charMovement = setInterval(char.move, 300)
   const noaMovement = setInterval(noa.move, 300)
+  const josMovement = setInterval(jos.move, 300)
+  const guyMovement = setInterval(guy.move, 300)
 }
 
 window.addEventListener('DOMContentLoaded', init)
