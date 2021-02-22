@@ -38,7 +38,7 @@ function init() {
     direction: 'right',
     class: 'player',
     positionX: function() {
-      return Math.floor(player.currentPosition % width)
+      return player.currentPosition % width
     },
     positionY: function() {
       return player.currentPosition / width
@@ -54,26 +54,26 @@ function init() {
       const playerRelativePositionRight = player.currentPosition + 1
       const playerRelativePositionUp = player.currentPosition - width
       const playerRelativePositionDown = player.currentPosition + width
-  
+
       player.remove(player.currentPosition)
-  
+
       if (player.direction === 'right' && player.currentPosition % width !== width - 1 && !playerTrack.includes(playerRelativePositionRight)) {
         player.currentPosition++
-        //console.log('Moving right')
+      //console.log('Moving right')
       } else if (player.direction === 'left' && player.currentPosition % width !== 0 && !playerTrack.includes(playerRelativePositionLeft)) {
         player.currentPosition--
-        //console.log('Moving left')
+      //console.log('Moving left')
       } else if (player.direction === 'up' && player.currentPosition >= width && !playerTrack.includes(playerRelativePositionUp)) {
         player.currentPosition -= width
-        //console.log('Moving up')
+      //console.log('Moving up')
       } else if (player.direction === 'down' && player.currentPosition + width <= width * width - 1 && !playerTrack.includes(playerRelativePositionDown)) {
         player.currentPosition += width
-        //console.log('Moving down')
+      //console.log('Moving down')
       } else {
-        //console.log('Ouch! Wall!')
+      //console.log('Ouch! Wall!')
       }
       //console.log('playerPosition ->', playerCurrentPosition)
-  
+
       // * Gateway logic 
       // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
       if (player.currentPosition === portalLocations[1]) {
@@ -83,7 +83,7 @@ function init() {
         player.currentPosition = portalLocations[1]
         console.log('Player traveled through portal')
       }
-  
+
       // ! inititalize functions dependent on player movement here
       player.add(player.currentPosition)
       removePellet(player.currentPosition)
@@ -98,11 +98,11 @@ function init() {
   const char = {
     name: 'Char',
     className: 'char',
-    startingPosition: 130,
-    currentPosition: 130,
+    startingPosition: 150,
+    currentPosition: 150,
     targetPosition: 21,
     positionX: function() {
-      return Math.floor(char.currentPosition % width)
+      return char.currentPosition % width
     },
     positionY: function() {
       return char.currentPosition / width
@@ -134,77 +134,82 @@ function init() {
       cells[position].classList.remove(char.className)
     },
     move() {
-      console.log('CHAR ->',char.positionX(), char.positionY())
-      console.log('PLAYER ->', player.positionX(), player.positionY())
+      //console.log('CHAR ->',char.positionX(), char.positionY())
+      //console.log('PLAYER ->', player.positionX(), player.positionY())
 
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
-
-      function getNextMoveCoordinates(nextCell) {
-        return [Math.floor(nextCell % width), nextCell / width]
-      }
+      
+      
+      // function getNextMoveCoordinates(nextCell) {
+      //   return [Math.floor(nextCell % width), nextCell / width]
+      // }
 
       if (!mazeArray.includes(char.currentPosition + direction)) {
+        console.log(direction)
         cells[char.currentPosition].classList.remove(char.className)
-
-        const charCoordinates = [char.positionX(), char.positionY()]
-        console.log(charCoordinates)
-        const playerCoordinates = [player.positionX(), player.positionY()]
-        const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
-        console.log('next tile ->', charNextMoveCoordinates)
-
-        const closerX = function() {
-          if ((charNextMoveCoordinates[0] - playerCoordinates[0]) > (charCoordinates[0] - playerCoordinates[0])) {
-            return true
-          } else {
-            return false
-          }
-        }
-
-        const closerY = function() {
-          if ((charNextMoveCoordinates[1] - playerCoordinates[1]) > (charCoordinates[1] - playerCoordinates[1])) {
-            return true
-          } else {
-            return false
-          }
-        }
-
-
-        if (closerY() || closerX()) {
-          char.currentPosition += direction
-          char.add(char.currentPosition)
-          console.log('closer')
-        } else {
-          char.add(char.currentPosition)
-          direction = directions[Math.floor(Math.random() * directions.length)]
-        }
-
-        //char.currentPosition += direction
+        char.currentPosition += direction
         cells[char.currentPosition].classList.add(char.className)
-      } else {
-        direction = directions[Math.floor(Math.random() * directions.length)]
+  
+      //   const charCoordinates = [char.positionX(), char.positionY()]
+      //   //console.log(charCoordinates)
+      //   const playerCoordinates = [player.positionX(), player.positionY()]
+      //   const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
+      //   //console.log('next tile ->', charNextMoveCoordinates)
+  
+      //   const closerX = function() {
+      //     if ((charNextMoveCoordinates[0] - playerCoordinates[0]) > (charCoordinates[0] - playerCoordinates[0])) {
+      //       return true
+      //     } else {
+      //       return false
+      //     }
+      //   }
+  
+      //   const closerY = function() {
+      //     if ((charNextMoveCoordinates[1] - playerCoordinates[1]) > (charCoordinates[1] - playerCoordinates[1])) {
+      //       return true
+      //     } else {
+      //       return false
+      //     }
+      //   }
+  
+  
+      //   if (closerY() || closerX()) {
+      //     char.currentPosition += direction
+      //     char.add(char.currentPosition)
+      //     //console.log('closer')
+      //   } else {
+      //     char.add(char.currentPosition)
+      //     direction = directions[Math.floor(Math.random() * directions.length)]
+      //   }
+  
+      //   //char.currentPosition += direction
+      //   cells[char.currentPosition].classList.add(char.className)
+       } else {
+         direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
-
-
-      // char coordinates
-      // player coordinates
-      // char next coordinates
-
-      //determine closer x
-      //determine closer y
-
+      // * Gateway logic 
+      // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
+      // if (char.currentPosition === portalLocations[1]) {
+      //   char.currentPosition = portalLocations[0]
+      //   console.log('Player traveled through portal')
+      // } else if (char.currentPosition === portalLocations[0]) {
+      //   char.currentPosition = portalLocations[1]
+      //   console.log('Player traveled through portal')
+      // }
 
 
     }
   }
 
   
+  
   // * Make Grid
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
       cell = document.createElement('div')
-      cell.textContent = i
+      //cell.textContent = i
       grid.appendChild(cell)
       cell.id = i
       cells.push(cell)
@@ -326,7 +331,7 @@ function init() {
 
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 50)
+  const charMovement = setInterval(char.move, 300)
 }
 
 window.addEventListener('DOMContentLoaded', init)
