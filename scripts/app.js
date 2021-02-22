@@ -14,7 +14,6 @@ function init() {
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
   const superPelletLocations = [84,95,276,263]
-  const ghostTrack = mazeArray
   const playerTrack = mazeArray.concat(ghostHomeArray)
   const pelletTrack = mazeArray.concat(ghostHomeArray, portalLocations, superPelletLocations)
 
@@ -78,7 +77,8 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
 
-      if (!cells[char.currentPosition + direction].classList.contains(mazeClass)) {
+      //if (!cells[char.currentPosition + direction].classList.contains(mazeClass)) {
+      if (!mazeArray.includes(char.currentPosition + direction)) {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
         cells[char.currentPosition].classList.add(char.className)
@@ -252,7 +252,7 @@ function init() {
 
     //console.log('playerPosition ->', playerCurrentPosition)
 
-    // inititalize functions tied/dependent om player movement's set interval
+    // inititalize functions dependent on player movement
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
     removeSuperPellet(playerCurrentPosition)
