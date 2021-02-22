@@ -85,21 +85,7 @@ function init() {
       } else {
         direction = directions[Math.ceil(Math.random() * directions.length)]
       }
-
     }
-    // move(cells) {
-    //   const directions = [-1, +1, -width, +width]
-    //   let direction = directions[Math.floor(Math.random() * directions.length)]
-
-    //   if (!cells[char.currentPosition + direction].classList.contains(mazeClass)) {
-    //     cells[char.currentPosition].classList.remove(char.className)
-    //     char.currentPosition += direction
-    //     cells[char.currentPosition].classList.add(char.className)
-    //   } else {
-    //     direction = directions[Math.ceil(Math.random() * directions.length)]
-    //   }
-
-    // }
   }
   
   // * Make Grid
@@ -203,21 +189,10 @@ function init() {
     const eatenSuperPellets = document.getElementsByClassName(superPelletEatenClass)
     const numberOfSuperPelletsEaten = eatenSuperPellets.length
 
-    console.log('pellets eaten ->', numberOfPelletsEaten)
+    //console.log('pellets eaten ->', numberOfPelletsEaten)
     score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue)
-    console.log('score', score)
+    //console.log('score', score)
     scoreDisplay.innerText = score
-  }
-
-  function gridCoordinates(position) {
-    const positionX = position % width
-    //console.log('positionX ->', positionX)
-    const positionY = position / width
-    //console.log('positionY ->', positionY)
-    let positionCoordinates = []
-    positionCoordinates = positionCoordinates.concat(positionX, positionY)
-    console.log('positionCoordinates(x,y) ->', positionCoordinates)
-    return positionCoordinates
   }
 
   function handleKeyUp(event) {
@@ -248,26 +223,25 @@ function init() {
     const playerRelativePositionDown = playerCurrentPosition + width
 
     removePlayer(playerCurrentPosition)
-    //char.remove(char.currentPosition)
 
     if (playerDirection === 'right' && playerCurrentPosition % width !== width - 1 && !playerTrack.includes(playerRelativePositionRight)) {
       playerCurrentPosition++
-      console.log('Moving right')
+      //console.log('Moving right')
     } else if (playerDirection === 'left' && playerCurrentPosition % width !== 0 && !playerTrack.includes(playerRelativePositionLeft)) {
       playerCurrentPosition--
-      console.log('Moving left')
+      //console.log('Moving left')
     } else if (playerDirection === 'up' && playerCurrentPosition >= width && !playerTrack.includes(playerRelativePositionUp)) {
       playerCurrentPosition -= width
-      console.log('Moving up')
+      //console.log('Moving up')
     } else if (playerDirection === 'down' && playerCurrentPosition + width <= width * width - 1 && !playerTrack.includes(playerRelativePositionDown)) {
       playerCurrentPosition += width
-      console.log('Moving down')
+      //console.log('Moving down')
     } else {
-      console.log('Ouch! Wall!')
+      //console.log('Ouch! Wall!')
     }
 
     // * Gateway logic 
-    // ? BONUS: Add two more gateways and have player come out of random one?
+    // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
     if (playerCurrentPosition === portalLocations[1]) {
       playerCurrentPosition = portalLocations[0]
       console.log('Player traveled through portal')
@@ -278,16 +252,25 @@ function init() {
 
     //console.log('playerPosition ->', playerCurrentPosition)
 
-    // * WHERE MOST FUNCTIONs WILL BE CALLED
-
-
-    //char.add(char.currentPosition)
+    // inititalize functions tied/dependent om player movement's set interval
     addPlayer(playerCurrentPosition)
     removePellet(playerCurrentPosition)
     removeSuperPellet(playerCurrentPosition)
     handleScore() 
-    gridCoordinates(playerCurrentPosition) 
-    char.move()
+    handleCoordinates(playerCurrentPosition) 
+  }
+
+  // * handle cooordinates
+
+  function handleCoordinates(position) {
+    const positionX = position % width
+    //console.log('positionX ->', positionX)
+    const positionY = position / width
+    //console.log('positionY ->', positionY)
+    let positionCoordinates = []
+    positionCoordinates = positionCoordinates.concat(positionX, positionY)
+    //console.log('positionCoordinates(x,y) ->', positionCoordinates)
+    return positionCoordinates
   }
 
   // * Call functions
@@ -298,10 +281,9 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
 
   // * Start timers
-  const playerDirectionState = setInterval(movePlayer, 300)
+  const playerMovement = setInterval(movePlayer, 300)
+  const charMovement = setInterval(char.move, 200)
 }
 
 window.addEventListener('DOMContentLoaded', init)
 
-
-//NEED TO ADD SUPERPELLETS AND GHOSTS
