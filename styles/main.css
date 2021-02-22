@@ -21,6 +21,12 @@ body {
   align-items: center;
 }
 
+.ui-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
 .grid {
   align-items: center;
   box-shadow: 0px 0px 10px 0 rgba(136, 66, 19, 0.788);

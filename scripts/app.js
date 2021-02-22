@@ -2,6 +2,7 @@ function init() {
   // * Global Variables
   const grid = document.querySelector('.grid')
   const scoreDisplay = document.querySelector('.score')
+  const livesDisplay = document.querySelector('.lives')
   
   // * Grid variables
   const width = 20
@@ -28,7 +29,6 @@ function init() {
   let score = 0
   const pelletScoreValue = 10
   const superPelletScoreValue = 50
-  // let lives = 3
 
   // * Player object
   const player = {
@@ -37,6 +37,7 @@ function init() {
     currentPosition: 369,
     direction: 'right',
     class: 'player',
+    lives: 3,
     add(position) {
       cells[position].classList.add(player.class)
     },
@@ -94,23 +95,6 @@ function init() {
     className: 'char',
     startingPosition: 150,
     currentPosition: 150,
-    //ghost coordinates here.
-    chase() {
-      // targets a target tile is clculated everytime before a decsiion to move is made
-      // each ghost has uniqe behaviour/target tile based on player position
-    },
-    scatter() {
-      // targets specific tile in the corner of maze, never changes
-    }, 
-    frightned() {
-      // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
-
-      // if player eats frightened ghost, they will endter eaten mode
-    }, 
-    eaten() {
-      // ghost targets ghost home/starting position
-      // once home they revert to scatter or chase mode
-    },
     add(position) {
       console.log('char added')
       //console.log(position)
@@ -134,24 +118,14 @@ function init() {
 
       //detect collision with player
       if (cells[char.currentPosition].classList.contains(player.class)) {
-        // remove player life
-        // send player back to starting position.
+        player.lives --
+        livesDisplay.innerText = player.lives
+        player.remove(player.currentPosition)
+        player.currentPosition = player.startPosition
         // if player life is less that 3, game over
         console.log('char caught player')
       }
-
       // sort out logic for when superpellet eaten
-
-      // * Gateway logic 
-      // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
-      // if (char.currentPosition === portalLocations[1]) {
-      //   char.currentPosition = portalLocations[0]
-      //   console.log('Player traveled through portal')
-      // } else if (char.currentPosition === portalLocations[0]) {
-      //   char.currentPosition = portalLocations[1]
-      //   console.log('Player traveled through portal')
-      // }
-
     }
   }
   
@@ -160,23 +134,6 @@ function init() {
     className: 'noa',
     startingPosition: 129,
     currentPosition: 129,
-    //ghost coordinates here.
-    chase() {
-      // targets a target tile is clculated everytime before a decsiion to move is made
-      // each ghost has uniqe behaviour/target tile based on player position
-    },
-    scatter() {
-      // targets specific tile in the corner of maze, never changes
-    }, 
-    frightned() {
-      // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
-
-      // if player eats frightened ghost, they will endter eaten mode
-    }, 
-    eaten() {
-      // ghost targets ghost home/starting position
-      // once home they revert to scatter or chase mode
-    },
     add(position) {
       console.log('noa added')
       //console.log(position)
@@ -198,27 +155,18 @@ function init() {
         direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
-      //detect collision with player
+      // detect collision with player
       if (cells[noa.currentPosition].classList.contains(player.class)) {
-        // remove player life
+        player.lives --
+        livesDisplay.innerText = player.lives
+        player.remove(player.currentPosition)
+        player.currentPosition = player.startPosition
         // send player back to starting position.
         // if player life is less that 3, game over
         console.log('noa caught player')
       }
 
       // sort out logic for when superpellet eaten
-
-      // * Gateway logic 
-      // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
-      // if (char.currentPosition === portalLocations[1]) {
-      //   char.currentPosition = portalLocations[0]
-      //   console.log('Player traveled through portal')
-      // } else if (char.currentPosition === portalLocations[0]) {
-      //   char.currentPosition = portalLocations[1]
-      //   console.log('Player traveled through portal')
-      // }
-
-
     }
   }
 
@@ -228,23 +176,6 @@ function init() {
     className: 'jos',
     startingPosition: 130,
     currentPosition: 130,
-    //ghost coordinates here.
-    chase() {
-      // targets a target tile is clculated everytime before a decsiion to move is made
-      // each ghost has uniqe behaviour/target tile based on player position
-    },
-    scatter() {
-      // targets specific tile in the corner of maze, never changes
-    }, 
-    frightned() {
-      // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
-
-      // if player eats frightened ghost, they will endter eaten mode
-    }, 
-    eaten() {
-      // ghost targets ghost home/starting position
-      // once home they revert to scatter or chase mode
-    },
     add(position) {
       console.log('jos added')
       //console.log(position)
@@ -268,24 +199,16 @@ function init() {
 
       //detect collision with player
       if (cells[jos.currentPosition].classList.contains(player.class)) {
-        // remove player life
+        player.lives --
+        livesDisplay.innerText = player.lives
+        player.remove(player.currentPosition)
+        player.currentPosition = player.startPosition
         // send player back to starting position.
         // if player life is less that 3, game over
         console.log('jos caught player')
       }
 
       // sort out logic for when superpellet eaten
-
-      // * Gateway logic 
-      // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
-      // if (char.currentPosition === portalLocations[1]) {
-      //   char.currentPosition = portalLocations[0]
-      //   console.log('Player traveled through portal')
-      // } else if (char.currentPosition === portalLocations[0]) {
-      //   char.currentPosition = portalLocations[1]
-      //   console.log('Player traveled through portal')
-      // }
-
 
     }
   }
@@ -296,23 +219,6 @@ function init() {
     className: 'guy',
     startingPosition: 149,
     currentPosition: 149,
-    //ghost coordinates here.
-    chase() {
-      // targets a target tile is clculated everytime before a decsiion to move is made
-      // each ghost has uniqe behaviour/target tile based on player position
-    },
-    scatter() {
-      // targets specific tile in the corner of maze, never changes
-    }, 
-    frightned() {
-      // instead fo minimising ditance they will pick an eldigible direction at random using output from a random number generator
-
-      // if player eats frightened ghost, they will endter eaten mode
-    }, 
-    eaten() {
-      // ghost targets ghost home/starting position
-      // once home they revert to scatter or chase mode
-    },
     add(position) {
       console.log('guy added')
       //console.log(position)
@@ -336,24 +242,16 @@ function init() {
 
       //detect collision with player
       if (cells[guy.currentPosition].classList.contains(player.class)) {
-        // remove player life
+        player.lives --
+        livesDisplay.innerText = player.lives
+        player.remove(player.currentPosition)
+        player.currentPosition = player.startPosition
         // send player back to starting position.
         // if player life is less that 3, game over
         console.log('guy caught player')
       }
 
       // sort out logic for when superpellet eaten
-
-      // * Gateway logic 
-      // // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
-      // if (char.currentPosition === portalLocations[1]) {
-      //   char.currentPosition = portalLocations[0]
-      //   console.log('Player traveled through portal')
-      // } else if (char.currentPosition === portalLocations[0]) {
-      //   char.currentPosition = portalLocations[1]
-      //   console.log('Player traveled through portal')
-      // }
-
 
     }
   }
