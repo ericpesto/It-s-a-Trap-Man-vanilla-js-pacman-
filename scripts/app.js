@@ -77,7 +77,6 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
 
-      //if (!cells[char.currentPosition + direction].classList.contains(mazeClass)) {
       if (!mazeArray.includes(char.currentPosition + direction)) {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
