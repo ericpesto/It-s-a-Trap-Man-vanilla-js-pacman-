@@ -10,8 +10,8 @@ function init() {
   const cells = []
   let cell 
   const mazeClass = 'maze-wall'
-  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,127,132,133,134,136,137,139,140,159,160,161,162,163,164,175,176,177,178,179,188,189,190,191,200,201,202,203,204,206,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,247,248,249,250,251,252,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
-  const ghostHomeArray = [129,130,149,150]
+  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,127,132,133,134,136,137,139,140,147,152,159,160,161,162,163,164,175,176,177,178,179,200,201,202,203,204,206,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,248,249,250,251,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
+  const ghostHomeArray = [169,170,189,190]
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
   const superPelletLocations = [84,95,276,263]
@@ -98,8 +98,8 @@ function init() {
   const char = {
     name: 'Char',
     className: 'char',
-    startingPosition: 150,
-    currentPosition: 150,
+    startingPosition: ghostHomeArray[0],
+    currentPosition: ghostHomeArray[0],
     add(position) {
       console.log('char added')
       //console.log(position)
@@ -137,8 +137,8 @@ function init() {
   const noa = {
     name: 'Noa',
     className: 'noa',
-    startingPosition: 129,
-    currentPosition: 129,
+    startingPosition: ghostHomeArray[1],
+    currentPosition: ghostHomeArray[1],
     add(position) {
       console.log('noa added')
       //console.log(position)
@@ -179,8 +179,8 @@ function init() {
   const jos = {
     name: 'Jos',
     className: 'jos',
-    startingPosition: 130,
-    currentPosition: 130,
+    startingPosition: ghostHomeArray[2],
+    currentPosition: ghostHomeArray[2],
     add(position) {
       console.log('jos added')
       //console.log(position)
@@ -222,8 +222,8 @@ function init() {
   const guy = {
     name: 'Guy',
     className: 'guy',
-    startingPosition: 149,
-    currentPosition: 149,
+    startingPosition: ghostHomeArray[3],
+    currentPosition: ghostHomeArray[3],
     add(position) {
       console.log('guy added')
       //console.log(position)
