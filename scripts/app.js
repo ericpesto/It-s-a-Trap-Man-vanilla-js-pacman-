@@ -450,16 +450,13 @@ function init() {
     }, 15000)
 
   
-    if (cells[char.currentPosition].classList.contains(player.class) || cells[noa.currentPosition].classList.contains(player.class) || cells[jos.currentPosition].classList.contains(player.class) || cells[guy.currentPosition].classList.contains(player.class)) {
-      console.log('scared ghost hit!')
-    }
-
     //if player eats ghost while fridghtened
     // + 200 points
     // + send ghost back home
   }
 
   function handleGhostCollision(position) {
+    // for normal collision
     if (cells[position].classList.contains(player.class) && !cells[position].classList.contains(scaredClass)) {
       player.lives --
       livesDisplay.innerText = player.lives
@@ -468,7 +465,13 @@ function init() {
       // send player back to starting position.
       // if player life is less that 3, game over
       console.log('ghost caught player')
+    } 
+    // for scared ghosts collision
+    if (cells[position].classList.contains(player.class) && cells[position].classList.contains(scaredClass)) {
+      alert('scared ghost hit')
     }
+
+
   }
 
   function handleTeleport(position, object) {
