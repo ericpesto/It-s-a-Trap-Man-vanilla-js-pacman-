@@ -141,7 +141,7 @@ function init() {
         return [Math.floor(nextCell % width), nextCell / width]
       }
 
-      if (!mazeArray.includes(char.currentPosition + direction) && !cells[char.currentPosition + direction].classList.contains(mazeClass)) {
+      if (!mazeArray.includes(char.currentPosition + direction)) {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
 
@@ -257,7 +257,7 @@ function init() {
         return [Math.floor(nextCell % width), nextCell / width]
       }
 
-      if (!mazeArray.includes(jos.currentPosition + direction) && !cells[jos.currentPosition + direction].classList.contains(mazeClass)) {
+      if (!mazeArray.includes(jos.currentPosition + direction)) {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
 
@@ -335,31 +335,6 @@ function init() {
 
       handleGhostCollision(guy.currentPosition)
       handleTeleport(guy.currentPosition, guy)
-    }
-  }
-
-
-  function handleGhostCollision(position) {
-    if (cells[position].classList.contains(player.class)) {
-      player.lives --
-      livesDisplay.innerText = player.lives
-      player.remove(player.currentPosition)
-      player.currentPosition = player.startPosition
-      // send player back to starting position.
-      // if player life is less that 3, game over
-      console.log('ghost caught player')
-    }
-  }
-
-  function handleTeleport(position, object) {
-    if (position === portalLocations[1]) {
-      object.remove(position)
-      object.currentPosition = portalLocations[0]
-      console.log('Player traveled through portal')
-    } else if (position === portalLocations[0]) {
-      object.remove(position)
-      object.currentPosition = portalLocations[1]
-      console.log('Player traveled through portal')
     }
   }
 
@@ -482,6 +457,30 @@ function init() {
     //if player eats ghost while fridghtened
     // + 200 points
     // + send ghost back home
+  }
+
+  function handleGhostCollision(position) {
+    if (cells[position].classList.contains(player.class) && !cells[position].classList.contains(scaredClass)) {
+      player.lives --
+      livesDisplay.innerText = player.lives
+      player.remove(player.currentPosition)
+      player.currentPosition = player.startPosition
+      // send player back to starting position.
+      // if player life is less that 3, game over
+      console.log('ghost caught player')
+    }
+  }
+
+  function handleTeleport(position, object) {
+    if (position === portalLocations[1]) {
+      object.remove(position)
+      object.currentPosition = portalLocations[0]
+      console.log('Player traveled through portal')
+    } else if (position === portalLocations[0]) {
+      object.remove(position)
+      object.currentPosition = portalLocations[1]
+      console.log('Player traveled through portal')
+    }
   }
 
   // * Handle Score (workaround to account for playermovement behavour related to set interval, works really well for both pellet and superpellets now)
