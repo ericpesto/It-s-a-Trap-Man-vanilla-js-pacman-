@@ -25,6 +25,7 @@ function init() {
   const pellets = []
   const superPellets = []
   const ghostsEaten = []
+  const scaredClass = 'scared'
 
   // * Game state/logic variables
   let score = 0
@@ -33,7 +34,7 @@ function init() {
   const eatenGhostValue = 200
 
 
-  const scaredClass = 'scared'
+  
   // * Player object
   const player = {
     name: 'Dave', // ! make it so user can add name to personalise experience
@@ -99,12 +100,12 @@ function init() {
       handleScore() 
 
       if (player.lives <= 0) {
-        // ! RESET GAME
+        // ! RESET GAME also on pellets array length = 0
         alert('Game Over')
       }
+
     }
   }
-
 
   // * Ghosts
   const char = {
@@ -112,6 +113,7 @@ function init() {
     className: 'char',
     startingPosition: ghostHomeArray[0],
     currentPosition: ghostHomeArray[0],
+    targetCoordinates: [player.positionX() - 8, player.positionY() - 120],
     positionX: function() {
       return Math.floor(char.currentPosition % width)
     },
@@ -147,14 +149,11 @@ function init() {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
 
-        const charCoordinates = [char.positionX(), char.positionY() - 40]
-        //console.log(charCoordinates)
-        const targetCoordinates = [player.positionX() - 10, player.positionY()]
+        const charCoordinates = [char.positionX(), char.positionY()]
         const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
-        //console.log('next tile ->', charNextMoveCoordinates)
-
+  
         const closerX = function() {
-          if ((charNextMoveCoordinates[0] - targetCoordinates[0]) > (charCoordinates[0] - targetCoordinates[0])) {
+          if ((charNextMoveCoordinates[0] - char.targetCoordinates[0]) > (charCoordinates[0] - char.targetCoordinates[0])) {
             return true
           } else {
             return false
@@ -162,7 +161,7 @@ function init() {
         }
 
         const closerY = function() {
-          if ((charNextMoveCoordinates[1] - targetCoordinates[1]) > (charCoordinates[1] - targetCoordinates[1])) {
+          if ((charNextMoveCoordinates[1] - char.targetCoordinates[1]) > (charCoordinates[1] - char.targetCoordinates[1])) {
             return true
           } else {
             return false
@@ -172,7 +171,6 @@ function init() {
         if ((closerY() || closerX()) && !mazeArray.includes(char.currentPosition + direction)) {
           char.currentPosition += direction
           char.add(char.currentPosition)
-          console.log('closer')
         } else {
           char.add(char.currentPosition)
           //direction = directions[Math.floor(Math.random() * directions.length)]
@@ -196,6 +194,7 @@ function init() {
     className: 'noa',
     startingPosition: ghostHomeArray[1],
     currentPosition: ghostHomeArray[1],
+    targetCoordinates: [player.positionX() - 12, player.positionY() - 200],
     positionX: function() {
       return Math.floor(noa.currentPosition % width)
     },
@@ -203,12 +202,11 @@ function init() {
       return noa.currentPosition / width
     },
     add(position) {
-      console.log('noa added')
-      //console.log(position)
+      //console.log('noa added')
       cells[position].classList.add(noa.className)
     },
     remove(position) {
-      console.log('noa removed')
+      //console.log('noa removed')
       cells[position].classList.remove(noa.className)
     },
     move() {
@@ -232,13 +230,10 @@ function init() {
         noa.currentPosition += direction
 
         const noaCoordinates = [noa.positionX(), noa.positionY()]
-        //console.log(charCoordinates)
-        const targetCoordinates = [player.positionX() - 20 , player.positionY() - 40]
         const noaNextMoveCoordinates =  getNextMoveCoordinates(noa.currentPosition + direction)
-        //console.log('next tile ->', charNextMoveCoordinates)
 
         const closerX = function() {
-          if ((noaNextMoveCoordinates[0] - targetCoordinates[0]) > (noaCoordinates[0] - targetCoordinates[0])) {
+          if ((noaNextMoveCoordinates[0] - noa.targetCoordinates[0]) > (noaCoordinates[0] - noa.targetCoordinates[0])) {
             return true
           } else {
             return false
@@ -246,7 +241,7 @@ function init() {
         }
 
         const closerY = function() {
-          if ((noaNextMoveCoordinates[1] - targetCoordinates[1]) > (noaCoordinates[1] - targetCoordinates[1])) {
+          if ((noaNextMoveCoordinates[1] - noa.targetCoordinates[1]) > (noaCoordinates[1] - noa.targetCoordinates[1])) {
             return true
           } else {
             return false
@@ -256,7 +251,6 @@ function init() {
         if ((closerY() || closerX()) && !mazeArray.includes(noa.currentPosition + direction)) {
           noa.currentPosition += direction
           noa.add(noa.currentPosition)
-          console.log('closer')
         } else {
           noa.add(noa.currentPosition)
           //direction = directions[Math.floor(Math.random() * directions.length)]
@@ -275,26 +269,25 @@ function init() {
       handleTeleport(noa.currentPosition, noa)
     }
   }
-
-
+  //const josCoordinates = [jos.positionX(), jos.positionY()]
   const jos = {
     name: 'Jos',
     className: 'jos',
     startingPosition: ghostHomeArray[4],
     currentPosition: ghostHomeArray[4],
     positionX: function() {
-      return Math.floor(char.currentPosition % width)
+      return Math.floor(jos.currentPosition % width)
     },
     positionY: function() {
-      return char.currentPosition / width
+      return jos.currentPosition / width
     },
+    targetCoordinates: [player.positionX(), player.positionY()],
     add(position) {
-      console.log('jos added')
-      //console.log(position)
+      //console.log('jos added')
       cells[position].classList.add(jos.className)
     },
     remove(position) {
-      console.log('jos removed')
+      //console.log('jos removed')
       cells[position].classList.remove(jos.className)
     },
     move() {
@@ -317,14 +310,11 @@ function init() {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
 
-        const josCoordinates = [jos.positionX() - 7, jos.positionY() - 40]
-        //console.log(charCoordinates)
-        const targetCoordinates = [player.positionX() + 14, player.positionY()]
+        const josCoordinates = [jos.positionX(), jos.positionY()]
         const josNextMoveCoordinates =  getNextMoveCoordinates(jos.currentPosition + direction)
-        //console.log('next tile ->', charNextMoveCoordinates)
 
         const closerX = function() {
-          if ((josNextMoveCoordinates[0] - targetCoordinates[0]) > (josCoordinates[0] - targetCoordinates[0])) {
+          if ((josNextMoveCoordinates[0] - jos.targetCoordinates[0]) > (josCoordinates[0] - jos.targetCoordinates[0])) {
             return true
           } else {
             return false
@@ -332,7 +322,7 @@ function init() {
         }
 
         const closerY = function() {
-          if ((josNextMoveCoordinates[1] - targetCoordinates[1]) > (josCoordinates[1] - targetCoordinates[1])) {
+          if ((josNextMoveCoordinates[1] - jos.targetCoordinates[1]) > (josCoordinates[1] - jos.targetCoordinates[1])) {
             return true
           } else {
             return false
@@ -342,7 +332,6 @@ function init() {
         if ((closerY() || closerX()) && !mazeArray.includes(jos.currentPosition + direction)) {
           jos.currentPosition += direction
           jos.add(jos.currentPosition)
-          console.log('closer')
         } else {
           jos.add(jos.currentPosition)
           //direction = directions[Math.floor(Math.random() * directions.length)]
@@ -362,19 +351,17 @@ function init() {
     }
   }
 
-
   const guy = {
     name: 'Guy',
     className: 'guy',
     startingPosition: ghostHomeArray[5],
     currentPosition: ghostHomeArray[5],
     add(position) {
-      console.log('guy added')
-      //console.log(position)
+      //console.log('guy added')
       cells[position].classList.add(guy.className)
     },
     remove(position) {
-      console.log('guy removed')
+      //console.log('guy removed')
       cells[position].classList.remove(guy.className)
     },
     move() {
@@ -393,7 +380,6 @@ function init() {
       handleTeleport(guy.currentPosition, guy)
     }
   }
-
 
   // * Make Grid
   function createGrid() {
@@ -520,7 +506,7 @@ function init() {
       player.currentPosition = player.startPosition
       // send player back to starting position.
       // if player life is less that 3, game over
-      console.log('ghost caught player')
+      //console.log('ghost caught player')
     } 
     // for scared ghosts collision
     if (cells[position].classList.contains(player.class) && cells[position].classList.contains(scaredClass)) {
@@ -591,11 +577,11 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
 
   // * Start timers
-  const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 300)
+  const playerMovement = setInterval(player.move, 250)
+  const charMovement = setInterval(char.move, 450)
   const noaMovement = setInterval(noa.move, 450)
-  const josMovement = setInterval(jos.move, 200)
-  const guyMovement = setInterval(guy.move, 450)
+  const josMovement = setInterval(jos.move, 450)
+  const guyMovement = setInterval(guy.move, 600)
 }
 
 window.addEventListener('DOMContentLoaded', init)
