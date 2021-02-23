@@ -10,7 +10,7 @@ function init() {
   const cells = []
   let cell 
   const mazeClass = 'maze-wall'
-  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,127,128,131,132,133,134,136,137,139,140,159,160,161,163,164,165,166,173,174,175,176,178,179,200,201,203,204,205,206,213,214,215,216,218,219,220,226,233,239,240,242,243,244,246,248,249,250,251,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,328,329,330,331,333,339,340,342,343,344,345,346,353,354,355,356,357,359,360,368,369,370,371,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
+  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,127,128,131,132,133,134,136,137,139,140,159,160,161,163,164,165,166,167,172,173,174,175,176,178,179,200,201,203,204,205,206,207,212,213,214,215,216,218,219,220,226,233,239,240,242,243,244,246,248,249,250,251,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,328,329,330,331,333,339,340,342,343,344,345,346,353,354,355,356,357,359,360,368,369,370,371,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
   const ghostHomeArray = [169,170,189,190,209,210]
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
@@ -149,12 +149,12 @@ function init() {
 
         const charCoordinates = [char.positionX(), char.positionY()]
         //console.log(charCoordinates)
-        const playerCoordinates = [(player.positionX() - 4), (player.positionY() - width)]
+        const targetCoordinates = [player.positionX() - 7, player.positionY() / 2]
         const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
         //console.log('next tile ->', charNextMoveCoordinates)
 
         const closerX = function() {
-          if ((charNextMoveCoordinates[0] - playerCoordinates[0]) > (charCoordinates[0] - playerCoordinates[0])) {
+          if ((charNextMoveCoordinates[0] - targetCoordinates[0]) > (charCoordinates[0] - targetCoordinates[0])) {
             return true
           } else {
             return false
@@ -162,7 +162,7 @@ function init() {
         }
 
         const closerY = function() {
-          if ((charNextMoveCoordinates[1] - playerCoordinates[1]) > (charCoordinates[1] - playerCoordinates[1])) {
+          if ((charNextMoveCoordinates[1] - targetCoordinates[1]) > (charCoordinates[1] - targetCoordinates[1])) {
             return true
           } else {
             return false
@@ -196,6 +196,12 @@ function init() {
     className: 'noa',
     startingPosition: ghostHomeArray[1],
     currentPosition: ghostHomeArray[1],
+    positionX: function() {
+      return Math.floor(noa.currentPosition % width)
+    },
+    positionY: function() {
+      return noa.currentPosition / width
+    },
     add(position) {
       console.log('noa added')
       //console.log(position)
@@ -209,12 +215,60 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(noa.currentPosition + direction) ) {
+      // if (!mazeArray.includes(noa.currentPosition + direction) ) {
+      //   cells[noa.currentPosition].classList.remove(noa.className)
+      //   noa.currentPosition += direction
+      //   cells[noa.currentPosition].classList.add(noa.className)
+      // } else {
+      //   direction = directions[Math.floor(Math.random() * directions.length)]
+      // }
+
+      function getNextMoveCoordinates(nextCell) {
+        return [Math.floor(nextCell % width), nextCell / width]
+      }
+
+      if (!mazeArray.includes(noa.currentPosition + direction)) {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.currentPosition += direction
-        cells[noa.currentPosition].classList.add(noa.className)
+
+        const noaCoordinates = [noa.positionX(), noa.positionY()]
+        //console.log(charCoordinates)
+        const targetCoordinates = [player.positionX() - 14 , player.positionY() * 2]
+        const noaNextMoveCoordinates =  getNextMoveCoordinates(noa.currentPosition + direction)
+        //console.log('next tile ->', charNextMoveCoordinates)
+
+        const closerX = function() {
+          if ((noaNextMoveCoordinates[0] - targetCoordinates[0]) > (noaCoordinates[0] - targetCoordinates[0])) {
+            return true
+          } else {
+            return false
+          }
+        }
+
+        const closerY = function() {
+          if ((noaNextMoveCoordinates[1] - targetCoordinates[1]) > (noaCoordinates[1] - targetCoordinates[1])) {
+            return true
+          } else {
+            return false
+          }
+        }
+
+        if ((closerY() || closerX()) && !mazeArray.includes(noa.currentPosition + direction)) {
+          noa.currentPosition += direction
+          noa.add(noa.currentPosition)
+          console.log('closer')
+        } else {
+          noa.add(noa.currentPosition)
+          //direction = directions[Math.floor(Math.random() * directions.length)]
+          //direction = 0
+        }
+        //noa.add(char.currentPosition)
+        //noa.currentPosition += direction
       } else {
-        direction = directions[Math.floor(Math.random() * directions.length)]
+        //direction = directions[Math.floor(Math.random() * directions.length)]
+        //direction = 0
+        noa.add(noa.currentPosition)
+        
       }
 
       handleGhostCollision(noa.currentPosition)
@@ -263,14 +317,14 @@ function init() {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
 
-        const josCoordinates = [jos.positionX(), jos.positionY()]
+        const josCoordinates = [jos.positionX() - 7, jos.positionY() - 10]
         //console.log(charCoordinates)
-        const playerCoordinates = [player.positionX(), player.positionY()]
+        const targetCoordinates = [player.positionX() - 7, player.positionY() - width]
         const josNextMoveCoordinates =  getNextMoveCoordinates(jos.currentPosition + direction)
         //console.log('next tile ->', charNextMoveCoordinates)
 
         const closerX = function() {
-          if ((josNextMoveCoordinates[0] - playerCoordinates[0]) > (josCoordinates[0] - playerCoordinates[0])) {
+          if ((josNextMoveCoordinates[0] - targetCoordinates[0]) > (josCoordinates[0] - targetCoordinates[0])) {
             return true
           } else {
             return false
@@ -278,7 +332,7 @@ function init() {
         }
 
         const closerY = function() {
-          if ((josNextMoveCoordinates[1] - playerCoordinates[1]) > (josCoordinates[1] - playerCoordinates[1])) {
+          if ((josNextMoveCoordinates[1] - targetCoordinates[1]) > (josCoordinates[1] - targetCoordinates[1])) {
             return true
           } else {
             return false
@@ -345,7 +399,7 @@ function init() {
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
       cell = document.createElement('div')
-      cell.textContent = i
+      //cell.textContent = i
       grid.appendChild(cell)
       cell.id = i
       cells.push(cell)
