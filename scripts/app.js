@@ -39,7 +39,7 @@ function init() {
     class: 'player',
     lives: 3,
     positionX: function() {
-      return Math.floor(player.currentPosition % width) 
+      return Math.ceil(player.currentPosition % width)
     },
     positionY: function() {
       return player.currentPosition / width
@@ -107,7 +107,7 @@ function init() {
     startingPosition: ghostHomeArray[0],
     currentPosition: ghostHomeArray[0],
     positionX: function() {
-      return Math.floor(char.currentPosition % width)
+      return Math.ceil(char.currentPosition % width)
     },
     positionY: function() {
       return char.currentPosition / width
@@ -134,7 +134,7 @@ function init() {
       // }
 
       function getNextMoveCoordinates(nextCell) {
-        return [Math.floor(nextCell % width), nextCell / width]
+        return [Math.ceil(nextCell % width), nextCell / width]
       }
 
       if (!mazeArray.includes(char.currentPosition + direction)) {
@@ -164,7 +164,7 @@ function init() {
         }
 
 
-        if (closerY() || closerX()) {
+        if ((closerY() || closerX())) {
           char.currentPosition += direction
           char.add(char.currentPosition)
           console.log('closer')
@@ -172,7 +172,7 @@ function init() {
           char.add(char.currentPosition)
           direction = directions[Math.floor(Math.random() * directions.length)]
         }
-
+      
         //char.currentPosition += direction
         cells[char.currentPosition].classList.add(char.className)
       } else {
