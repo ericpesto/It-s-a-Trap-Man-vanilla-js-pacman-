@@ -86,7 +86,7 @@ function init() {
       handleScore() 
 
       if (player.lives <= 0) {
-        //RESET GAME
+        // ! RESET GAME
         alert('Game Over')
       }
     }
@@ -113,12 +113,20 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(char.currentPosition + direction) && !mazeArray.includes(noa.currentPosition + direction) && !mazeArray.includes(jos.currentPosition + direction) && !mazeArray.includes(guy.currentPosition + direction)) {
+      if (!mazeArray.includes(char.currentPosition + direction)) {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
         cells[char.currentPosition].classList.add(char.className)
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
+      }
+
+      if (player.currentPosition === portalLocations[1]) {
+        char.currentPosition = portalLocations[0]
+        console.log('Player traveled through portal')
+      } else if (player.currentPosition === portalLocations[0]) {
+        char.currentPosition = portalLocations[1]
+        console.log('Player traveled through portal')
       }
 
       //detect collision with player
@@ -152,12 +160,20 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(noa.currentPosition + direction) && !mazeArray.includes(char.currentPosition + direction) && !mazeArray.includes(jos.currentPosition + direction) && !mazeArray.includes(guy.currentPosition + direction)) {
+      if (!mazeArray.includes(noa.currentPosition + direction) ) {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.currentPosition += direction
         cells[noa.currentPosition].classList.add(noa.className)
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
+      }
+
+      if (player.currentPosition === portalLocations[1]) {
+        noa.currentPosition = portalLocations[0]
+        console.log('Player traveled through portal')
+      } else if (player.currentPosition === portalLocations[0]) {
+        noa.currentPosition = portalLocations[1]
+        console.log('Player traveled through portal')
       }
 
       // detect collision with player
@@ -194,12 +210,20 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(jos.currentPosition + direction) && !mazeArray.includes(char.currentPosition + direction) && !mazeArray.includes(noa.currentPosition + direction) && !mazeArray.includes(guy.currentPosition + direction)) {
+      if (!mazeArray.includes(jos.currentPosition + direction)) {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
         cells[jos.currentPosition].classList.add(jos.className)
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
+      }
+
+      if (player.currentPosition === portalLocations[1]) {
+        jos.currentPosition = portalLocations[0]
+        console.log('Player traveled through portal')
+      } else if (player.currentPosition === portalLocations[0]) {
+        jos.currentPosition = portalLocations[1]
+        console.log('Player traveled through portal')
       }
 
       //detect collision with player
@@ -236,13 +260,21 @@ function init() {
     move() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
-      
-      if (!mazeArray.includes(guy.currentPosition + direction) && !mazeArray.includes(char.currentPosition + direction) && !mazeArray.includes(noa.currentPosition + direction) && !mazeArray.includes(jos.currentPosition + direction)) {
+      console.log(cells)
+      if (!mazeArray.includes(guy.currentPosition + direction)) {
         cells[guy.currentPosition].classList.remove(guy.className)
         guy.currentPosition += direction
         cells[guy.currentPosition].classList.add(guy.className)
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
+      }
+
+      if (player.currentPosition === portalLocations[1]) {
+        guy.currentPosition = portalLocations[0]
+        console.log('Player traveled through portal')
+      } else if (player.currentPosition === portalLocations[0]) {
+        guy.currentPosition = portalLocations[1]
+        console.log('Player traveled through portal')
       }
 
       //detect collision with player

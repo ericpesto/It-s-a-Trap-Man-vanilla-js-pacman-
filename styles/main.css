@@ -45,6 +45,7 @@ body {
   height: 5%;
   width: 5%;
   font-family: Arial, Helvetica, sans-serif;
+  padding: 5px 5px 5px 5px;
 }
 
 .grid div.maze-wall {
@@ -54,8 +55,9 @@ body {
 }
 
 .grid div.ghost-home {
-  background-color: rgba(136, 66, 19, 0.788);
-  border: 1px rgba(0, 0, 0, 0.158) solid;
+  background-color: rgba(16, 140, 211, 0.26);
+  border: 4px rgba(206, 50, 180, 0.479) solid;
+  border-radius:5px ;
 }
 
 .grid div.pellet {
