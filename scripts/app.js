@@ -113,12 +113,12 @@ function init() {
       return player.currentPosition / width
     },
     add(position) {
-      console.log('char added')
+      //console.log('char added')
       //console.log(position)
       cells[position].classList.add(char.className)
     },
     remove(position) {
-      console.log('char removed')
+      //console.log('char removed')
       cells[position].classList.remove(char.className)
     },
     move() {
@@ -142,10 +142,10 @@ function init() {
         char.currentPosition += direction
 
         const charCoordinates = [char.positionX(), char.positionY()]
-        console.log(charCoordinates)
+        //console.log(charCoordinates)
         const playerCoordinates = [player.positionX(), player.positionY()]
         const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
-        console.log('next tile ->', charNextMoveCoordinates)
+        //console.log('next tile ->', charNextMoveCoordinates)
 
         const closerX = function() {
           if ((charNextMoveCoordinates[0] - playerCoordinates[0]) > (charCoordinates[0] - playerCoordinates[0])) {
@@ -319,7 +319,6 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
   
-      console.log(cells)
       if (!mazeArray.includes(guy.currentPosition + direction)) {
         cells[guy.currentPosition].classList.remove(guy.className)
         guy.currentPosition += direction
@@ -481,7 +480,7 @@ function init() {
 
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 300)
+  const charMovement = setInterval(char.move, 200)
   const noaMovement = setInterval(noa.move, 350)
   const josMovement = setInterval(jos.move, 400)
   const guyMovement = setInterval(guy.move, 300)
