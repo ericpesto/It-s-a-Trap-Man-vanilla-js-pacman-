@@ -39,7 +39,7 @@ function init() {
     class: 'player',
     lives: 3,
     positionX: function() {
-      return (Math.floor(player.currentPosition % width) + Math.ceil(player.currentPosition % width)) / 2
+      return Math.floor(player.currentPosition % width) 
     },
     positionY: function() {
       return player.currentPosition / width
@@ -107,7 +107,7 @@ function init() {
     startingPosition: ghostHomeArray[0],
     currentPosition: ghostHomeArray[0],
     positionX: function() {
-      return (Math.floor(char.currentPosition % width) + Math.ceil(char.currentPosition % width)) / 2
+      return Math.floor(char.currentPosition % width)
     },
     positionY: function() {
       return char.currentPosition / width
