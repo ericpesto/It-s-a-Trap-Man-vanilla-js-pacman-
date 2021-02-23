@@ -35,7 +35,7 @@ function init() {
     name: 'Dave', // ! make it so user can add name to personalise experience
     startPosition: 369,
     currentPosition: 369,
-    direction: 'right',
+    direction: 'up',
     class: 'player',
     lives: 3,
     positionX: function() {
@@ -143,7 +143,7 @@ function init() {
 
         const charCoordinates = [char.positionX(), char.positionY()]
         //console.log(charCoordinates)
-        const playerCoordinates = [player.positionX(), player.positionY()]
+        const playerCoordinates = [(player.positionX() - 4), (player.positionY() - width)]
         const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
         //console.log('next tile ->', charNextMoveCoordinates)
 
@@ -181,7 +181,7 @@ function init() {
         
       }
 
-      if (player.currentPosition === portalLocations[1]) {
+      if (char.currentPosition === portalLocations[1]) {
         char.currentPosition = portalLocations[0]
         console.log('Player traveled through portal')
       } else if (player.currentPosition === portalLocations[0]) {
@@ -228,7 +228,7 @@ function init() {
         direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
-      if (player.currentPosition === portalLocations[1]) {
+      if (noa.currentPosition === portalLocations[1]) {
         noa.currentPosition = portalLocations[0]
         console.log('Player traveled through portal')
       } else if (player.currentPosition === portalLocations[0]) {
@@ -333,7 +333,7 @@ function init() {
       }
 
 
-      if (player.currentPosition === portalLocations[1]) {
+      if (jos.currentPosition === portalLocations[1]) {
         jos.currentPosition = portalLocations[0]
         console.log('Player traveled through portal')
       } else if (player.currentPosition === portalLocations[0]) {
@@ -384,7 +384,7 @@ function init() {
         direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
-      if (player.currentPosition === portalLocations[1]) {
+      if (guy.currentPosition === portalLocations[1]) {
         guy.currentPosition = portalLocations[0]
         console.log('Player traveled through portal')
       } else if (player.currentPosition === portalLocations[0]) {
@@ -537,10 +537,10 @@ function init() {
 
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 400)
-  const noaMovement = setInterval(noa.move, 400)
-  const josMovement = setInterval(jos.move, 400)
-  const guyMovement = setInterval(guy.move, 400)
+  const charMovement = setInterval(char.move, 300)
+  const noaMovement = setInterval(noa.move, 450)
+  const josMovement = setInterval(jos.move, 200)
+  const guyMovement = setInterval(guy.move, 450)
 }
 
 window.addEventListener('DOMContentLoaded', init)
