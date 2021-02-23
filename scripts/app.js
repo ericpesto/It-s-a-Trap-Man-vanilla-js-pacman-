@@ -30,6 +30,8 @@ function init() {
   const pelletScoreValue = 10
   const superPelletScoreValue = 50
 
+
+  const scaredClass = 'scared'
   // * Player object
   const player = {
     name: 'Dave', // ! make it so user can add name to personalise experience
@@ -75,20 +77,23 @@ function init() {
       }
       //console.log('playerPosition ->', playerCurrentPosition)
 
-      // * Gateway logic 
-      // ? BONUS: Add two more gateways and have player come out of random one? also what happens when ghosts goes to portal?
-      if (player.currentPosition === portalLocations[1]) {
-        player.currentPosition = portalLocations[0]
-        console.log('Player traveled through portal')
-      } else if (player.currentPosition === portalLocations[0]) {
-        player.currentPosition = portalLocations[1]
-        console.log('Player traveled through portal')
-      }
+   
+
+      
+
+
+      // ! SUPER PELLET LOGIC
+      //if (player eats super pellet)
+      // for 15 seconds add class of fridgtened to all ghosts, after time is over, remove the frightened class.
+      //if player eats ghost while fridghtened
+      // + 200 points
+      // + send ghost back home
 
       // ! inititalize functions dependent on player movement here
       player.add(player.currentPosition)
       removePellet(player.currentPosition)
       removeSuperPellet(player.currentPosition)
+      handleTeleport(player.currentPosition, player)
       handleScore() 
 
       if (player.lives <= 0) {
@@ -100,7 +105,6 @@ function init() {
 
 
   // * Ghosts
-  // ? four ghosts as individual objects, each with uniq behaviours stored as methods that can be called back with conditoinal logic based on player movement.
   const char = {
     name: 'Char',
     className: 'char',
@@ -123,7 +127,7 @@ function init() {
     },
     move() {
       const directions = [-1, +1, -width, +width]
-      let direction = directions[Math.floor(Math.random() * directions.length)]
+      const direction = directions[Math.floor(Math.random() * directions.length)]
       
       // if (!mazeArray.includes(char.currentPosition + direction)) {
       //   cells[char.currentPosition].classList.remove(char.className)
@@ -180,26 +184,8 @@ function init() {
         char.add(char.currentPosition)
         
       }
-
-      // if (char.currentPosition === portalLocations[1]) {
-      //   char.remove(char.currentPosition)
-      //   char.currentPosition = portalLocations[0]
-      //   console.log('Player traveled through portal')
-      // } else if (player.currentPosition === portalLocations[0]) {
-      //   char.currentPosition = portalLocations[1]
-      //   console.log('Player traveled through portal')
-      // }
-
-      //detect collision with player
-      if (cells[char.currentPosition].classList.contains(player.class)) {
-        player.lives --
-        livesDisplay.innerText = player.lives
-        player.remove(player.currentPosition)
-        player.currentPosition = player.startPosition
-        // if player life is less that 3, game over
-        console.log('char caught player')
-      }
-      // sort out logic for when superpellet eaten
+      handleGhostCollision(char.currentPosition)
+      handleTeleport(char.currentPosition, char)
     }
   }
   
@@ -229,27 +215,8 @@ function init() {
         direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
-      // if (noa.currentPosition === portalLocations[1]) {
-      //   noa.remove(noa.currentPosition)
-      //   noa.currentPosition = portalLocations[0]
-      //   console.log('Player traveled through portal')
-      // } else if (player.currentPosition === portalLocations[0]) {
-      //   noa.currentPosition = portalLocations[1]
-      //   console.log('Player traveled through portal')
-      // }
-
-      // detect collision with player
-      if (cells[noa.currentPosition].classList.contains(player.class)) {
-        player.lives --
-        livesDisplay.innerText = player.lives
-        player.remove(player.currentPosition)
-        player.currentPosition = player.startPosition
-        // send player back to starting position.
-        // if player life is less that 3, game over
-        console.log('noa caught player')
-      }
-
-      // sort out logic for when superpellet eaten
+      handleGhostCollision(noa.currentPosition)
+      handleTeleport(noa.currentPosition, noa)
     }
   }
 
@@ -276,7 +243,7 @@ function init() {
     },
     move() {
       const directions = [-1, +1, -width, +width]
-      let direction = directions[Math.floor(Math.random() * directions.length)]
+      const direction = directions[Math.floor(Math.random() * directions.length)]
       
       // if (!mazeArray.includes(jos.currentPosition + direction)) {
       //   cells[jos.currentPosition].classList.remove(jos.className)
@@ -334,29 +301,8 @@ function init() {
         
       }
 
-
-      // if (jos.currentPosition === portalLocations[1]) {
-      //   jos.remove(jos.currentPosition)
-      //   jos.currentPosition = portalLocations[0]
-      //   console.log('Player traveled through portal')
-      // } else if (player.currentPosition === portalLocations[0]) {
-      //   jos.currentPosition = portalLocations[1]
-      //   console.log('Player traveled through portal')
-      // }
-
-      //detect collision with player
-      if (cells[jos.currentPosition].classList.contains(player.class)) {
-        player.lives --
-        livesDisplay.innerText = player.lives
-        player.remove(player.currentPosition)
-        player.currentPosition = player.startPosition
-        // send player back to starting position.
-        // if player life is less that 3, game over
-        console.log('jos caught player')
-      }
-
-      // sort out logic for when superpellet eaten
-
+      handleGhostCollision(jos.currentPosition)
+      handleTeleport(jos.currentPosition, jos)
     }
   }
 
@@ -387,30 +333,36 @@ function init() {
         direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
-      // if (guy.currentPosition === portalLocations[1]) {
-      //   guy.remove(guy.currentPosition)
-      //   guy.currentPosition = portalLocations[0]
-      //   console.log('Player traveled through portal')
-      // } else if (player.currentPosition === portalLocations[0]) {
-      //   guy.currentPosition = portalLocations[1]
-      //   console.log('Player traveled through portal')
-      // }
-
-      //detect collision with player
-      if (cells[guy.currentPosition].classList.contains(player.class)) {
-        player.lives --
-        livesDisplay.innerText = player.lives
-        player.remove(player.currentPosition)
-        player.currentPosition = player.startPosition
-        // send player back to starting position.
-        // if player life is less that 3, game over
-        console.log('guy caught player')
-      }
-
-      // sort out logic for when superpellet eaten
-
+      handleGhostCollision(guy.currentPosition)
+      handleTeleport(guy.currentPosition, guy)
     }
   }
+
+
+  function handleGhostCollision(position) {
+    if (cells[position].classList.contains(player.class)) {
+      player.lives --
+      livesDisplay.innerText = player.lives
+      player.remove(player.currentPosition)
+      player.currentPosition = player.startPosition
+      // send player back to starting position.
+      // if player life is less that 3, game over
+      console.log('ghost caught player')
+    }
+  }
+
+  function handleTeleport(position, object) {
+    if (position === portalLocations[1]) {
+      object.remove(position)
+      object.currentPosition = portalLocations[0]
+      console.log('Player traveled through portal')
+    } else if (position === portalLocations[0]) {
+      object.remove(position)
+      object.currentPosition = portalLocations[1]
+      console.log('Player traveled through portal')
+    }
+  }
+
 
   // * Make Grid
   function createGrid() {
@@ -494,8 +446,42 @@ function init() {
         superPellet.classList.remove(superPelletClass)
         superPellet.classList.add(superPelletEatenClass)
         //superPellet.setAttribute('data-score', superPelletScoreValue)
+        
+        handleScaredGhosts(playerPosition)
       }
     })
+  }
+
+  function handleScaredGhosts() {
+    //console.log(char.classList.contains())
+    cells[char.currentPosition].classList.remove(char.className)
+    char.className = scaredClass
+    cells[noa.currentPosition].classList.remove(noa.className)
+    noa.className = scaredClass
+    cells[jos.currentPosition].classList.remove(jos.className)
+    jos.className = scaredClass
+    cells[guy.currentPosition].classList.remove(guy.className)
+    guy.className = scaredClass
+
+    setTimeout(() => {
+      cells[char.currentPosition].classList.remove(scaredClass)
+      char.className = 'char'
+      cells[noa.currentPosition].classList.remove(scaredClass)
+      noa.className = 'noa'
+      cells[jos.currentPosition].classList.remove(scaredClass)
+      jos.className = 'jos'
+      cells[guy.currentPosition].classList.remove(scaredClass)
+      guy.className = 'guy'
+    }, 15000)
+
+  
+    if (cells[char.currentPosition].classList.contains(player.class) || cells[noa.currentPosition].classList.contains(player.class) || cells[jos.currentPosition].classList.contains(player.class) || cells[guy.currentPosition].classList.contains(player.class)) {
+      console.log('scared ghost hit!')
+    }
+
+    //if player eats ghost while fridghtened
+    // + 200 points
+    // + send ghost back home
   }
 
   // * Handle Score (workaround to account for playermovement behavour related to set interval, works really well for both pellet and superpellets now)

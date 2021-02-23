@@ -121,6 +121,15 @@ body {
   cursor: pointer;
 }
 
+.grid div.scared {
+  background-image: url('../assets/images/crying-emoji.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-size: 110%;
+  cursor: pointer;
+}
+
 .grid div.player {
   background-image: url('../assets/images/curious-emoji.gif');
   background-repeat: no-repeat;
