@@ -520,7 +520,7 @@ function init() {
   }
 
   // * Call functions
-  createGrid(player.startPositiontartPosition) 
+  createGrid(player.startPosition) 
   
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
