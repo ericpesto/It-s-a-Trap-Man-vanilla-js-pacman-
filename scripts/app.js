@@ -39,7 +39,7 @@ function init() {
     class: 'player',
     lives: 3,
     positionX: function() {
-      return Math.floor(player.currentPosition % width)
+      return (Math.floor(player.currentPosition % width) + Math.ceil(player.currentPosition % width)) / 2
     },
     positionY: function() {
       return player.currentPosition / width
@@ -107,10 +107,10 @@ function init() {
     startingPosition: ghostHomeArray[0],
     currentPosition: ghostHomeArray[0],
     positionX: function() {
-      return Math.floor(player.currentPosition % width)
+      return (Math.floor(char.currentPosition % width) + Math.ceil(char.currentPosition % width)) / 2
     },
     positionY: function() {
-      return player.currentPosition / width
+      return char.currentPosition / width
     },
     add(position) {
       //console.log('char added')
@@ -480,7 +480,7 @@ function init() {
 
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 200)
+  const charMovement = setInterval(char.move, 100)
   const noaMovement = setInterval(noa.move, 350)
   const josMovement = setInterval(jos.move, 400)
   const guyMovement = setInterval(guy.move, 300)
