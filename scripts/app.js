@@ -39,7 +39,7 @@ function init() {
     class: 'player',
     lives: 3,
     positionX: function() {
-      return Math.ceil(player.currentPosition % width)
+      return Math.floor(player.currentPosition % width)
     },
     positionY: function() {
       return player.currentPosition / width
@@ -107,7 +107,7 @@ function init() {
     startingPosition: ghostHomeArray[0],
     currentPosition: ghostHomeArray[0],
     positionX: function() {
-      return Math.ceil(char.currentPosition % width)
+      return Math.floor(char.currentPosition % width)
     },
     positionY: function() {
       return char.currentPosition / width
@@ -134,7 +134,7 @@ function init() {
       // }
 
       function getNextMoveCoordinates(nextCell) {
-        return [Math.ceil(nextCell % width), nextCell / width]
+        return [Math.floor(nextCell % width), nextCell / width]
       }
 
       if (!mazeArray.includes(char.currentPosition + direction) && !cells[char.currentPosition + direction].classList.contains(mazeClass)) {
@@ -257,6 +257,12 @@ function init() {
     className: 'jos',
     startingPosition: ghostHomeArray[2],
     currentPosition: ghostHomeArray[2],
+    positionX: function() {
+      return Math.floor(char.currentPosition % width)
+    },
+    positionY: function() {
+      return char.currentPosition / width
+    },
     add(position) {
       console.log('jos added')
       //console.log(position)
@@ -270,13 +276,62 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(jos.currentPosition + direction)) {
+      // if (!mazeArray.includes(jos.currentPosition + direction)) {
+      //   cells[jos.currentPosition].classList.remove(jos.className)
+      //   jos.currentPosition += direction
+      //   cells[jos.currentPosition].classList.add(jos.className)
+      // } else {
+      //   direction = directions[Math.floor(Math.random() * directions.length)]
+      // }
+
+      function getNextMoveCoordinates(nextCell) {
+        return [Math.floor(nextCell % width), nextCell / width]
+      }
+
+      if (!mazeArray.includes(jos.currentPosition + direction) && !cells[jos.currentPosition + direction].classList.contains(mazeClass)) {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
-        cells[jos.currentPosition].classList.add(jos.className)
+
+        const josCoordinates = [jos.positionX(), jos.positionY()]
+        //console.log(charCoordinates)
+        const playerCoordinates = [player.positionX(), player.positionY()]
+        const josNextMoveCoordinates =  getNextMoveCoordinates(jos.currentPosition + direction)
+        //console.log('next tile ->', charNextMoveCoordinates)
+
+        const closerX = function() {
+          if ((josNextMoveCoordinates[0] - playerCoordinates[0]) > (josCoordinates[0] - playerCoordinates[0])) {
+            return true
+          } else {
+            return false
+          }
+        }
+
+        const closerY = function() {
+          if ((josNextMoveCoordinates[1] - playerCoordinates[1]) > (josCoordinates[1] - playerCoordinates[1])) {
+            return true
+          } else {
+            return false
+          }
+        }
+
+        if ((closerY() || closerX()) && !mazeArray.includes(jos.currentPosition + direction)) {
+          jos.currentPosition += direction
+          jos.add(jos.currentPosition)
+          console.log('closer')
+        } else {
+          jos.add(jos.currentPosition)
+          //direction = directions[Math.floor(Math.random() * directions.length)]
+          //direction = 0
+        }
+        //char.add(char.currentPosition)
+        //char.currentPosition += direction
       } else {
-        direction = directions[Math.floor(Math.random() * directions.length)]
+        //direction = directions[Math.floor(Math.random() * directions.length)]
+        //direction = 0
+        jos.add(jos.currentPosition)
+        
       }
+
 
       if (player.currentPosition === portalLocations[1]) {
         jos.currentPosition = portalLocations[0]
@@ -482,10 +537,10 @@ function init() {
 
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 250)
-  const noaMovement = setInterval(noa.move, 350)
+  const charMovement = setInterval(char.move, 400)
+  const noaMovement = setInterval(noa.move, 400)
   const josMovement = setInterval(jos.move, 400)
-  const guyMovement = setInterval(guy.move, 300)
+  const guyMovement = setInterval(guy.move, 400)
 }
 
 window.addEventListener('DOMContentLoaded', init)
