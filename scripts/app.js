@@ -113,7 +113,7 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(char.currentPosition + direction)) {
+      if (!mazeArray.includes(char.currentPosition + direction) && !mazeArray.includes(noa.currentPosition + direction) && !mazeArray.includes(jos.currentPosition + direction) && !mazeArray.includes(guy.currentPosition + direction)) {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
         cells[char.currentPosition].classList.add(char.className)
@@ -152,7 +152,7 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(noa.currentPosition + direction)) {
+      if (!mazeArray.includes(noa.currentPosition + direction) && !mazeArray.includes(char.currentPosition + direction) && !mazeArray.includes(jos.currentPosition + direction) && !mazeArray.includes(guy.currentPosition + direction)) {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.currentPosition += direction
         cells[noa.currentPosition].classList.add(noa.className)
@@ -194,7 +194,7 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(jos.currentPosition + direction)) {
+      if (!mazeArray.includes(jos.currentPosition + direction) && !mazeArray.includes(char.currentPosition + direction) && !mazeArray.includes(noa.currentPosition + direction) && !mazeArray.includes(guy.currentPosition + direction)) {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
         cells[jos.currentPosition].classList.add(jos.className)
@@ -237,7 +237,7 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      if (!mazeArray.includes(guy.currentPosition + direction)) {
+      if (!mazeArray.includes(guy.currentPosition + direction) && !mazeArray.includes(char.currentPosition + direction) && !mazeArray.includes(noa.currentPosition + direction) && !mazeArray.includes(jos.currentPosition + direction)) {
         cells[guy.currentPosition].classList.remove(guy.className)
         guy.currentPosition += direction
         cells[guy.currentPosition].classList.add(guy.className)
@@ -391,8 +391,8 @@ function init() {
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
   const charMovement = setInterval(char.move, 300)
-  const noaMovement = setInterval(noa.move, 300)
-  const josMovement = setInterval(jos.move, 300)
+  const noaMovement = setInterval(noa.move, 350)
+  const josMovement = setInterval(jos.move, 400)
   const guyMovement = setInterval(guy.move, 300)
 }
 
