@@ -29,6 +29,8 @@ function init() {
 
   // * Game state/logic variables
   let score = 0
+  //let pelletsLeft = cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)
+  let pelletsLeft = []
   const pelletScoreValue = 10
   const superPelletScoreValue = 50
   const eatenGhostValue = 200
@@ -80,11 +82,6 @@ function init() {
       }
       //console.log('playerPosition ->', playerCurrentPosition)
 
-   
-
-      
-
-
       // * inititalize functions dependent on player movement here
       player.add(player.currentPosition)
       removePellet(player.currentPosition)
@@ -92,10 +89,18 @@ function init() {
       handleTeleport(player.currentPosition, player)
       handleScore() 
 
+
+
       if (player.lives <= 0) {
-        
         alert('Game Over')
+        player.lives = 3
       }
+
+      if (pelletsLeft <= 0) {
+        alert('You Won!')
+        player.lives = 3
+      }
+
 
       // ! SUPER PELLET LOGIC
       // * if (player eats super pellet)
@@ -105,13 +110,8 @@ function init() {
       // ? send ghost back home
 
       // ! RESET GAME also on pellets array length = 0
-      // need to return array of pellets and know when length of that array = 0
-
-      // then work on sending ghosts home when eaten
-
-      console.log(cells)
-
-
+      
+      // work on sending ghosts home when eaten
     }
   }
 
@@ -219,7 +219,7 @@ function init() {
     },
     move() {
       const directions = [-1, +1, -width, +width]
-      let direction = directions[Math.floor(Math.random() * directions.length)]
+      const direction = directions[Math.floor(Math.random() * directions.length)]
       
       // if (!mazeArray.includes(noa.currentPosition + direction) ) {
       //   cells[noa.currentPosition].classList.remove(noa.className)
@@ -410,7 +410,6 @@ function init() {
     noa.add(noa.startingPosition)
     jos.add(jos.startingPosition)
     guy.add(guy.startingPosition)
-  
   }  
 
   function addMaze(gridIndex) {
@@ -554,6 +553,10 @@ function init() {
     score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue) + (numberOfSuperGhostsEaten * eatenGhostValue)
     //console.log('score', score)
     scoreDisplay.innerText = score
+
+
+    pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten) + 1)
+    //console.log(pelletsLeft)
   }
 
   function handleKeyUp(event) {
