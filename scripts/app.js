@@ -137,7 +137,7 @@ function init() {
         return [Math.ceil(nextCell % width), nextCell / width]
       }
 
-      if (!mazeArray.includes(char.currentPosition + direction)) {
+      if (!mazeArray.includes(char.currentPosition + direction) && !cells[char.currentPosition + direction].classList.contains(mazeClass)) {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
 
@@ -176,7 +176,8 @@ function init() {
         //char.currentPosition += direction
         cells[char.currentPosition].classList.add(char.className)
       } else {
-        direction = directions[Math.floor(Math.random() * directions.length)]
+        //direction = directions[Math.floor(Math.random() * directions.length)]
+        direction
       }
 
       if (player.currentPosition === portalLocations[1]) {
@@ -480,7 +481,7 @@ function init() {
 
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 100)
+  const charMovement = setInterval(char.move, 200)
   const noaMovement = setInterval(noa.move, 350)
   const josMovement = setInterval(jos.move, 400)
   const guyMovement = setInterval(guy.move, 300)
