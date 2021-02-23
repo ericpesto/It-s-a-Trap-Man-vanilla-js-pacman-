@@ -148,7 +148,7 @@ function init() {
         //console.log('next tile ->', charNextMoveCoordinates)
 
         const closerX = function() {
-          if ((charNextMoveCoordinates[0] - playerCoordinates[0]) < (charCoordinates[0] - playerCoordinates[0])) {
+          if ((charNextMoveCoordinates[0] - playerCoordinates[0]) > (charCoordinates[0] - playerCoordinates[0])) {
             return true
           } else {
             return false
@@ -156,28 +156,27 @@ function init() {
         }
 
         const closerY = function() {
-          if ((charNextMoveCoordinates[1] - playerCoordinates[1]) < (charCoordinates[1] - playerCoordinates[1])) {
+          if ((charNextMoveCoordinates[1] - playerCoordinates[1]) > (charCoordinates[1] - playerCoordinates[1])) {
             return true
           } else {
             return false
           }
         }
 
-        if ((closerY() || closerX()) && !mazeArray.includes(char.currentPosition + direction) && !cells[char.currentPosition + direction].classList.contains(mazeClass)) {
+        if ((closerY() || closerX()) && !mazeArray.includes(char.currentPosition + direction)) {
           char.currentPosition += direction
           char.add(char.currentPosition)
           console.log('closer')
         } else {
           char.add(char.currentPosition)
           //direction = directions[Math.floor(Math.random() * directions.length)]
-          direction = 0
+          //direction = 0
         }
         //char.add(char.currentPosition)
         //char.currentPosition += direction
-        //cells[char.currentPosition].classList.add(char.className)
       } else {
         //direction = directions[Math.floor(Math.random() * directions.length)]
-        direction = 0
+        //direction = 0
         char.add(char.currentPosition)
         
       }
@@ -483,7 +482,7 @@ function init() {
 
   // * Start timers
   const playerMovement = setInterval(player.move, 300)
-  const charMovement = setInterval(char.move, 350)
+  const charMovement = setInterval(char.move, 250)
   const noaMovement = setInterval(noa.move, 350)
   const josMovement = setInterval(jos.move, 400)
   const guyMovement = setInterval(guy.move, 300)
