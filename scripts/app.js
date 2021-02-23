@@ -10,8 +10,8 @@ function init() {
   const cells = []
   let cell 
   const mazeClass = 'maze-wall'
-  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,127,132,133,134,136,137,139,140,147,152,159,160,161,162,163,164,175,176,177,178,179,200,201,202,203,204,206,213,215,216,217,218,219,220,226,233,239,240,242,243,244,246,248,249,250,251,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,333,339,340,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
-  const ghostHomeArray = [169,170,189,190]
+  const mazeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,30,39,40,42,43,45,46,47,49,50,52,53,54,56,57,59,60,62,63,65,66,67,69,70,72,73,74,76,77,79,80,87,89,90,92,99,100,102,103,105,114,116,117,119,120,122,123,125,126,127,132,133,134,136,137,139,140,159,160,161,178,179,183,184,185,186,193,194,195,196,200,201,218,219,220,226,233,239,240,242,243,244,246,248,249,250,251,253,255,256,257,259,260,262,277,279,280,284,286,288,289,290,291,293,295,279,299,300,302,303,304,306,313,315,316,317,319,320,326,333,339,340,342,343,344,345,346,348,349,350,351,353,354,355,356,357,359,360,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399] 
+  const ghostHomeArray = [169,170,189,190,209,210]
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
   const superPelletLocations = [84,95,276,263]
@@ -181,13 +181,14 @@ function init() {
         
       }
 
-      if (char.currentPosition === portalLocations[1]) {
-        char.currentPosition = portalLocations[0]
-        console.log('Player traveled through portal')
-      } else if (player.currentPosition === portalLocations[0]) {
-        char.currentPosition = portalLocations[1]
-        console.log('Player traveled through portal')
-      }
+      // if (char.currentPosition === portalLocations[1]) {
+      //   char.remove(char.currentPosition)
+      //   char.currentPosition = portalLocations[0]
+      //   console.log('Player traveled through portal')
+      // } else if (player.currentPosition === portalLocations[0]) {
+      //   char.currentPosition = portalLocations[1]
+      //   console.log('Player traveled through portal')
+      // }
 
       //detect collision with player
       if (cells[char.currentPosition].classList.contains(player.class)) {
@@ -228,13 +229,14 @@ function init() {
         direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
-      if (noa.currentPosition === portalLocations[1]) {
-        noa.currentPosition = portalLocations[0]
-        console.log('Player traveled through portal')
-      } else if (player.currentPosition === portalLocations[0]) {
-        noa.currentPosition = portalLocations[1]
-        console.log('Player traveled through portal')
-      }
+      // if (noa.currentPosition === portalLocations[1]) {
+      //   noa.remove(noa.currentPosition)
+      //   noa.currentPosition = portalLocations[0]
+      //   console.log('Player traveled through portal')
+      // } else if (player.currentPosition === portalLocations[0]) {
+      //   noa.currentPosition = portalLocations[1]
+      //   console.log('Player traveled through portal')
+      // }
 
       // detect collision with player
       if (cells[noa.currentPosition].classList.contains(player.class)) {
@@ -255,8 +257,8 @@ function init() {
   const jos = {
     name: 'Jos',
     className: 'jos',
-    startingPosition: ghostHomeArray[2],
-    currentPosition: ghostHomeArray[2],
+    startingPosition: ghostHomeArray[4],
+    currentPosition: ghostHomeArray[4],
     positionX: function() {
       return Math.floor(char.currentPosition % width)
     },
@@ -333,13 +335,14 @@ function init() {
       }
 
 
-      if (jos.currentPosition === portalLocations[1]) {
-        jos.currentPosition = portalLocations[0]
-        console.log('Player traveled through portal')
-      } else if (player.currentPosition === portalLocations[0]) {
-        jos.currentPosition = portalLocations[1]
-        console.log('Player traveled through portal')
-      }
+      // if (jos.currentPosition === portalLocations[1]) {
+      //   jos.remove(jos.currentPosition)
+      //   jos.currentPosition = portalLocations[0]
+      //   console.log('Player traveled through portal')
+      // } else if (player.currentPosition === portalLocations[0]) {
+      //   jos.currentPosition = portalLocations[1]
+      //   console.log('Player traveled through portal')
+      // }
 
       //detect collision with player
       if (cells[jos.currentPosition].classList.contains(player.class)) {
@@ -361,8 +364,8 @@ function init() {
   const guy = {
     name: 'Guy',
     className: 'guy',
-    startingPosition: ghostHomeArray[3],
-    currentPosition: ghostHomeArray[3],
+    startingPosition: ghostHomeArray[5],
+    currentPosition: ghostHomeArray[5],
     add(position) {
       console.log('guy added')
       //console.log(position)
@@ -384,13 +387,14 @@ function init() {
         direction = directions[Math.floor(Math.random() * directions.length)]
       }
 
-      if (guy.currentPosition === portalLocations[1]) {
-        guy.currentPosition = portalLocations[0]
-        console.log('Player traveled through portal')
-      } else if (player.currentPosition === portalLocations[0]) {
-        guy.currentPosition = portalLocations[1]
-        console.log('Player traveled through portal')
-      }
+      // if (guy.currentPosition === portalLocations[1]) {
+      //   guy.remove(guy.currentPosition)
+      //   guy.currentPosition = portalLocations[0]
+      //   console.log('Player traveled through portal')
+      // } else if (player.currentPosition === portalLocations[0]) {
+      //   guy.currentPosition = portalLocations[1]
+      //   console.log('Player traveled through portal')
+      // }
 
       //detect collision with player
       if (cells[guy.currentPosition].classList.contains(player.class)) {
