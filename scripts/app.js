@@ -24,19 +24,21 @@ function init() {
   const superPelletEatenClass = 'super-pellet-eaten'
   const pellets = []
   const superPellets = []
+  const ghostsEaten = []
 
   // * Game state/logic variables
   let score = 0
   const pelletScoreValue = 10
   const superPelletScoreValue = 50
+  const eatenGhostValue = 200
 
 
   const scaredClass = 'scared'
   // * Player object
   const player = {
     name: 'Dave', // ! make it so user can add name to personalise experience
-    startPosition: 369,
-    currentPosition: 369,
+    startPosition: 21,
+    currentPosition: 21,
     direction: 'up',
     class: 'player',
     lives: 3,
@@ -468,8 +470,13 @@ function init() {
     } 
     // for scared ghosts collision
     if (cells[position].classList.contains(player.class) && cells[position].classList.contains(scaredClass)) {
-      alert('scared ghost hit')
+      //alert('scared ghost hit')
+      ghostsEaten.push('super ghost eaten')
     }
+
+ 
+
+    // have an if for each ghost?
 
 
   }
@@ -494,8 +501,10 @@ function init() {
     const eatenSuperPellets = document.getElementsByClassName(superPelletEatenClass)
     const numberOfSuperPelletsEaten = eatenSuperPellets.length
 
+    const numberOfSuperGhostsEaten = ghostsEaten.length
+
     //console.log('pellets eaten ->', numberOfPelletsEaten)
-    score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue)
+    score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue) + (numberOfSuperGhostsEaten * eatenGhostValue)
     //console.log('score', score)
     scoreDisplay.innerText = score
   }
