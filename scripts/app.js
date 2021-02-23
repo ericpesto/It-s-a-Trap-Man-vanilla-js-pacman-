@@ -85,14 +85,7 @@ function init() {
       
 
 
-      // ! SUPER PELLET LOGIC
-      //if (player eats super pellet)
-      // for 15 seconds add class of fridgtened to all ghosts, after time is over, remove the frightened class.
-      //if player eats ghost while fridghtened
-      // + 200 points
-      // + send ghost back home
-
-      // ! inititalize functions dependent on player movement here
+      // * inititalize functions dependent on player movement here
       player.add(player.currentPosition)
       removePellet(player.currentPosition)
       removeSuperPellet(player.currentPosition)
@@ -100,9 +93,24 @@ function init() {
       handleScore() 
 
       if (player.lives <= 0) {
-        // ! RESET GAME also on pellets array length = 0
+        
         alert('Game Over')
       }
+
+      // ! SUPER PELLET LOGIC
+      // * if (player eats super pellet)
+      // * for 15 seconds add class of fridgtened to all ghosts, after time is over, remove the frightened class.
+      // * if player eats ghost while fridghtened
+      // * 200 points
+      // ? send ghost back home
+
+      // ! RESET GAME also on pellets array length = 0
+      // need to return array of pellets and know when length of that array = 0
+
+      // then work on sending ghosts home when eaten
+
+      console.log(cells)
+
 
     }
   }
@@ -462,8 +470,7 @@ function init() {
       if (playerPosition === Number(superPellet.id)) {
         superPellet.classList.remove(superPelletClass)
         superPellet.classList.add(superPelletEatenClass)
-        //superPellet.setAttribute('data-score', superPelletScoreValue)
-        
+        //superPellet.setAttribute('data-score', superPelletScoreValue)     
         handleScaredGhosts(playerPosition)
       }
     })
@@ -525,11 +532,11 @@ function init() {
     if (position === portalLocations[1]) {
       object.remove(position)
       object.currentPosition = portalLocations[0]
-      console.log('Player traveled through portal')
+      //console.log('portal used')
     } else if (position === portalLocations[0]) {
       object.remove(position)
       object.currentPosition = portalLocations[1]
-      console.log('Player traveled through portal')
+      //console.log('portal used')
     }
   }
 
