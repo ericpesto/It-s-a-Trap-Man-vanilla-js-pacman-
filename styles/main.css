@@ -1,20 +1,47 @@
-
+ 
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: #f9ce20;
+  background-color: #fdfdfd;
+  color: #f9ce20;
   min-height: 100vh;
   margin: 0;
   /*font-family: 'Montserrat Alternates', sans-serif;*/
   font-family: 'Press Start 2P', cursive;
   text-transform: uppercase;
+  text-align: center;
 }
 
+.intro-page {
+/* CSS HERE */
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+}
+
+.hero {
+  width: 25vmax;
+}
+
+.soundtrack-button {
+  width: 4vmax;
+  position: absolute;
+  right: 0%;
+  bottom: 0%;
+  margin: 1vmax 1vmax;
+  cursor: pointer;
+}
+
+h3 {
+  cursor: pointer;
+}
 
 .grid-wrapper {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,6 +52,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  max-width: 960px;
 }
 
 .grid {
@@ -36,6 +64,8 @@ body {
   justify-content: center;
   height: 60vmax;
   width: 60vmax;
+  max-width: 960px;
+  max-height: 960px;
   background-color: #cecece;
 }
 
@@ -151,4 +181,10 @@ body {
   background-position: center;
   background-size: 105%;
   cursor: pointer;
+}
+
+audio.soundtrack {
+  margin-top: 1vmax;
+  /*border-radius: 50px;
+  border: 2px solid #f9ce20;*/
 }

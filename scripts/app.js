@@ -3,9 +3,18 @@ function init() {
   const grid = document.querySelector('.grid')
   const scoreDisplay = document.querySelector('.score')
   const livesDisplay = document.querySelector('.lives')
+  const startGameButton = document.querySelector('.start-game')
+  const soundTrackButton = document.querySelector('.soundtrack-button')
+  const introPage = document.querySelector('.intro-page')
+
+
+
+
+
   const soundTrack = document.querySelector('.soundtrack')
   const playerEatenFx = document.querySelector('.player-eaten-fx')
   const scaredGhostFx = document.querySelector('.ghost-eaten-fx')
+
   
   // * Grid variables
   const width = 20
@@ -46,7 +55,7 @@ function init() {
     name: 'Dave', // ! make it so user can add name to personalise experience
     startPosition: 361,
     currentPosition: 361,
-    direction: 'down',
+    direction: 'left',
     class: 'player',
     lives: 3,
     huntClass: 'player-hunt',
@@ -97,26 +106,30 @@ function init() {
 
 
       if (player.lives <= 0) {
-        alert('Game Over')
+        //alert('Game Over')
+        // show game over page plus score, and a replay button
         player.lives = 3
+        clearInterval(playerMovement)
+        clearInterval(charMovement)
+        clearInterval(noaMovement)
+        clearInterval(josMovement)
+        clearInterval(guyMovement)
       }
 
       if (pelletsLeft <= 0) {
-        alert('You Won!')
-        player.lives = 3
+        // show you won page plus score, and a replay button
+        //alert('You Won!')
+        //player.lives = 3
+        clearInterval(playerMovement)
+        clearInterval(charMovement)
+        clearInterval(noaMovement)
+        clearInterval(josMovement)
+        clearInterval(guyMovement)
       }
 
 
-      // ! SUPER PELLET LOGIC
-      // * if (player eats super pellet)
-      // * for 15 seconds add class of fridgtened to all ghosts, after time is over, remove the frightened class.
-      // * if player eats ghost while fridghtened
-      // * 200 points
-      // ? send ghost back home
 
-      // ! RESET GAME also on pellets array length = 0
-      
-      // work on sending ghosts home when eaten
+      // work on turning ghosts back to normal after sent home
     }
   }
 
@@ -144,7 +157,7 @@ function init() {
     },
     move() {
       const directions = [-1, +1, -width, +width]
-      const direction = directions[Math.floor(Math.random() * directions.length)]
+      let direction = directions[Math.floor(Math.random() * directions.length)]
       
       // if (!mazeArray.includes(char.currentPosition + direction)) {
       //   cells[char.currentPosition].classList.remove(char.className)
@@ -186,13 +199,13 @@ function init() {
           char.add(char.currentPosition)
         } else {
           char.add(char.currentPosition)
-          //direction = directions[Math.floor(Math.random() * directions.length)]
+          direction = directions[Math.floor(Math.random() * directions.length)]
           //direction = 0
         }
-        //char.add(char.currentPosition)
+        char.add(char.currentPosition)
         //char.currentPosition += direction
       } else {
-        //direction = directions[Math.floor(Math.random() * directions.length)]
+        direction = directions[Math.floor(Math.random() * directions.length)]
         //direction = 0
         char.add(char.currentPosition)
         
@@ -224,7 +237,7 @@ function init() {
     },
     move() {
       const directions = [-1, +1, -width, +width]
-      const direction = directions[Math.floor(Math.random() * directions.length)]
+      let direction = directions[Math.floor(Math.random() * directions.length)]
       
       // if (!mazeArray.includes(noa.currentPosition + direction) ) {
       //   cells[noa.currentPosition].classList.remove(noa.className)
@@ -266,13 +279,13 @@ function init() {
           noa.add(noa.currentPosition)
         } else {
           noa.add(noa.currentPosition)
-          //direction = directions[Math.floor(Math.random() * directions.length)]
+          direction = directions[Math.floor(Math.random() * directions.length)]
           //direction = 0
         }
-        //noa.add(char.currentPosition)
+        noa.add(noa.currentPosition)
         //noa.currentPosition += direction
       } else {
-        //direction = directions[Math.floor(Math.random() * directions.length)]
+        direction = directions[Math.floor(Math.random() * directions.length)]
         //direction = 0
         noa.add(noa.currentPosition)
         
@@ -305,7 +318,7 @@ function init() {
     },
     move() {
       const directions = [-1, +1, -width, +width]
-      const direction = directions[Math.floor(Math.random() * directions.length)]
+      let direction = directions[Math.floor(Math.random() * directions.length)]
       
       // if (!mazeArray.includes(jos.currentPosition + direction)) {
       //   cells[jos.currentPosition].classList.remove(jos.className)
@@ -347,13 +360,13 @@ function init() {
           jos.add(jos.currentPosition)
         } else {
           jos.add(jos.currentPosition)
-          //direction = directions[Math.floor(Math.random() * directions.length)]
+          direction = directions[Math.floor(Math.random() * directions.length)]
           //direction = 0
         }
-        //char.add(char.currentPosition)
+        jos.add(jos.currentPosition)
         //char.currentPosition += direction
       } else {
-        //direction = directions[Math.floor(Math.random() * directions.length)]
+        direction = directions[Math.floor(Math.random() * directions.length)]
         //direction = 0
         jos.add(jos.currentPosition)
         
@@ -445,6 +458,8 @@ function init() {
 
   function createSuperPellets(gridIndex) {
     if (superPelletLocations.includes(Number(gridIndex.id))) {
+
+      //! fix superpellet bug here, need to remove location from superpellet location once player vistits it or change how i assign the sueprpellat, using classes rather than indexes.
       superPellets.push(gridIndex)
       addSuperPellets()
     }
@@ -589,8 +604,6 @@ function init() {
   }
 
   function handleTeleport(position, object) {
-
-
     if (position === portalLocations[1]) {
       object.remove(position)
       object.currentPosition = portalLocations[0]
@@ -643,23 +656,51 @@ function init() {
     }
   }
 
-  // function handleAudio() {
-  //   soundTrack.play()
-  // }
+
+
+  
+  function startGame() {
+    introPage.style.display = 'none'
+    soundTrack.play()
+
+    // * Start timers
+
+    setTimeout(() => {
+
+      // start noise ( 3 second counter noise)
+      const playerMovement = setInterval(player.move, 250)
+      const charMovement = setInterval(char.move, 200)
+      const noaMovement = setInterval(noa.move, 200)
+      const josMovement = setInterval(jos.move, 200)
+      const guyMovement = setInterval(guy.move, 600)
+
+    }, 1000)
+  }
+
+  function handleSoundtrack() {
+    soundTrack.pause()
+    // ccs animate infinite pulse once clicked
+  }
 
   // * Call functions
   createGrid(player.startPosition) 
   
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
+  soundTrackButton.addEventListener('click', handleSoundtrack)
+  startGameButton.addEventListener('click', startGame)
 
-  // * Start timers
-  const playerMovement = setInterval(player.move, 250)
-  const charMovement = setInterval(char.move, 450)
-  const noaMovement = setInterval(noa.move, 450)
-  const josMovement = setInterval(jos.move, 450)
-  const guyMovement = setInterval(guy.move, 600)
-  //handleAudio()
+  // // * Start timers
+  // const playerMovement = setInterval(player.move, 250)
+  // const charMovement = setInterval(char.move, 200)
+  // const noaMovement = setInterval(noa.move, 200)
+  // const josMovement = setInterval(jos.move, 200)
+  // const guyMovement = setInterval(guy.move, 600)
+
+  //on click function to start game on click
+
+  //clear inervals on player win/loss
+
 }
 
 window.addEventListener('DOMContentLoaded', init)
