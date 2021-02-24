@@ -141,14 +141,6 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
-      // if (!mazeArray.includes(char.currentPosition + direction)) {
-      //   cells[char.currentPosition].classList.remove(char.className)
-      //   char.currentPosition += direction
-      //   cells[char.currentPosition].classList.add(char.className)
-      // } else {
-      //   direction = directions[Math.floor(Math.random() * directions.length)]
-      // }
-
       function getNextMoveCoordinates(nextCell) {
         return [Math.floor(nextCell % width), nextCell / width]
       }
@@ -176,14 +168,11 @@ function init() {
         } else {
           char.add(char.currentPosition)
           direction = directions[Math.floor(Math.random() * directions.length)]
-          //direction = 0
         }
 
         char.add(char.currentPosition)
-        //char.currentPosition += direction
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
-        //direction = 0
         char.add(char.currentPosition)
         
       }
@@ -216,14 +205,6 @@ function init() {
     move() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
-      
-      // if (!mazeArray.includes(noa.currentPosition + direction) ) {
-      //   cells[noa.currentPosition].classList.remove(noa.className)
-      //   noa.currentPosition += direction
-      //   cells[noa.currentPosition].classList.add(noa.className)
-      // } else {
-      //   direction = directions[Math.floor(Math.random() * directions.length)]
-      // }
 
       function getNextMoveCoordinates(nextCell) {
         return [Math.floor(nextCell % width), nextCell / width]
@@ -252,14 +233,11 @@ function init() {
         } else {
           noa.add(noa.currentPosition)
           direction = directions[Math.floor(Math.random() * directions.length)]
-          //direction = 0
         }
 
         noa.add(noa.currentPosition)
-        //noa.currentPosition += direction
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
-        //direction = 0
         noa.add(noa.currentPosition)
         
       }
@@ -293,14 +271,6 @@ function init() {
     move() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
-      
-      // if (!mazeArray.includes(jos.currentPosition + direction)) {
-      //   cells[jos.currentPosition].classList.remove(jos.className)
-      //   jos.currentPosition += direction
-      //   cells[jos.currentPosition].classList.add(jos.className)
-      // } else {
-      //   direction = directions[Math.floor(Math.random() * directions.length)]
-      // }
 
       function getNextMoveCoordinates(nextCell) {
         return [Math.floor(nextCell % width), nextCell / width]
@@ -328,14 +298,11 @@ function init() {
         } else {
           jos.add(jos.currentPosition)
           direction = directions[Math.floor(Math.random() * directions.length)]
-          //direction = 0
         }
 
         jos.add(jos.currentPosition)
-        //char.currentPosition += direction
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
-        //direction = 0
         jos.add(jos.currentPosition)
         
       }
