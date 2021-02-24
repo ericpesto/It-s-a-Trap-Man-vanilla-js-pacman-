@@ -63,6 +63,7 @@ h3:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #f9ce20;
 }
 
 .ui-wrapper {
@@ -74,7 +75,7 @@ h3:hover {
 
 .grid {
   align-items: center;
-  box-shadow: 0px 0px 10px 0 rgba(136, 66, 19, 0.788);
+  box-shadow: 0px 0px 10px 0 #fafafa73;
   display: flex;
   flex-wrap: wrap;
   height: 100%;
@@ -97,18 +98,19 @@ h3:hover {
 
 .grid div.maze-wall {
   background-color: rgb(136, 66, 19);
+  background-color: #313bc3e0;
   border-radius: 3px;
   border: 7px rgba(0, 0, 0, 0.205) double;
 }
 
 .grid div.ghost-home {
-  background-color: #313bc3e0;
+  background-color: #9020f980;
   /*border: 4px rgba(206, 50, 180, 0.479) solid;*/
   border-radius:5px ;
 }
 
 .grid div.portal {
-  background-color: #f9ce2059;
+  background-color: #a5a5a57c;
   /*border: 4px rgba(206, 50, 180, 0.479) solid;*/
   border-radius:5px ;
 }
@@ -176,6 +178,15 @@ h3:hover {
 
 .grid div.scared {
   background-image: url('../assets/images/scared-3.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-size: 110%;
+  cursor: pointer;
+}
+
+.grid div.laughing {
+  background-image: url('../assets/images/crying-emoji.gif');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

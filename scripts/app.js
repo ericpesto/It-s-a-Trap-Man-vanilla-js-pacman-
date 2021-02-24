@@ -656,15 +656,19 @@ function init() {
       // show game over page plus score, and a replay button
       player.lives = 0
       livesDisplayHeader.style.color = 'red'
+      cells[char.currentPosition].classList.add('laughing')
+      cells[noa.currentPosition].classList.add('laughing')
+      cells[jos.currentPosition].classList.add('laughing')
+      cells[guy.currentPosition].classList.add('laughing')
       clearInterval(playerMovement)
       clearInterval(charMovement)
       clearInterval(noaMovement)
       clearInterval(josMovement)
       clearInterval(guyMovement)
-      
-      setTimeout(() => {
-        //hide game grid and show score page, with celebration emoji have a custom reload page button to play game again
-      })
+
+      // setTimeout(() => {
+      //   //hide game grid and show score page, with celebration emoji have a custom reload page button to play game again
+      // }, 1000)
     }
 
     if (pelletsLeft <= 0) {
@@ -674,6 +678,10 @@ function init() {
       scoreDisplayHeader.style.color = 'green'
       //player.className = 'celebration'
       cells[player.currentPosition].classList.add('celebration')
+      cells[char.currentPosition].classList.add(scaredClass)
+      cells[noa.currentPosition].classList.add(scaredClass)
+      cells[jos.currentPosition].classList.add(scaredClass)
+      cells[guy.currentPosition].classList.add(scaredClass)
       clearInterval(playerMovement)
       clearInterval(charMovement)
       clearInterval(noaMovement)
