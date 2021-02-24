@@ -663,7 +663,7 @@ function init() {
       clearInterval(guyMovement)
       
       setTimeout(() => {
-        //hide game grid and show score page, have a custom reload page button to play game again
+        //hide game grid and show score page, with celebration emoji have a custom reload page button to play game again
       })
     }
 
@@ -672,6 +672,8 @@ function init() {
       //alert('You Won!')
       //player.lives = 3
       scoreDisplayHeader.style.color = 'green'
+      //player.className = 'celebration'
+      cells[player.currentPosition].classList.add('celebration')
       clearInterval(playerMovement)
       clearInterval(charMovement)
       clearInterval(noaMovement)

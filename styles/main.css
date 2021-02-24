@@ -191,12 +191,12 @@ h3:hover {
   background-size: 105%;
   cursor: pointer;
 }
-.grid div.player-hunt {
-  background-image: url('../assets/images/crying-emoji.gif');
+.grid div.celebration {
+  background-image: url('../assets/images/celebration-emoji.gif');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  background-size: 105%;
+  background-size: 150%;
   cursor: pointer;
 }
 
