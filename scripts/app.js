@@ -581,9 +581,9 @@ function init() {
     }
   }
 
-  function handleAudio() {
-    soundTrack.play()
-  }
+  // function handleAudio() {
+  //   soundTrack.play()
+  // }
 
   // * Call functions
   createGrid(player.startPosition) 
@@ -597,7 +597,7 @@ function init() {
   const noaMovement = setInterval(noa.move, 450)
   const josMovement = setInterval(jos.move, 450)
   const guyMovement = setInterval(guy.move, 600)
-  handleAudio()
+  //handleAudio()
 }
 
 window.addEventListener('DOMContentLoaded', init)
