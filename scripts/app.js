@@ -3,6 +3,7 @@ function init() {
   const grid = document.querySelector('.grid')
   const scoreDisplay = document.querySelector('.score')
   const livesDisplay = document.querySelector('.lives')
+  const soundTrack = document.querySelector('.soundtrack')
   
   // * Grid variables
   const width = 20
@@ -555,7 +556,7 @@ function init() {
     scoreDisplay.innerText = score
 
 
-    pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten) + 1)
+    pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten)) + 1
     //console.log(pelletsLeft)
   }
 
@@ -580,6 +581,10 @@ function init() {
     }
   }
 
+  function handleAudio() {
+    soundTrack.play()
+  }
+
   // * Call functions
   createGrid(player.startPosition) 
   
@@ -592,6 +597,7 @@ function init() {
   const noaMovement = setInterval(noa.move, 450)
   const josMovement = setInterval(jos.move, 450)
   const guyMovement = setInterval(guy.move, 600)
+  handleAudio()
 }
 
 window.addEventListener('DOMContentLoaded', init)

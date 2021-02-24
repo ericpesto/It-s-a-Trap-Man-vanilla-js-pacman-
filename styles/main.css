@@ -63,16 +63,16 @@ body {
 .grid div.pellet {
   background-image: url('../assets/images/coin-4.gif');
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 35%;
   background-position: center;
   cursor: pointer;
 }
 
 .grid div.super-pellet {
-  background-image: url('../assets/images/green-diamond.gif');
+  background-image: url('../assets/images/bit-coin.gif');
   background-repeat: no-repeat;
   background-size: contain;
-  background-size: 85%;
+  background-size: 120%;
   background-position: center;
   cursor: pointer;
 }
