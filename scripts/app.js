@@ -559,21 +559,25 @@ function init() {
       if (player.currentPosition === char.currentPosition) {
         char.remove(char.currentPosition)
         char.currentPosition = char.startingPosition
+        //char.add(char.currentPosition)
       }
 
       if (player.currentPosition === noa.currentPosition) {
         noa.remove(noa.currentPosition)
         noa.currentPosition = noa.startingPosition
+        //noa.add(noa.currentPosition)
       }
 
       if (player.currentPosition === jos.currentPosition) {
         jos.remove(jos.currentPosition)
         jos.currentPosition = jos.startingPosition
+        //jos.add(jos.currentPosition)
       }
 
       if (player.currentPosition === guy.currentPosition) {
         guy.remove(guy.currentPosition)
         guy.currentPosition = guy.startingPosition
+        //guy.add(guy.currentPosition)
       }
 
     }
