@@ -37,11 +37,18 @@ align-items: center;
   cursor: pointer;
 }
 
+h1 {
+  cursor: pointer;
+  color: #A9BDCE;
+}
+
 h3 {
   cursor: pointer;
+
 }
 
 .grid-wrapper {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,8 +69,8 @@ h3 {
   flex-wrap: wrap;
   height: 100%;
   justify-content: center;
-  height: 60vmax;
-  width: 60vmax;
+  height: 50vmax;
+  width: 50vmax;
   max-width: 960px;
   max-height: 960px;
   background-color: #cecece;

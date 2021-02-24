@@ -6,6 +6,8 @@ function init() {
   const startGameButton = document.querySelector('.start-game')
   const soundTrackButton = document.querySelector('.soundtrack-button')
   const introPage = document.querySelector('.intro-page')
+  const livesDisplayHeader = document.querySelector('.lives-header')
+  const scoreDisplayHeader = document.querySelector('.score-header')
 
 
 
@@ -14,6 +16,13 @@ function init() {
   const soundTrack = document.querySelector('.soundtrack')
   const playerEatenFx = document.querySelector('.player-eaten-fx')
   const scaredGhostFx = document.querySelector('.ghost-eaten-fx')
+
+  // * iniate timers
+  let playerMovement = null
+  let charMovement = null
+  let noaMovement = null
+  let josMovement = null
+  let guyMovement = null
 
   
   // * Grid variables
@@ -59,6 +68,7 @@ function init() {
     class: 'player',
     lives: 3,
     huntClass: 'player-hunt',
+    speed: 250,
     positionX: function() {
       return Math.floor(player.currentPosition % width)
     },
@@ -102,35 +112,13 @@ function init() {
       removeSuperPellet(player.currentPosition)
       handleTeleport(player.currentPosition, player)
       handleScore() 
-
-
-
-      if (player.lives <= 0) {
-        //alert('Game Over')
-        // show game over page plus score, and a replay button
-        player.lives = 3
-        clearInterval(playerMovement)
-        clearInterval(charMovement)
-        clearInterval(noaMovement)
-        clearInterval(josMovement)
-        clearInterval(guyMovement)
-      }
-
-      if (pelletsLeft <= 0) {
-        // show you won page plus score, and a replay button
-        //alert('You Won!')
-        //player.lives = 3
-        clearInterval(playerMovement)
-        clearInterval(charMovement)
-        clearInterval(noaMovement)
-        clearInterval(josMovement)
-        clearInterval(guyMovement)
-      }
-
-
-
-      // work on turning ghosts back to normal after sent home
+      handleGameState()
     }
+
+
+
+    // work on turning ghosts back to normal after sent home and the superpellet bug
+    
   }
 
   // * Ghosts
@@ -139,6 +127,7 @@ function init() {
     className: 'char',
     startingPosition: ghostHomeArray[0],
     currentPosition: ghostHomeArray[0],
+    speed: 300,
     targetCoordinates: [player.positionX(), player.positionY()],
     positionX: function() {
       return Math.floor(char.currentPosition % width)
@@ -220,6 +209,7 @@ function init() {
     className: 'noa',
     startingPosition: ghostHomeArray[1],
     currentPosition: ghostHomeArray[1],
+    speed: 300,
     targetCoordinates: [player.positionX(), player.positionY()],
     positionX: function() {
       return Math.floor(noa.currentPosition % width)
@@ -301,6 +291,7 @@ function init() {
     className: 'jos',
     startingPosition: ghostHomeArray[4],
     currentPosition: ghostHomeArray[4],
+    speed: 200,
     positionX: function() {
       return Math.floor(jos.currentPosition % width)
     },
@@ -382,6 +373,7 @@ function init() {
     className: 'guy',
     startingPosition: ghostHomeArray[5],
     currentPosition: ghostHomeArray[5],
+    speed: 300,
     add(position) {
       //console.log('guy added')
       cells[position].classList.add(guy.className)
@@ -657,7 +649,33 @@ function init() {
   }
 
 
+  function handleGameState() {
+    if (player.lives <= 0) {
+      //alert('Game Over')
+      // show game over page plus score, and a replay button
+      player.lives = 0
+      livesDisplayHeader.style.color = 'red'
+      clearInterval(playerMovement)
+      clearInterval(charMovement)
+      clearInterval(noaMovement)
+      clearInterval(josMovement)
+      clearInterval(guyMovement)
+    }
 
+    if (pelletsLeft <= 0) {
+      // show you won page plus score, and a replay button
+      //alert('You Won!')
+      //player.lives = 3
+      scoreDisplayHeader.style.color = 'green'
+      clearInterval(playerMovement)
+      clearInterval(charMovement)
+      clearInterval(noaMovement)
+      clearInterval(josMovement)
+      clearInterval(guyMovement)
+
+      // ! if you win, reset the game and increase ghost speed, might have to store ghost speed as variable yu can then add to
+    }
+  }
   
   function startGame() {
     introPage.style.display = 'none'
@@ -668,26 +686,26 @@ function init() {
     setTimeout(() => {
 
       // start noise ( 3 second counter noise)
-      const playerMovement = setInterval(player.move, 250)
-      const charMovement = setInterval(char.move, 200)
-      const noaMovement = setInterval(noa.move, 200)
-      const josMovement = setInterval(jos.move, 200)
-      const guyMovement = setInterval(guy.move, 600)
+      playerMovement = setInterval(player.move, player.speed)
+      charMovement = setInterval(char.move, char.speed)
+      noaMovement = setInterval(noa.move, noa.speed)
+      josMovement = setInterval(jos.move, jos.speed)
+      guyMovement = setInterval(guy.move, guy.speed)
 
     }, 1000)
   }
 
-  function handleSoundtrack() {
-    soundTrack.pause()
-    // ccs animate infinite pulse once clicked
-  }
+  // function handleSoundtrack() {
+  //   soundTrack.pause()
+  //   // ccs animate infinite pulse once clicked
+  // }
 
   // * Call functions
   createGrid(player.startPosition) 
   
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
-  soundTrackButton.addEventListener('click', handleSoundtrack)
+  //soundTrackButton.addEventListener('click', handleSoundtrack)
   startGameButton.addEventListener('click', startGame)
 
   // // * Start timers
