@@ -476,6 +476,8 @@ function init() {
     })
   }
 
+
+ 
   // * Remove super pellet on player movement
   function removeSuperPellet(playerPosition) {
     superPellets.forEach(superPellet => {
@@ -483,13 +485,18 @@ function init() {
         superPellet.classList.remove(superPelletClass)
         superPellet.classList.add(superPelletEatenClass)
         //superPellet.setAttribute('data-score', superPelletScoreValue)     
-        handleScaredGhosts(playerPosition)
+        handleScaredGhosts()
+        scaredGhostFx.play() 
       }
     })
   }
+  // ! BUG ghost get scared when plaer mvoes over epty superpellet region
+
+  // ! if cells[player.currentPosition].classList.cointains((superpelletClass)
+  //do i split each ghonst into its own scared function?
 
   function handleScaredGhosts() {
-    
+
     cells[char.currentPosition].classList.remove(char.className)
     char.className = scaredClass
     cells[noa.currentPosition].classList.remove(noa.className)
@@ -499,7 +506,7 @@ function init() {
     cells[guy.currentPosition].classList.remove(guy.className)
     guy.className = scaredClass
     //game sound fex src equals right sound
-    scaredGhostFx.play() 
+    
 
     setTimeout(() => {
       cells[char.currentPosition].classList.remove(scaredClass)
@@ -513,9 +520,23 @@ function init() {
 
     }, 17000)
 
-  
+    // if (player.currentPosition === char.currentPosition) {
+    //   char.currentPosition = char.startingPosition
+    // }
+
+    // if (player.currentPosition === noa.currentPosition) {
+    //   noa.currentPosition = noa.startingPosition
+    // }
+
+    // if (player.currentPosition === jos.currentPosition) {
+    //   jos.currentPosition = jos.startingPosition
+    // }
+
+    // if (player.currentPosition === guy.currentPosition) {
+    //   guy.currentPosition = guy.startingPosition
+    // }
     //if player eats ghost while fridghtened
-    // + 200 points
+
     // + send ghost back home
   }
 
@@ -534,6 +555,26 @@ function init() {
     if (cells[position].classList.contains(player.class) && cells[position].classList.contains(scaredClass)) {
       //alert('scared ghost hit')
       ghostsEaten.push('super ghost eaten')
+
+      if (player.currentPosition === char.currentPosition) {
+        char.remove(char.currentPosition)
+        char.currentPosition = char.startingPosition
+      }
+
+      if (player.currentPosition === noa.currentPosition) {
+        noa.remove(noa.currentPosition)
+        noa.currentPosition = noa.startingPosition
+      }
+
+      if (player.currentPosition === jos.currentPosition) {
+        jos.remove(jos.currentPosition)
+        jos.currentPosition = jos.startingPosition
+      }
+
+      if (player.currentPosition === guy.currentPosition) {
+        guy.remove(guy.currentPosition)
+        guy.currentPosition = guy.startingPosition
+      }
 
     }
 
