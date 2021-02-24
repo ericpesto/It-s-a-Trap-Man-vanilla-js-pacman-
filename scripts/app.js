@@ -4,6 +4,7 @@ function init() {
   const scoreDisplay = document.querySelector('.score')
   const livesDisplay = document.querySelector('.lives')
   const soundTrack = document.querySelector('.soundtrack')
+  const gameSoundFx = document.querySelector('.game-fx')
   
   // * Grid variables
   const width = 20
@@ -460,6 +461,7 @@ function init() {
         pellet.classList.remove(pelletClass)
         pellet.classList.add(pelletEatenClass)
         //pellet.setAttribute('data-score', pelletScoreValue)
+        
       }
     })
   }
@@ -511,6 +513,7 @@ function init() {
       livesDisplay.innerText = player.lives
       player.remove(player.currentPosition)
       player.currentPosition = player.startPosition
+      gameSoundFx.play() 
       // send player back to starting position.
       // if player life is less that 3, game over
       //console.log('ghost caught player')
