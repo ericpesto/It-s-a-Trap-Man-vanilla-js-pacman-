@@ -60,6 +60,12 @@ body {
   border-radius:5px ;
 }
 
+.grid div.portal {
+  background-color: #f9ce2059;
+  /*border: 4px rgba(206, 50, 180, 0.479) solid;*/
+  border-radius:5px ;
+}
+
 .grid div.pellet {
   background-image: url('../assets/images/coin-4.gif');
   background-repeat: no-repeat;

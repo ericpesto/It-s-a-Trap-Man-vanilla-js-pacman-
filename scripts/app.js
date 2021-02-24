@@ -16,6 +16,7 @@ function init() {
   const ghostHomeArray = [169,170,189,190,209,210]
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
+  const portalClass = 'portal'
   const superPelletLocations = [84,95,276,263]
   const playerTrack = mazeArray.concat(ghostHomeArray)
   const pelletTrack = mazeArray.concat(ghostHomeArray, portalLocations, superPelletLocations)
@@ -124,7 +125,7 @@ function init() {
     className: 'char',
     startingPosition: ghostHomeArray[0],
     currentPosition: ghostHomeArray[0],
-    targetCoordinates: [player.positionX() - 8, player.positionY() - 120],
+    targetCoordinates: [player.positionX(), player.positionY()],
     positionX: function() {
       return Math.floor(char.currentPosition % width)
     },
@@ -205,7 +206,7 @@ function init() {
     className: 'noa',
     startingPosition: ghostHomeArray[1],
     currentPosition: ghostHomeArray[1],
-    targetCoordinates: [player.positionX() - 12, player.positionY() - 200],
+    targetCoordinates: [player.positionX(), player.positionY()],
     positionX: function() {
       return Math.floor(noa.currentPosition % width)
     },
@@ -403,6 +404,7 @@ function init() {
     
       addMaze(cell)
       addGhostHome(cell)
+      addPortalGateway(cell)
       createPellets(cell)
       createSuperPellets(cell)
     }
@@ -424,6 +426,12 @@ function init() {
   function addGhostHome(gridIndex) {
     if (ghostHomeArray.includes(Number(gridIndex.id))) {
       gridIndex.classList.add(ghostHomeClass)
+    }
+  }
+
+  function addPortalGateway(gridIndex) {
+    if (portalLocations.includes(Number(gridIndex.id))) {
+      gridIndex.classList.add(portalClass)
     }
   }
 
@@ -531,6 +539,8 @@ function init() {
   }
 
   function handleTeleport(position, object) {
+
+
     if (position === portalLocations[1]) {
       object.remove(position)
       object.currentPosition = portalLocations[0]
