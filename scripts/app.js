@@ -4,7 +4,8 @@ function init() {
   const scoreDisplay = document.querySelector('.score')
   const livesDisplay = document.querySelector('.lives')
   const soundTrack = document.querySelector('.soundtrack')
-  const gameSoundFx = document.querySelector('.game-fx')
+  const playerEatenFx = document.querySelector('.player-eaten-fx')
+  const scaredGhostFx = document.querySelector('.ghost-eaten-fx')
   
   // * Grid variables
   const width = 20
@@ -497,6 +498,8 @@ function init() {
     jos.className = scaredClass
     cells[guy.currentPosition].classList.remove(guy.className)
     guy.className = scaredClass
+    //game sound fex src equals right sound
+    scaredGhostFx.play() 
 
     setTimeout(() => {
       cells[char.currentPosition].classList.remove(scaredClass)
@@ -508,7 +511,7 @@ function init() {
       cells[guy.currentPosition].classList.remove(scaredClass)
       guy.className = 'guy'
 
-    }, 15000)
+    }, 17000)
 
   
     //if player eats ghost while fridghtened
@@ -523,13 +526,15 @@ function init() {
       livesDisplay.innerText = player.lives
       player.remove(player.currentPosition)
       player.currentPosition = player.startPosition
-      gameSoundFx.play() 
+      //game sound fex src equals right sound
+      playerEatenFx.play() 
 
     } 
     // for scared ghosts collision
     if (cells[position].classList.contains(player.class) && cells[position].classList.contains(scaredClass)) {
       //alert('scared ghost hit')
       ghostsEaten.push('super ghost eaten')
+
     }
 
     // ! need to send eaten ghost back home
