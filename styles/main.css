@@ -171,6 +171,7 @@ h3:hover {
   background-position: center;
   background-size: 110%;
   cursor: pointer;
+  background-color: pink;
 }
 
 .grid div.jos {
@@ -180,6 +181,7 @@ h3:hover {
   background-position: center;
   background-size: 110%;
   cursor: pointer;
+  background-color: lightsalmon;
 }
 
 .grid div.guy {
@@ -189,6 +191,7 @@ h3:hover {
   background-position: center;
   background-size: 110%;
   cursor: pointer;
+  background-color: lightskyblue;
 }
 
 .grid div.scared {

@@ -158,9 +158,6 @@ function init() {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
 
-        const charCoordinates = [char.positionX(), char.positionY()]
-  
-
         let dX = Math.abs(player.positionX() - char.positionX())
         let dY = Math.abs(player.positionY() - char.positionY())
         let distance = Math.sqrt(dX * dX + dY * dY)
@@ -173,39 +170,13 @@ function init() {
         let distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
         console.log('distanceNext', distanceNext)
       
-  
-        // const closerX = function() {
-        //   if (Math.abs((charNextMoveCoordinates[0] - char.targetCoordinates[0])) > Math.abs((charCoordinates[0] - char.targetCoordinates[0]))) {
-        //     return true
-        //   } else {
-        //     return false
-        //   }
-        // }
-
-        // const closerY = function() {
-        //   if (Math.abs((charNextMoveCoordinates[1] - char.targetCoordinates[1])) > Math.abs((charCoordinates[1] - char.targetCoordinates[1]))) {
-        //     return true
-        //   } else {
-        //     return false
-        //   }
-        // }
-
-        // if ((closerY() || closerX()) && !mazeArray.includes(char.currentPosition + direction)) {
-        //   char.currentPosition += direction
-        //   char.add(char.currentPosition)
-        // } else {
-        //   char.add(char.currentPosition)
-        //   direction = directions[Math.floor(Math.random() * directions.length)]
-        //   //direction = 0
-        // }
-
 
         if (distanceNext < distance && !mazeArray.includes(char.currentPosition + direction)) {
           char.currentPosition += direction
           char.add(char.currentPosition)
         } else {
           char.add(char.currentPosition)
-          //direction = directions[Math.floor(Math.random() * directions.length)]
+          direction = directions[Math.floor(Math.random() * directions.length)]
           //direction = 0
         }
 
@@ -213,7 +184,7 @@ function init() {
         char.add(char.currentPosition)
         //char.currentPosition += direction
       } else {
-        //direction = directions[Math.floor(Math.random() * directions.length)]
+        direction = directions[Math.floor(Math.random() * directions.length)]
         //direction = 0
         char.add(char.currentPosition)
         
@@ -262,28 +233,22 @@ function init() {
 
       if (!mazeArray.includes(noa.currentPosition + direction)) {
         cells[noa.currentPosition].classList.remove(noa.className)
-        noa.currentPosition += direction
+        noa.currentPosition += direction       
 
-        const noaCoordinates = [noa.positionX(), noa.positionY()]
+        const dX = Math.abs(player.positionX() - noa.positionX())
+        const dY = Math.abs(player.positionY() - noa.positionY())
+        const distance = Math.sqrt(dX * dX + dY * dY)
+        console.log('distance', distance)
+
         const noaNextMoveCoordinates =  getNextMoveCoordinates(noa.currentPosition + direction)
 
-        const closerX = function() {
-          if ((noaNextMoveCoordinates[0] - noa.targetCoordinates[0]) > (noaCoordinates[0] - noa.targetCoordinates[0])) {
-            return true
-          } else {
-            return false
-          }
-        }
+        const dXN = Math.abs(player.positionX() - noaNextMoveCoordinates[0])
+        const dYN = Math.abs(player.positionY() - noaNextMoveCoordinates[1])
+        const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
+        console.log('distanceNext', distanceNext)
+      
 
-        const closerY = function() {
-          if ((noaNextMoveCoordinates[1] - noa.targetCoordinates[1]) > (noaCoordinates[1] - noa.targetCoordinates[1])) {
-            return true
-          } else {
-            return false
-          }
-        }
-
-        if ((closerY() || closerX()) && !mazeArray.includes(noa.currentPosition + direction)) {
+        if (distanceNext < distance && !mazeArray.includes(noa.currentPosition + direction)) {
           noa.currentPosition += direction
           noa.add(noa.currentPosition)
         } else {
@@ -291,6 +256,7 @@ function init() {
           direction = directions[Math.floor(Math.random() * directions.length)]
           //direction = 0
         }
+
         noa.add(noa.currentPosition)
         //noa.currentPosition += direction
       } else {
@@ -346,26 +312,22 @@ function init() {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
 
-        const josCoordinates = [jos.positionX(), jos.positionY()]
+
+
+        const dX = Math.abs(player.positionX() - jos.positionX())
+        const dY = Math.abs(player.positionY() - jos.positionY())
+        const distance = Math.sqrt(dX * dX + dY * dY)
+        console.log('distance', distance)
+
         const josNextMoveCoordinates =  getNextMoveCoordinates(jos.currentPosition + direction)
 
-        const closerX = function() {
-          if ((josNextMoveCoordinates[0] - jos.targetCoordinates[0]) > (josCoordinates[0] - jos.targetCoordinates[0])) {
-            return true
-          } else {
-            return false
-          }
-        }
+        const dXN = Math.abs(player.positionX() - josNextMoveCoordinates[0])
+        const dYN = Math.abs(player.positionY() - josNextMoveCoordinates[1])
+        const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
+        console.log('distanceNext', distanceNext)
+      
 
-        const closerY = function() {
-          if ((josNextMoveCoordinates[1] - jos.targetCoordinates[1]) > (josCoordinates[1] - jos.targetCoordinates[1])) {
-            return true
-          } else {
-            return false
-          }
-        }
-
-        if ((closerY() || closerX()) && !mazeArray.includes(jos.currentPosition + direction)) {
+        if (distanceNext < distance && !mazeArray.includes(jos.currentPosition + direction)) {
           jos.currentPosition += direction
           jos.add(jos.currentPosition)
         } else {
@@ -373,6 +335,7 @@ function init() {
           direction = directions[Math.floor(Math.random() * directions.length)]
           //direction = 0
         }
+
         jos.add(jos.currentPosition)
         //char.currentPosition += direction
       } else {
