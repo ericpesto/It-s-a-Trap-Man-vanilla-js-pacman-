@@ -55,7 +55,6 @@ function init() {
   const superPelletScoreValue = 50
   const eatenGhostValue = 200
 
-
   // * Player object
   const player = {
     name: 'Dave', // ! make it so user can add name to personalise experience
@@ -161,14 +160,14 @@ function init() {
         let dX = Math.abs(player.positionX() - char.positionX())
         let dY = Math.abs(player.positionY() - char.positionY())
         let distance = Math.sqrt(dX * dX + dY * dY)
-        console.log('distance', distance)
+        //console.log('distance', distance)
 
         const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
 
         let dXN = Math.abs(player.positionX() - charNextMoveCoordinates[0])
         let dYN = Math.abs(player.positionY() - charNextMoveCoordinates[1])
         let distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
-        console.log('distanceNext', distanceNext)
+        //console.log('distanceNext', distanceNext)
       
 
         if (distanceNext < distance && !mazeArray.includes(char.currentPosition + direction)) {
@@ -179,7 +178,6 @@ function init() {
           direction = directions[Math.floor(Math.random() * directions.length)]
           //direction = 0
         }
-
 
         char.add(char.currentPosition)
         //char.currentPosition += direction
@@ -238,14 +236,14 @@ function init() {
         const dX = Math.abs(player.positionX() - noa.positionX())
         const dY = Math.abs(player.positionY() - noa.positionY())
         const distance = Math.sqrt(dX * dX + dY * dY)
-        console.log('distance', distance)
+        //console.log('distance', distance)
 
         const noaNextMoveCoordinates =  getNextMoveCoordinates(noa.currentPosition + direction)
 
         const dXN = Math.abs(player.positionX() - noaNextMoveCoordinates[0])
         const dYN = Math.abs(player.positionY() - noaNextMoveCoordinates[1])
         const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
-        console.log('distanceNext', distanceNext)
+        //console.log('distanceNext', distanceNext)
       
 
         if (distanceNext < distance && !mazeArray.includes(noa.currentPosition + direction)) {
@@ -312,21 +310,18 @@ function init() {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
 
-
-
         const dX = Math.abs(player.positionX() - jos.positionX())
         const dY = Math.abs(player.positionY() - jos.positionY())
         const distance = Math.sqrt(dX * dX + dY * dY)
-        console.log('distance', distance)
+        //console.log('distance', distance)
 
         const josNextMoveCoordinates =  getNextMoveCoordinates(jos.currentPosition + direction)
 
         const dXN = Math.abs(player.positionX() - josNextMoveCoordinates[0])
         const dYN = Math.abs(player.positionY() - josNextMoveCoordinates[1])
         const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
-        console.log('distanceNext', distanceNext)
+        //console.log('distanceNext', distanceNext)
       
-
         if (distanceNext < distance && !mazeArray.includes(jos.currentPosition + direction)) {
           jos.currentPosition += direction
           jos.add(jos.currentPosition)
