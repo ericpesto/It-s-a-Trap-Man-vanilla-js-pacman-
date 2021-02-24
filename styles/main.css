@@ -161,6 +161,7 @@ h3:hover {
   background-position: center;
   background-size: 110%;
   cursor: pointer;
+  background-color: green;
 }
 
 .grid div.noa {

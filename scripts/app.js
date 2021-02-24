@@ -159,36 +159,61 @@ function init() {
         char.currentPosition += direction
 
         const charCoordinates = [char.positionX(), char.positionY()]
-        const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
   
-        const closerX = function() {
-          if ((charNextMoveCoordinates[0] - char.targetCoordinates[0]) > (charCoordinates[0] - char.targetCoordinates[0])) {
-            return true
-          } else {
-            return false
-          }
-        }
 
-        const closerY = function() {
-          if ((charNextMoveCoordinates[1] - char.targetCoordinates[1]) > (charCoordinates[1] - char.targetCoordinates[1])) {
-            return true
-          } else {
-            return false
-          }
-        }
+        let dX = Math.abs(player.positionX() - char.positionX())
+        let dY = Math.abs(player.positionY() - char.positionY())
+        let distance = Math.sqrt(dX * dX + dY * dY)
+        console.log('distance', distance)
 
-        if ((closerY() || closerX()) && !mazeArray.includes(char.currentPosition + direction)) {
+        const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
+
+        let dXN = Math.abs(player.positionX() - charNextMoveCoordinates[0])
+        let dYN = Math.abs(player.positionY() - charNextMoveCoordinates[1])
+        let distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
+        console.log('distanceNext', distanceNext)
+      
+  
+        // const closerX = function() {
+        //   if (Math.abs((charNextMoveCoordinates[0] - char.targetCoordinates[0])) > Math.abs((charCoordinates[0] - char.targetCoordinates[0]))) {
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // }
+
+        // const closerY = function() {
+        //   if (Math.abs((charNextMoveCoordinates[1] - char.targetCoordinates[1])) > Math.abs((charCoordinates[1] - char.targetCoordinates[1]))) {
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // }
+
+        // if ((closerY() || closerX()) && !mazeArray.includes(char.currentPosition + direction)) {
+        //   char.currentPosition += direction
+        //   char.add(char.currentPosition)
+        // } else {
+        //   char.add(char.currentPosition)
+        //   direction = directions[Math.floor(Math.random() * directions.length)]
+        //   //direction = 0
+        // }
+
+
+        if (distanceNext < distance && !mazeArray.includes(char.currentPosition + direction)) {
           char.currentPosition += direction
           char.add(char.currentPosition)
         } else {
           char.add(char.currentPosition)
-          direction = directions[Math.floor(Math.random() * directions.length)]
+          //direction = directions[Math.floor(Math.random() * directions.length)]
           //direction = 0
         }
+
+
         char.add(char.currentPosition)
         //char.currentPosition += direction
       } else {
-        direction = directions[Math.floor(Math.random() * directions.length)]
+        //direction = directions[Math.floor(Math.random() * directions.length)]
         //direction = 0
         char.add(char.currentPosition)
         
