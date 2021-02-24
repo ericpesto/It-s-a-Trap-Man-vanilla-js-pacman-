@@ -69,10 +69,10 @@ body {
 }
 
 .grid div.super-pellet {
-  background-image: url('../assets/images/bit-coin.gif');
+  background-image: url('../assets/images/orange-gem.gif');
   background-repeat: no-repeat;
   background-size: contain;
-  background-size: 120%;
+  background-size: 130%;
   background-position: center;
   cursor: pointer;
 }
