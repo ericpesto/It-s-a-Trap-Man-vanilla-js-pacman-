@@ -1,24 +1,21 @@
 function init() {
-  // * Global Variables
+  // * HTML variables
   const grid = document.querySelector('.grid')
   const scoreDisplay = document.querySelector('.score')
   const livesDisplay = document.querySelector('.lives')
   const startGameButton = document.querySelector('.start-game')
-  const soundTrackButton = document.querySelector('.soundtrack-button')
   const introPage = document.querySelector('.intro-page')
   const livesDisplayHeader = document.querySelector('.lives-header')
   const scoreDisplayHeader = document.querySelector('.score-header')
   const gridWrapper = document.querySelector('.grid-wrapper')
 
-
-
-
+  // * Audio
 
   const soundTrack = document.querySelector('.soundtrack')
   const playerEatenFx = document.querySelector('.player-eaten-fx')
   const scaredGhostFx = document.querySelector('.ghost-eaten-fx')
 
-  // * iniate timers
+  // * Timers
   let playerMovement = null
   let charMovement = null
   let noaMovement = null
@@ -59,7 +56,6 @@ function init() {
   const eatenGhostValue = 200
 
 
-  
   // * Player object
   const player = {
     name: 'Dave', // ! make it so user can add name to personalise experience
@@ -115,9 +111,6 @@ function init() {
       handleScore() 
       handleGameState()
     }
-
-
-
     // work on turning ghosts back to normal after sent home and the superpellet bug
     
   }
@@ -400,6 +393,101 @@ function init() {
     }
   }
 
+  function handleGameState() {
+    if (player.lives <= 0) {
+      //alert('Game Over')
+      // show game over page plus score, and a replay button
+      player.lives = 0
+      livesDisplayHeader.style.color = 'red'
+      cells[char.currentPosition].classList.add('laughing')
+      cells[noa.currentPosition].classList.add('laughing')
+      cells[jos.currentPosition].classList.add('laughing')
+      cells[guy.currentPosition].classList.add('laughing')
+      clearInterval(playerMovement)
+      clearInterval(charMovement)
+      clearInterval(noaMovement)
+      clearInterval(josMovement)
+      clearInterval(guyMovement)
+
+      // setTimeout(() => {
+      //   //hide game grid and show score page, with celebration emoji have a custom reload page button to play game again
+      // }, 1000)
+    }
+
+    if (pelletsLeft <= 0) {
+      scoreDisplayHeader.style.color = 'green'
+      cells[player.currentPosition].classList.add('celebration')
+      cells[char.currentPosition].classList.add(scaredClass)
+      cells[noa.currentPosition].classList.add(scaredClass)
+      cells[jos.currentPosition].classList.add(scaredClass)
+      cells[guy.currentPosition].classList.add(scaredClass)
+      clearInterval(playerMovement)
+      clearInterval(charMovement)
+      clearInterval(noaMovement)
+      clearInterval(josMovement)
+      clearInterval(guyMovement)
+      // ! if you win, reset the game and increase ghost speed, might have to store ghost speed as variable yu can then add to
+    }
+  }
+  
+  function startGame() {
+    createGrid(player.startPosition) 
+    introPage.style.display = 'none'
+    gridWrapper.style.display = 'flex'
+    soundTrack.play()
+
+    // * Start timers
+    setTimeout(() => {
+      // start noise ( 3 second counter noise)
+      playerMovement = setInterval(player.move, player.speed)
+      charMovement = setInterval(char.move, char.speed)
+      noaMovement = setInterval(noa.move, noa.speed)
+      josMovement = setInterval(jos.move, jos.speed)
+      guyMovement = setInterval(guy.move, guy.speed)
+    }, 1000)
+  }
+
+  // * Handle Score (workaround to account for playermovement behavour related to set interval, works really well for both pellet and superpellets now)
+  function handleScore() {
+    const eatenPellets = document.getElementsByClassName(pelletEatenClass)
+    const numberOfPelletsEaten = eatenPellets.length
+
+    const eatenSuperPellets = document.getElementsByClassName(superPelletEatenClass)
+    const numberOfSuperPelletsEaten = eatenSuperPellets.length
+
+    const numberOfSuperGhostsEaten = ghostsEaten.length
+
+    //console.log('pellets eaten ->', numberOfPelletsEaten)
+    score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue) + (numberOfSuperGhostsEaten * eatenGhostValue)
+    //console.log('score', score)
+    scoreDisplay.innerText = score
+
+
+    pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten)) + 1
+    //console.log(pelletsLeft)
+  }
+
+  function handleKeyUp(event) {
+    const key = event.keyCode
+
+    // * player direction logic
+    if (key === 39) {
+      player.direction = 'right'
+      //console.log('player pressed right')
+    } else if (key === 37) {
+      player.direction = 'left'
+      //console.log('player pressed left')
+    } else if (key === 38) {
+      player.direction = 'up'
+      //console.log('player pressed up')
+    } else if (key === 40) {
+      player.direction = 'down'
+      //console.log('player pressed down')
+    } else {
+      //console.log('invalid key')
+    }
+  }
+
   // * Make Grid
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
@@ -451,7 +539,6 @@ function init() {
 
   function createSuperPellets(gridIndex) {
     if (superPelletLocations.includes(Number(gridIndex.id))) {
-
       //! fix superpellet bug here, need to remove location from superpellet location once player vistits it or change how i assign the sueprpellat, using classes rather than indexes.
       superPellets.push(gridIndex)
       addSuperPellets()
@@ -498,13 +585,9 @@ function init() {
       }
     })
   }
-  // ! BUG ghost get scared when plaer mvoes over epty superpellet region
-
-  // ! if cells[player.currentPosition].classList.cointains((superpelletClass)
-  //do i split each ghonst into its own scared function?
+  // ! BUG: super pellet scared ghost triggered when empty
 
   function handleScaredGhosts() {
-
     cells[char.currentPosition].classList.remove(char.className)
     char.className = scaredClass
     cells[noa.currentPosition].classList.remove(noa.className)
@@ -515,7 +598,6 @@ function init() {
     guy.className = scaredClass
     //game sound fex src equals right sound
     
-
     setTimeout(() => {
       cells[char.currentPosition].classList.remove(scaredClass)
       char.className = 'char'
@@ -557,7 +639,6 @@ function init() {
       player.currentPosition = player.startPosition
       //game sound fex src equals right sound
       playerEatenFx.play() 
-
     } 
     // for scared ghosts collision
     if (cells[position].classList.contains(player.class) && cells[position].classList.contains(scaredClass)) {
@@ -593,7 +674,6 @@ function init() {
     // ! need to send eaten ghost back home
     // have an if for each ghost?
 
-
   }
 
   function handleTeleport(position, object) {
@@ -608,134 +688,10 @@ function init() {
     }
   }
 
-  // * Handle Score (workaround to account for playermovement behavour related to set interval, works really well for both pellet and superpellets now)
-  function handleScore() {
-    const eatenPellets = document.getElementsByClassName(pelletEatenClass)
-    const numberOfPelletsEaten = eatenPellets.length
-
-    const eatenSuperPellets = document.getElementsByClassName(superPelletEatenClass)
-    const numberOfSuperPelletsEaten = eatenSuperPellets.length
-
-    const numberOfSuperGhostsEaten = ghostsEaten.length
-
-    //console.log('pellets eaten ->', numberOfPelletsEaten)
-    score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue) + (numberOfSuperGhostsEaten * eatenGhostValue)
-    //console.log('score', score)
-    scoreDisplay.innerText = score
-
-
-    pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten)) + 1
-    //console.log(pelletsLeft)
-  }
-
-  function handleKeyUp(event) {
-    const key = event.keyCode
-
-    // * player direction logic
-    if (key === 39) {
-      player.direction = 'right'
-      //console.log('player pressed right')
-    } else if (key === 37) {
-      player.direction = 'left'
-      //console.log('player pressed left')
-    } else if (key === 38) {
-      player.direction = 'up'
-      //console.log('player pressed up')
-    } else if (key === 40) {
-      player.direction = 'down'
-      //console.log('player pressed down')
-    } else {
-      //console.log('invalid key')
-    }
-  }
-
-
-  function handleGameState() {
-    if (player.lives <= 0) {
-      //alert('Game Over')
-      // show game over page plus score, and a replay button
-      player.lives = 0
-      livesDisplayHeader.style.color = 'red'
-      cells[char.currentPosition].classList.add('laughing')
-      cells[noa.currentPosition].classList.add('laughing')
-      cells[jos.currentPosition].classList.add('laughing')
-      cells[guy.currentPosition].classList.add('laughing')
-      clearInterval(playerMovement)
-      clearInterval(charMovement)
-      clearInterval(noaMovement)
-      clearInterval(josMovement)
-      clearInterval(guyMovement)
-
-      // setTimeout(() => {
-      //   //hide game grid and show score page, with celebration emoji have a custom reload page button to play game again
-      // }, 1000)
-    }
-
-    if (pelletsLeft <= 0) {
-      // show you won page plus score, and a replay button
-      //alert('You Won!')
-      //player.lives = 3
-      scoreDisplayHeader.style.color = 'green'
-      //player.className = 'celebration'
-      cells[player.currentPosition].classList.add('celebration')
-      cells[char.currentPosition].classList.add(scaredClass)
-      cells[noa.currentPosition].classList.add(scaredClass)
-      cells[jos.currentPosition].classList.add(scaredClass)
-      cells[guy.currentPosition].classList.add(scaredClass)
-      clearInterval(playerMovement)
-      clearInterval(charMovement)
-      clearInterval(noaMovement)
-      clearInterval(josMovement)
-      clearInterval(guyMovement)
-
-      // ! if you win, reset the game and increase ghost speed, might have to store ghost speed as variable yu can then add to
-    }
-  }
-  
-  function startGame() {
-    createGrid(player.startPosition) 
-    introPage.style.display = 'none'
-    gridWrapper.style.display = 'flex'
-    soundTrack.play()
-
-    // * Start timers
-
-    setTimeout(() => {
-
-      // start noise ( 3 second counter noise)
-      playerMovement = setInterval(player.move, player.speed)
-      charMovement = setInterval(char.move, char.speed)
-      noaMovement = setInterval(noa.move, noa.speed)
-      josMovement = setInterval(jos.move, jos.speed)
-      guyMovement = setInterval(guy.move, guy.speed)
-
-    }, 1000)
-  }
-
-  // function handleSoundtrack() {
-  //   soundTrack.pause()
-  //   // ccs animate infinite pulse once clicked
-  // }
-
-  // * Call functions
-  //createGrid(player.startPosition) 
-  
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
-  //soundTrackButton.addEventListener('click', handleSoundtrack)
+
   startGameButton.addEventListener('click', startGame)
-
-  // // * Start timers
-  // const playerMovement = setInterval(player.move, 250)
-  // const charMovement = setInterval(char.move, 200)
-  // const noaMovement = setInterval(noa.move, 200)
-  // const josMovement = setInterval(jos.move, 200)
-  // const guyMovement = setInterval(guy.move, 600)
-
-  //on click function to start game on click
-
-  //clear inervals on player win/loss
-
 }
 
 window.addEventListener('DOMContentLoaded', init)
