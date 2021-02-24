@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #f9ce20;
+  background-color: #313BC3;
   color: #fafafa;
   min-height: 100vh;
   margin: 0;
@@ -25,9 +25,14 @@ align-items: center;
 
 }
 
-.hero {
-  width: 40vmax;
+.hero-ghosts {
+  width: 48vmax;
 }
+
+.hero-player {
+  width: 7vmax;
+}
+
 
 .soundtrack-button {
   width: 4vmax;
@@ -40,12 +45,21 @@ align-items: center;
 
 h1 {
   cursor: pointer;
-  color: #313BC3;
-  font-size: 3.5rem;
+  color: #f9ce20;
+  font-size: 3.7rem;
+  margin-bottom: 5vmax;
 }
 
 h3 {
   cursor: pointer;
+  color: #fafafa;
+  font-size: 1.5rem;
+
+}
+
+h4 {
+  cursor: pointer;
+  color: #313BC3;
   font-size: 1.5rem;
 
 }
