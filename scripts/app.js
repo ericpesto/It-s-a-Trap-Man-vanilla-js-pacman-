@@ -8,6 +8,7 @@ function init() {
   const introPage = document.querySelector('.intro-page')
   const livesDisplayHeader = document.querySelector('.lives-header')
   const scoreDisplayHeader = document.querySelector('.score-header')
+  const gridWrapper = document.querySelector('.grid-wrapper')
 
 
 
@@ -660,6 +661,10 @@ function init() {
       clearInterval(noaMovement)
       clearInterval(josMovement)
       clearInterval(guyMovement)
+      
+      setTimeout(() => {
+        //hide game grid and show score page, have a custom reload page button to play game again
+      })
     }
 
     if (pelletsLeft <= 0) {
@@ -678,7 +683,9 @@ function init() {
   }
   
   function startGame() {
+    createGrid(player.startPosition) 
     introPage.style.display = 'none'
+    gridWrapper.style.display = 'flex'
     soundTrack.play()
 
     // * Start timers
@@ -701,7 +708,7 @@ function init() {
   // }
 
   // * Call functions
-  createGrid(player.startPosition) 
+  //createGrid(player.startPosition) 
   
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
