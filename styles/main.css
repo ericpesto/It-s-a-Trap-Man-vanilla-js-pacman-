@@ -56,7 +56,7 @@ body {
 
 .grid div.ghost-home {
   background-color: rgba(16, 140, 211, 0.26);
-  border: 4px rgba(206, 50, 180, 0.479) solid;
+  /*border: 4px rgba(206, 50, 180, 0.479) solid;*/
   border-radius:5px ;
 }
 
@@ -86,7 +86,7 @@ body {
 }
 
 .grid div.char {
-  background-image: url('../assets/images/char-1.png');
+  background-image: url('../assets/images/woman.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -95,7 +95,7 @@ body {
 }
 
 .grid div.noa {
-  background-image: url('../assets/images/teacher.png');
+  background-image: url('../assets/images/woman.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -104,7 +104,7 @@ body {
 }
 
 .grid div.jos {
-  background-image: url('../assets/images/mage.png');
+  background-image: url('../assets/images/man.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -113,7 +113,7 @@ body {
 }
 
 .grid div.guy {
-  background-image: url('../assets/images/guy.png');
+  background-image: url('../assets/images/man.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -122,7 +122,7 @@ body {
 }
 
 .grid div.scared {
-  background-image: url('../assets/images/crying-emoji.gif');
+  background-image: url('../assets/images/scared-3.gif');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -132,6 +132,14 @@ body {
 
 .grid div.player {
   background-image: url('../assets/images/curious-emoji.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-size: 105%;
+  cursor: pointer;
+}
+.grid div.player-hunt {
+  background-image: url('../assets/images/crying-emoji.gif');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

@@ -47,6 +47,7 @@ function init() {
     direction: 'down',
     class: 'player',
     lives: 3,
+    huntClass: 'player-hunt',
     positionX: function() {
       return Math.floor(player.currentPosition % width)
     },
@@ -479,7 +480,7 @@ function init() {
   }
 
   function handleScaredGhosts() {
-    //console.log(char.classList.contains())
+    
     cells[char.currentPosition].classList.remove(char.className)
     char.className = scaredClass
     cells[noa.currentPosition].classList.remove(noa.className)
@@ -498,6 +499,7 @@ function init() {
       jos.className = 'jos'
       cells[guy.currentPosition].classList.remove(scaredClass)
       guy.className = 'guy'
+
     }, 15000)
 
   
@@ -514,9 +516,7 @@ function init() {
       player.remove(player.currentPosition)
       player.currentPosition = player.startPosition
       gameSoundFx.play() 
-      // send player back to starting position.
-      // if player life is less that 3, game over
-      //console.log('ghost caught player')
+
     } 
     // for scared ghosts collision
     if (cells[position].classList.contains(player.class) && cells[position].classList.contains(scaredClass)) {
@@ -524,8 +524,7 @@ function init() {
       ghostsEaten.push('super ghost eaten')
     }
 
- 
-
+    // ! need to send eaten ghost back home
     // have an if for each ghost?
 
 
