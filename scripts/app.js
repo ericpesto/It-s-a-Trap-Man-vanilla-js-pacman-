@@ -28,6 +28,14 @@ function init() {
 
   let scaredCharTimer = null
   let charCount = 17
+  let scaredNoaTimer = null
+  let noaCount = 17
+  let scaredJosTimer = null
+  let josCount = 17
+  let scaredGuyTimer = null
+  let guyCount = 17
+
+
 
   
   // * Grid variables
@@ -452,27 +460,13 @@ function init() {
   }
 
   function handleScaredGhosts() {
-    //scaredGhostFx.play() 
-
-    //let charCount = 17
-    // let scaredCharTimer = null
-
-    const noaCount = 17
-    let scaredNoaTimer = null
-
-    const josCount = 17
-    let scaredJosTimer = null
-
-    const guyCount = 17
-    let scaredGuyTimer = null
+    //sort out individual ghosts scared sounds
 
     scaredCharTimer = setInterval(() => {
       charCount--
       cells[char.currentPosition].classList.remove(char.className)
       char.className = scaredClass
       scaredGhostFx.play() 
-      //play noise
-      console.log(charCount)
       if (charCount < 0) {
         cells[char.currentPosition].classList.remove(scaredClass)
         char.className = 'char'
@@ -482,35 +476,47 @@ function init() {
       }
     }, 1000)
 
+    scaredNoaTimer = setInterval(() => {
+      noaCount--
+      cells[noa.currentPosition].classList.remove(noa.className)
+      noa.className = scaredClass
+      scaredGhostFx.play() 
+      if (noaCount < 0) {
+        cells[noa.currentPosition].classList.remove(scaredClass)
+        noa.className = 'noa'
+        scaredGhostFx.pause() 
+        clearInterval(scaredNoaTimer)
+        noaCount = 17
+      }
+    }, 1000)
 
+    scaredJosTimer = setInterval(() => {
+      josCount--
+      cells[jos.currentPosition].classList.remove(jos.className)
+      jos.className = scaredClass
+      scaredGhostFx.play() 
+      if (josCount < 0) {
+        cells[jos.currentPosition].classList.remove(scaredClass)
+        jos.className = 'jos'
+        scaredGhostFx.pause() 
+        clearInterval(scaredJosTimer)
+        josCount = 17
+      }
+    }, 1000)
 
-    // cells[char.currentPosition].classList.remove(char.className)
-    // char.className = scaredClass
-
-    // cells[noa.currentPosition].classList.remove(noa.className)
-    // noa.className = scaredClass
-
-    // cells[jos.currentPosition].classList.remove(jos.className)
-    // jos.className = scaredClass
-
-    // cells[guy.currentPosition].classList.remove(guy.className)
-    // guy.className = scaredClass
-
-    // ? change each target position for ghost to starting position
-
-    // ! BUG: timer acts weird if superpelet triggered within 17 seconds
-    
-    // setTimeout(() => {
-    //   cells[char.currentPosition].classList.remove(scaredClass)
-    //   char.className = 'char'
-    //   cells[noa.currentPosition].classList.remove(scaredClass)
-    //   noa.className = 'noa'
-    //   cells[jos.currentPosition].classList.remove(scaredClass)
-    //   jos.className = 'jos'
-    //   cells[guy.currentPosition].classList.remove(scaredClass)
-    //   guy.className = 'guy'
-
-    // }, 17000)
+    scaredGuyTimer = setInterval(() => {
+      guyCount--
+      cells[guy.currentPosition].classList.remove(guy.className)
+      guy.className = scaredClass
+      scaredGhostFx.play() 
+      if (guyCount < 0) {
+        cells[guy.currentPosition].classList.remove(scaredClass)
+        guy.className = 'guy'
+        scaredGhostFx.pause() 
+        clearInterval(scaredGuyTimer)
+        guyCount = 17
+      }
+    }, 1000)
   }
 
   function handleGhostCollision(position) {
@@ -543,6 +549,11 @@ function init() {
         noa.currentPosition = noa.startingPosition
         //noa.add(noa.currentPosition)
         ghostEatenFx.play()
+        clearInterval(scaredNoaTimer)
+        cells[noa.currentPosition].classList.remove(scaredClass)
+        noa.className = 'noa'
+        scaredGhostFx.pause()
+        noaCount = 17
       }
 
       if (player.currentPosition === jos.currentPosition) {
@@ -550,6 +561,11 @@ function init() {
         jos.currentPosition = jos.startingPosition
         //jos.add(jos.currentPosition)
         ghostEatenFx.play()
+        clearInterval(scaredJosTimer)
+        cells[jos.currentPosition].classList.remove(scaredClass)
+        jos.className = 'jos'
+        scaredGhostFx.pause()
+        josCount = 17
       }
 
       if (player.currentPosition === guy.currentPosition) {
@@ -557,6 +573,11 @@ function init() {
         guy.currentPosition = guy.startingPosition
         //guy.add(guy.currentPosition)
         ghostEatenFx.play()
+        clearInterval(scaredGuyTimer)
+        cells[guy.currentPosition].classList.remove(scaredClass)
+        guy.className = 'guy'
+        scaredGhostFx.pause()
+        guyCount = 17
       }
     }
   }
