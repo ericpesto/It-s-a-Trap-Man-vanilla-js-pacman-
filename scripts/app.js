@@ -344,7 +344,7 @@ function init() {
       clearInterval(noaMovement)
       clearInterval(josMovement)
       clearInterval(guyMovement)
-      livesDisplayHeader.style.color = 'red'
+      livesDisplayHeader.style.color = '#FF3B28'
       resetGameButon.style.display = 'block'
     }
 
@@ -360,7 +360,7 @@ function init() {
       clearInterval(noaMovement)
       clearInterval(josMovement)
       clearInterval(guyMovement)
-      scoreDisplayHeader.style.color = 'green'
+      scoreDisplayHeader.style.color = '#4CFE21'
       resetGameButon.style.display = 'block'
       // ! if you win, reset the game and increase ghost speed, might have to store ghost speed as variable yu can then add to
     }
