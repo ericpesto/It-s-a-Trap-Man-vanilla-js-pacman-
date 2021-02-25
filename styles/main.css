@@ -52,7 +52,7 @@ h3 {
   cursor: pointer;
   color: #fafafa;
   font-size: 1.5rem;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 h3:hover {
