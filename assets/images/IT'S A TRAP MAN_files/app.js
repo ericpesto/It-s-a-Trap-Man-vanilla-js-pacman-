@@ -444,34 +444,17 @@ function init() {
   // * Remove super pellet on player movement
   function removeSuperPellet(playerPosition) {
     superPellets.forEach(superPellet => {
-      console.log(cells[superPellet.id].classList.contains(superPelletClass))
-      if (playerPosition === (Number(superPellet.id))) { 
-        if (cells[superPellet.id].classList.contains(superPelletClass)) { 
-          superPellet.classList.remove(superPelletClass)
-          superPellet.classList.add(superPelletEatenClass)
-          //superPellet.setAttribute('data-score', superPelletScoreValue)     
-          handleScaredGhosts()
-          //scaredGhostFx.play() 
-        } 
+      //console.log(cells[superPellet])
+      if (playerPosition === Number(superPellet.id)) {
+      // if (playerPosition === cells[superPellet].classList.contains(superPelletClass)) {
+        superPellet.classList.remove(superPelletClass)
+        superPellet.classList.add(superPelletEatenClass)
+        //superPellet.setAttribute('data-score', superPelletScoreValue)     
+        handleScaredGhosts()
+        //scaredGhostFx.play() 
       }
     })
   }
-
-
-
-  // function removeSuperPellet(playerPosition) {
-  //   superPellets.forEach(superPellet => {
-  //     console.log(cells[superPellet.id].classList.contains(superPelletClass))
-  //     //if (playerPosition === Number(superPellet.id)) {
-  //     if (playerPosition === cells[superPellet.id].classList.contains(superPelletClass)) {
-  //       superPellet.classList.remove(superPelletClass)
-  //       superPellet.classList.add(superPelletEatenClass)
-  //       //superPellet.setAttribute('data-score', superPelletScoreValue)     
-  //       handleScaredGhosts()
-  //       //scaredGhostFx.play() 
-  //     }
-  //   })
-  // }
   // ! BUG: super pellet scared ghost triggered when empty
 
   function handleScaredGhosts() {
