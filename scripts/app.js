@@ -13,6 +13,7 @@ function init() {
 
   // * Audio
   const soundTrack = document.querySelector('.soundtrack')
+  const playerLostMusic = document.querySelector('.player-lost-music')
   const playerEatenFx = document.querySelector('.player-eaten-fx')
   const scaredGhostFx = document.querySelector('.ghosts-scared')
   const ghostEatenFx = document.querySelector('.ghost-eaten')
@@ -367,6 +368,8 @@ function init() {
       clearInterval(guyMovement)
       livesDisplayHeader.style.color = '#FF3B28'
       resetGameButon.style.display = 'block'
+      soundTrack.pause()
+      playerLostMusic.play()
     }
 
     if (pelletsLeft <= 0) {
