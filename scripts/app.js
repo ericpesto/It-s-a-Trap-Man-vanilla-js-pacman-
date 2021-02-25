@@ -663,6 +663,11 @@ function init() {
       clearInterval(noaMovement)
       clearInterval(josMovement)
       clearInterval(guyMovement)
+      scaredCharFx.pause() 
+      scaredNoaFx.pause() 
+      scaredJosFx.pause() 
+      scaredGuyFx.pause() 
+      soundTrack.pause()
       livesDisplayHeader.style.color = '#FF3B28'
       resetGameButon.style.display = 'block'
       soundTrack.pause()
