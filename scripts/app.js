@@ -150,12 +150,12 @@ function init() {
 
         const dX = Math.abs(player.positionX() - char.positionX())
         const dY = Math.abs(player.positionY() - char.positionY())
-        const distance = Math.sqrt(dX * dX + dY * dY)
+        const distance = Math.sqrt((dX * dX) + (dY * dY))
         //console.log('distance', distance)
         const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
         const dXN = Math.abs(player.positionX() - charNextMoveCoordinates[0])
         const dYN = Math.abs(player.positionY() - charNextMoveCoordinates[1])
-        const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
+        const distanceNext = Math.sqrt((dXN * dXN) + (dYN * dYN))
         //console.log('distanceNext', distanceNext)
       
         if (distanceNext < distance && !mazeArray.includes(char.currentPosition + direction)) {
@@ -211,12 +211,12 @@ function init() {
 
         const dX = Math.abs((player.positionX() + 4) - noa.positionX())
         const dY = Math.abs(player.positionY() - noa.positionY())
-        const distance = Math.sqrt(dX * dX + dY * dY)
+        const distance = Math.sqrt((dX * dX) + (dY * dY))
         //console.log('distance', distance)
         const noaNextMoveCoordinates =  getNextMoveCoordinates(noa.currentPosition + direction)
         const dXN = Math.abs((player.positionX() + 4) - noaNextMoveCoordinates[0])
         const dYN = Math.abs(player.positionY() - noaNextMoveCoordinates[1])
-        const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
+        const distanceNext = Math.sqrt((dXN * dXN) + (dYN * dYN))
         //console.log('distanceNext', distanceNext)
 
         if (distanceNext < distance && !mazeArray.includes(noa.currentPosition + direction)) {
@@ -272,12 +272,12 @@ function init() {
 
         const dX = Math.abs(player.positionX() - jos.positionX())
         const dY = Math.abs((player.positionY() - 4)  - jos.positionY())
-        const distance = Math.sqrt(dX * dX + dY * dY)
+        const distance = Math.sqrt((dX * dX) + (dY * dY))
         //console.log('distance', distance)
         const josNextMoveCoordinates =  getNextMoveCoordinates(jos.currentPosition + direction)
         const dXN = Math.abs(player.positionX() - josNextMoveCoordinates[0])
         const dYN = Math.abs((player.positionY() - 4) - josNextMoveCoordinates[1])
-        const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
+        const distanceNext = Math.sqrt((dXN * dXN) + (dYN * dYN))
         //console.log('distanceNext', distanceNext)
       
         if (distanceNext < distance && !mazeArray.includes(jos.currentPosition + direction)) {
