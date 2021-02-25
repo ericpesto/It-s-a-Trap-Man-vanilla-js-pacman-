@@ -53,7 +53,6 @@ function init() {
 
   // * Game state/logic variables
   let score = 0
-  //let pelletsLeft = cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)
   let pelletsLeft = []
   const pelletScoreValue = 10
   const superPelletScoreValue = 50
@@ -61,7 +60,7 @@ function init() {
 
   // * Player object
   const player = {
-    name: 'Dave', // ! make it so user can add name to personalise experience
+    name: 'Dave', // ? make it so user can add name to personalise experience
     startPosition: 361,
     currentPosition: 361,
     direction: 'left',
@@ -114,7 +113,7 @@ function init() {
       handleScore() 
       handleGameState()
     }
-    // work on turning ghosts back to normal after sent home and the superpellet bug
+    // ! work on turning ghosts back to normal after sent home
     
   }
 
@@ -618,7 +617,7 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
   startGameButton.addEventListener('click', startGame)
   resetGameButon.addEventListener('click', resetGame)
-  
+
 }
 
 window.addEventListener('DOMContentLoaded', init)
