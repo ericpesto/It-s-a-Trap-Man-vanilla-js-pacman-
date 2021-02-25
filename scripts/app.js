@@ -407,7 +407,6 @@ function init() {
 
   function createSuperPellets(gridIndex) {
     if (superPelletLocations.includes(Number(gridIndex.id))) {
-      //! fix superpellet bug here, need to remove location from superpellet location once player vistits it or change how i assign the sueprpellat, using classes rather than indexes.
       superPellets.push(gridIndex)
       addSuperPellets()
     }
@@ -433,14 +432,10 @@ function init() {
       if (playerPosition === Number(pellet.id)) {
         pellet.classList.remove(pelletClass)
         pellet.classList.add(pelletEatenClass)
-        //pellet.setAttribute('data-score', pelletScoreValue)
-        
       }
     })
   }
 
-
- 
   // * Remove super pellet on player movement
   function removeSuperPellet(playerPosition) {
     superPellets.forEach(superPellet => {
@@ -449,30 +444,11 @@ function init() {
         if (cells[superPellet.id].classList.contains(superPelletClass)) { 
           superPellet.classList.remove(superPelletClass)
           superPellet.classList.add(superPelletEatenClass)
-          //superPellet.setAttribute('data-score', superPelletScoreValue)     
           handleScaredGhosts()
-          //scaredGhostFx.play() 
         } 
       }
     })
   }
-
-
-
-  // function removeSuperPellet(playerPosition) {
-  //   superPellets.forEach(superPellet => {
-  //     console.log(cells[superPellet.id].classList.contains(superPelletClass))
-  //     //if (playerPosition === Number(superPellet.id)) {
-  //     if (playerPosition === cells[superPellet.id].classList.contains(superPelletClass)) {
-  //       superPellet.classList.remove(superPelletClass)
-  //       superPellet.classList.add(superPelletEatenClass)
-  //       //superPellet.setAttribute('data-score', superPelletScoreValue)     
-  //       handleScaredGhosts()
-  //       //scaredGhostFx.play() 
-  //     }
-  //   })
-  // }
-  // ! BUG: super pellet scared ghost triggered when empty
 
   function handleScaredGhosts() {
     scaredGhostFx.play() 
@@ -486,7 +462,7 @@ function init() {
     cells[guy.currentPosition].classList.remove(guy.className)
     guy.className = scaredClass
 
-    //change each target position for ghost to starting position
+    // ? change each target position for ghost to starting position
 
     // ! BUG: timer acts weird if superpelet triggered within 17 seconds
     
@@ -510,12 +486,10 @@ function init() {
       livesDisplay.innerText = player.lives
       player.remove(player.currentPosition)
       player.currentPosition = player.startPosition
-      //game sound fex src equals right sound
       playerEatenFx.play() 
     } 
     // for scared ghosts collision
     if (cells[position].classList.contains(player.class) && cells[position].classList.contains(scaredClass)) {
-      //alert('scared ghost hit')
       ghostsEaten.push('super ghost eaten')
 
       if (player.currentPosition === char.currentPosition) {
@@ -545,12 +519,7 @@ function init() {
         //guy.add(guy.currentPosition)
         ghostEatenFx.play()
       }
-
     }
-
-    // ! need to send eaten ghost back home
-    // have an if for each ghost?
-
   }
 
   function handleTeleport(position, object) {
@@ -619,7 +588,7 @@ function init() {
       scaredGhostFx.pause() 
       soundTrack.pause()
       playerWonMusic.play()
-      // ! BONUS : if you win, reset the game and increase ghost speed
+      // ? BONUS: if you win, reset the game and increase ghost speed
     }
   }
 
@@ -637,7 +606,6 @@ function init() {
     //console.log('score', score)
     scoreDisplay.innerText = score
 
-
     pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten)) + 1
     //console.log(pelletsLeft)
   }
@@ -648,9 +616,9 @@ function init() {
 
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
-
   startGameButton.addEventListener('click', startGame)
   resetGameButon.addEventListener('click', resetGame)
+  
 }
 
 window.addEventListener('DOMContentLoaded', init)
