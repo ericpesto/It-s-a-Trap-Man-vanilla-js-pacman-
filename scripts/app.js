@@ -382,7 +382,7 @@ function init() {
       clearInterval(guyMovement)
       scoreDisplayHeader.style.color = '#4CFE21'
       resetGameButon.style.display = 'block'
-      // ! if you win, reset the game and increase ghost speed, might have to store ghost speed as variable yu can then add to
+      // ! BONUS : if you win, reset the game and increase ghost speed
     }
   }
 
@@ -540,6 +540,8 @@ function init() {
     cells[guy.currentPosition].classList.remove(guy.className)
     guy.className = scaredClass
     //game sound fex src equals right sound
+
+    // ! BUG: timer acts weird if superpelet triggered within 17 seconds
     
     setTimeout(() => {
       cells[char.currentPosition].classList.remove(scaredClass)
