@@ -10,7 +10,6 @@ function init() {
   const gridWrapper = document.querySelector('.grid-wrapper')
   const resetGameButon = document.querySelector('.reset-game')
   const opacityWrapper = document.querySelector('.opacity-wrapper')
-  const main =  document.querySelector('main')
 
   // * Audio
   const soundTrack = document.querySelector('.soundtrack')
@@ -146,7 +145,7 @@ function init() {
         return [nextCell % width, nextCell / width]
       }
 
-      if (!mazeArray.includes(char.currentPosition + direction)) {
+      if (!mazeArray.includes(char.currentPosition + direction) && (!cells[char.currentPosition + direction].classList.contains(noa.className) || !cells[char.currentPosition + direction].classList.contains(jos.className) || !cells[char.currentPosition + direction].classList.contains(guy.className))) {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
 
@@ -160,7 +159,7 @@ function init() {
         const distanceNext = Math.sqrt((dXN * dXN) + (dYN * dYN))
         //console.log('distanceNext', distanceNext)
       
-        if (distanceNext < distance && !mazeArray.includes(char.currentPosition + direction)) {
+        if (distanceNext < distance && !mazeArray.includes(char.currentPosition + direction) && (!cells[char.currentPosition + direction].classList.contains(noa.className) || !cells[char.currentPosition + direction].classList.contains(jos.className) || !cells[char.currentPosition + direction].classList.contains(guy.className))) {
           char.currentPosition += direction
           char.add(char.currentPosition)
         } else {
@@ -207,7 +206,7 @@ function init() {
         return [nextCell % width, nextCell / width]
       }
 
-      if (!mazeArray.includes(noa.currentPosition + direction)) {
+      if (!mazeArray.includes(noa.currentPosition + direction) && (!cells[noa.currentPosition + direction].classList.contains(char.className) || !cells[noa.currentPosition + direction].classList.contains(jos.className) || !cells[noa.currentPosition + direction].classList.contains(guy.className))) {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.currentPosition += direction       
 
@@ -221,7 +220,7 @@ function init() {
         const distanceNext = Math.sqrt((dXN * dXN) + (dYN * dYN))
         //console.log('distanceNext', distanceNext)
 
-        if (distanceNext < distance && !mazeArray.includes(noa.currentPosition + direction)) {
+        if (distanceNext < distance && !mazeArray.includes(noa.currentPosition + direction) && (!cells[noa.currentPosition + direction].classList.contains(char.className) || !cells[noa.currentPosition + direction].classList.contains(jos.className) || !cells[noa.currentPosition + direction].classList.contains(guy.className))) {
           noa.currentPosition += direction
           noa.add(noa.currentPosition)
         } else {
@@ -268,7 +267,7 @@ function init() {
         return [nextCell % width, nextCell / width]
       }
 
-      if (!mazeArray.includes(jos.currentPosition + direction)) {
+      if (!mazeArray.includes(jos.currentPosition + direction) && (!cells[jos.currentPosition + direction].classList.contains(char.className) || !cells[jos.currentPosition + direction].classList.contains(noa.className) || !cells[jos.currentPosition + direction].classList.contains(guy.className))) {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
 
@@ -282,7 +281,7 @@ function init() {
         const distanceNext = Math.sqrt((dXN * dXN) + (dYN * dYN))
         //console.log('distanceNext', distanceNext)
       
-        if (distanceNext < distance && !mazeArray.includes(jos.currentPosition + direction)) {
+        if (distanceNext < distance && !mazeArray.includes(jos.currentPosition + direction) && (!cells[jos.currentPosition + direction].classList.contains(char.className) || !cells[jos.currentPosition + direction].classList.contains(noa.className) || !cells[jos.currentPosition + direction].classList.contains(guy.className))) {
           jos.currentPosition += direction
           jos.add(jos.currentPosition)
         } else {
@@ -320,7 +319,7 @@ function init() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
   
-      if (!mazeArray.includes(guy.currentPosition + direction)) {
+      if (!mazeArray.includes(guy.currentPosition + direction) && (!cells[guy.currentPosition + direction].classList.contains(char.className) || !cells[guy.currentPosition + direction].classList.contains(noa.className) || !cells[guy.currentPosition + direction].classList.contains(jos.className))) {
         cells[guy.currentPosition].classList.remove(guy.className)
         guy.currentPosition += direction
         cells[guy.currentPosition].classList.add(guy.className)
