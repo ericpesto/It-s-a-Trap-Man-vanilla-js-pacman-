@@ -14,6 +14,7 @@ function init() {
   // * Audio
   const soundTrack = document.querySelector('.soundtrack')
   const playerLostMusic = document.querySelector('.player-lost-music')
+  const playerWonMusic = document.querySelector('.player-won-music')
   const playerEatenFx = document.querySelector('.player-eaten-fx')
   const scaredGhostFx = document.querySelector('.ghosts-scared')
   const ghostEatenFx = document.querySelector('.ghost-eaten')
@@ -334,86 +335,6 @@ function init() {
     }
   }
 
-
-  function startGame() {
-    createGrid(player.startPosition) 
-    introPage.style.display = 'none'
-    opacityWrapper.style.opacity = '1'
-    gridWrapper.style.display = 'flex'
-    soundTrack.play()
-
-    // * Start timers
-    setTimeout(() => {
-      // start noise ( 3 second counter noise)
-      playerMovement = setInterval(player.move, player.speed)
-      charMovement = setInterval(char.move, char.speed)
-      noaMovement = setInterval(noa.move, noa.speed)
-      josMovement = setInterval(jos.move, jos.speed)
-      guyMovement = setInterval(guy.move, guy.speed)
-    }, 1000)
-  }
-
-  function handleGameState() {
-    if (player.lives <= 0) {
-      // game over
-      player.lives = 0
-      cells[char.currentPosition].classList.add('laughing')
-      cells[noa.currentPosition].classList.add('laughing')
-      cells[jos.currentPosition].classList.add('laughing')
-      cells[guy.currentPosition].classList.add('laughing')
-      clearInterval(playerMovement)
-      clearInterval(charMovement)
-      clearInterval(noaMovement)
-      clearInterval(josMovement)
-      clearInterval(guyMovement)
-      livesDisplayHeader.style.color = '#FF3B28'
-      resetGameButon.style.display = 'block'
-      soundTrack.pause()
-      playerLostMusic.play()
-    }
-
-    if (pelletsLeft <= 0) {
-      // player won
-      cells[player.currentPosition].classList.add('celebration')
-      cells[char.currentPosition].classList.add(scaredClass)
-      cells[noa.currentPosition].classList.add(scaredClass)
-      cells[jos.currentPosition].classList.add(scaredClass)
-      cells[guy.currentPosition].classList.add(scaredClass)
-      clearInterval(playerMovement)
-      clearInterval(charMovement)
-      clearInterval(noaMovement)
-      clearInterval(josMovement)
-      clearInterval(guyMovement)
-      scoreDisplayHeader.style.color = '#4CFE21'
-      resetGameButon.style.display = 'block'
-      // ! BONUS : if you win, reset the game and increase ghost speed
-    }
-  }
-
-  function resetGame() {
-    location.reload()
-  }
-
-  // * Handle Score (workaround to account for playermovement behavour related to set interval, works really well for both pellet and superpellets now)
-  function handleScore() {
-    const eatenPellets = document.getElementsByClassName(pelletEatenClass)
-    const numberOfPelletsEaten = eatenPellets.length
-
-    const eatenSuperPellets = document.getElementsByClassName(superPelletEatenClass)
-    const numberOfSuperPelletsEaten = eatenSuperPellets.length
-
-    const numberOfSuperGhostsEaten = ghostsEaten.length
-
-    //console.log('pellets eaten ->', numberOfPelletsEaten)
-    score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue) + (numberOfSuperGhostsEaten * eatenGhostValue)
-    //console.log('score', score)
-    scoreDisplay.innerText = score
-
-
-    pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten)) + 1
-    //console.log(pelletsLeft)
-  }
-
   function handleKeyUp(event) {
     const key = event.keyCode
 
@@ -623,6 +544,87 @@ function init() {
       object.currentPosition = portalLocations[1]
       //console.log('portal used')
     }
+  }
+
+  function startGame() {
+    createGrid(player.startPosition) 
+    introPage.style.display = 'none'
+    opacityWrapper.style.opacity = '1'
+    gridWrapper.style.display = 'flex'
+    soundTrack.play()
+
+    // * Start timers
+    setTimeout(() => {
+      // start noise ( 3 second counter noise)
+      playerMovement = setInterval(player.move, player.speed)
+      charMovement = setInterval(char.move, char.speed)
+      noaMovement = setInterval(noa.move, noa.speed)
+      josMovement = setInterval(jos.move, jos.speed)
+      guyMovement = setInterval(guy.move, guy.speed)
+    }, 1000)
+  }
+
+  function handleGameState() {
+    if (player.lives <= 0) {
+      // game over
+      player.lives = 0
+      cells[char.currentPosition].classList.add('laughing')
+      cells[noa.currentPosition].classList.add('laughing')
+      cells[jos.currentPosition].classList.add('laughing')
+      cells[guy.currentPosition].classList.add('laughing')
+      clearInterval(playerMovement)
+      clearInterval(charMovement)
+      clearInterval(noaMovement)
+      clearInterval(josMovement)
+      clearInterval(guyMovement)
+      livesDisplayHeader.style.color = '#FF3B28'
+      resetGameButon.style.display = 'block'
+      soundTrack.pause()
+      playerLostMusic.play()
+    }
+
+    if (pelletsLeft <= 0) {
+      // player won
+      cells[player.currentPosition].classList.add('celebration')
+      cells[char.currentPosition].classList.add(scaredClass)
+      cells[noa.currentPosition].classList.add(scaredClass)
+      cells[jos.currentPosition].classList.add(scaredClass)
+      cells[guy.currentPosition].classList.add(scaredClass)
+      clearInterval(playerMovement)
+      clearInterval(charMovement)
+      clearInterval(noaMovement)
+      clearInterval(josMovement)
+      clearInterval(guyMovement)
+      scoreDisplayHeader.style.color = '#4CFE21'
+      resetGameButon.style.display = 'block'
+      scaredGhostFx.pause() 
+      soundTrack.pause()
+      playerWonMusic.play()
+      // ! BONUS : if you win, reset the game and increase ghost speed
+    }
+  }
+
+  function handleScore() {
+    const eatenPellets = document.getElementsByClassName(pelletEatenClass)
+    const numberOfPelletsEaten = eatenPellets.length
+
+    const eatenSuperPellets = document.getElementsByClassName(superPelletEatenClass)
+    const numberOfSuperPelletsEaten = eatenSuperPellets.length
+
+    const numberOfSuperGhostsEaten = ghostsEaten.length
+
+    //console.log('pellets eaten ->', numberOfPelletsEaten)
+    score = (numberOfPelletsEaten * pelletScoreValue) + (numberOfSuperPelletsEaten * superPelletScoreValue) + (numberOfSuperGhostsEaten * eatenGhostValue)
+    //console.log('score', score)
+    scoreDisplay.innerText = score
+
+
+    pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten)) + 1
+    //console.log(pelletsLeft)
+  }
+
+  function resetGame() {
+    location.reload()
   }
 
   // * Event listeners
