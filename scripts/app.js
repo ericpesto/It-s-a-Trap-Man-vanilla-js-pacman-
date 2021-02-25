@@ -8,9 +8,9 @@ function init() {
   const livesDisplayHeader = document.querySelector('.lives-header')
   const scoreDisplayHeader = document.querySelector('.score-header')
   const gridWrapper = document.querySelector('.grid-wrapper')
+  const resetGameButon = document.querySelector('.reset-game')
 
   // * Audio
-
   const soundTrack = document.querySelector('.soundtrack')
   const playerEatenFx = document.querySelector('.player-eaten-fx')
   const scaredGhostFx = document.querySelector('.ghost-eaten-fx')
@@ -333,10 +333,8 @@ function init() {
 
   function handleGameState() {
     if (player.lives <= 0) {
-      //alert('Game Over')
-      // show game over page plus score, and a replay button
+      // game over
       player.lives = 0
-      livesDisplayHeader.style.color = 'red'
       cells[char.currentPosition].classList.add('laughing')
       cells[noa.currentPosition].classList.add('laughing')
       cells[jos.currentPosition].classList.add('laughing')
@@ -346,14 +344,12 @@ function init() {
       clearInterval(noaMovement)
       clearInterval(josMovement)
       clearInterval(guyMovement)
-
-      // setTimeout(() => {
-      //   //hide game grid and show score page, with celebration emoji have a custom reload page button to play game again
-      // }, 1000)
+      livesDisplayHeader.style.color = 'red'
+      resetGameButon.style.display = 'block'
     }
 
     if (pelletsLeft <= 0) {
-      scoreDisplayHeader.style.color = 'green'
+      // player won
       cells[player.currentPosition].classList.add('celebration')
       cells[char.currentPosition].classList.add(scaredClass)
       cells[noa.currentPosition].classList.add(scaredClass)
@@ -364,6 +360,8 @@ function init() {
       clearInterval(noaMovement)
       clearInterval(josMovement)
       clearInterval(guyMovement)
+      scoreDisplayHeader.style.color = 'green'
+      resetGameButon.style.display = 'block'
       // ! if you win, reset the game and increase ghost speed, might have to store ghost speed as variable yu can then add to
     }
   }
@@ -383,6 +381,10 @@ function init() {
       josMovement = setInterval(jos.move, jos.speed)
       guyMovement = setInterval(guy.move, guy.speed)
     }, 1000)
+  }
+
+  function resetGame() {
+    location.reload()
   }
 
   // * Handle Score (workaround to account for playermovement behavour related to set interval, works really well for both pellet and superpellets now)
@@ -630,6 +632,7 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
 
   startGameButton.addEventListener('click', startGame)
+  resetGameButon.addEventListener('click', resetGame)
 }
 
 window.addEventListener('DOMContentLoaded', init)
