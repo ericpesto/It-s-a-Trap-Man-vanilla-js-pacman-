@@ -1,5 +1,5 @@
 function init() {
-  // * HTML variables
+  // * HTML elements
   const grid = document.querySelector('.grid')
   const scoreDisplay = document.querySelector('.score')
   const livesDisplay = document.querySelector('.lives')
@@ -28,7 +28,6 @@ function init() {
   let noaMovement = null
   let josMovement = null
   let guyMovement = null
-
   let scaredCharTimer = null
   let charCount = 17
   let scaredNoaTimer = null
@@ -38,9 +37,6 @@ function init() {
   let scaredGuyTimer = null
   let guyCount = 17
 
-
-
-  
   // * Grid variables
   const width = 20
   const cellCount = width * width
@@ -55,19 +51,18 @@ function init() {
   const superPelletLocations = [84,95,283,296]
   const playerTrack = mazeArray.concat(ghostHomeArray)
   const pelletTrack = mazeArray.concat(ghostHomeArray, portalLocations, superPelletLocations)
-
   const pelletClass = 'pellet'
   const superPelletClass = 'super-pellet'
   const pelletEatenClass = 'pellet-eaten'
   const superPelletEatenClass = 'super-pellet-eaten'
   const pellets = []
   const superPellets = []
-  const ghostsEaten = []
   const scaredClass = 'scared'
 
   // * Game state/logic variables
   let score = 0
   let pelletsLeft = []
+  const ghostsEaten = []
   const pelletScoreValue = 10
   const superPelletScoreValue = 50
   const eatenGhostValue = 200
@@ -127,8 +122,6 @@ function init() {
       handleScore() 
       handleGameState()
     }
-    // ! work on turning ghosts back to normal after sent home
-    
   }
 
   // * Ghosts
@@ -146,7 +139,6 @@ function init() {
     },
     add(position) {
       //console.log('char added')
-      //console.log(position)
       cells[position].classList.add(char.className)
     },
     remove(position) {
@@ -632,53 +624,12 @@ function init() {
 
     // * Start timers
     setTimeout(() => {
-      // start noise ( 3 second counter noise)
       playerMovement = setInterval(player.move, player.speed)
       charMovement = setInterval(char.move, char.speed)
       noaMovement = setInterval(noa.move, noa.speed)
       josMovement = setInterval(jos.move, jos.speed)
       guyMovement = setInterval(guy.move, guy.speed)
     }, 1000)
-  }
-
-  function handleGameState() {
-    if (player.lives <= 0) {
-      // game over
-      player.lives = 0
-      cells[char.currentPosition].classList.add('laughing')
-      cells[noa.currentPosition].classList.add('laughing')
-      cells[jos.currentPosition].classList.add('laughing')
-      cells[guy.currentPosition].classList.add('laughing')
-      clearInterval(playerMovement)
-      clearInterval(charMovement)
-      clearInterval(noaMovement)
-      clearInterval(josMovement)
-      clearInterval(guyMovement)
-      livesDisplayHeader.style.color = '#FF3B28'
-      resetGameButon.style.display = 'block'
-      soundTrack.pause()
-      playerLostMusic.play()
-    }
-
-    if (pelletsLeft <= 0) {
-      // player won
-      cells[player.currentPosition].classList.add('celebration')
-      cells[char.currentPosition].classList.add(scaredClass)
-      cells[noa.currentPosition].classList.add(scaredClass)
-      cells[jos.currentPosition].classList.add(scaredClass)
-      cells[guy.currentPosition].classList.add(scaredClass)
-      clearInterval(playerMovement)
-      clearInterval(charMovement)
-      clearInterval(noaMovement)
-      clearInterval(josMovement)
-      clearInterval(guyMovement)
-      scoreDisplayHeader.style.color = '#4CFE21'
-      resetGameButon.style.display = 'block'
-      scaredGhostFx.pause() 
-      soundTrack.pause()
-      playerWonMusic.play()
-      // ? BONUS: if you win, reset the game and increase ghost speed
-    }
   }
 
   function handleScore() {
@@ -697,6 +648,49 @@ function init() {
 
     pelletsLeft = ((cells.length - (mazeArray.length + ghostHomeArray.length + portalLocations.length)) - (numberOfPelletsEaten + numberOfSuperPelletsEaten)) + 1
     //console.log(pelletsLeft)
+  }
+
+  function handleGameState() {
+    // game over
+    if (player.lives <= 0) {
+      player.lives = 0
+      cells[char.currentPosition].classList.add('laughing')
+      cells[noa.currentPosition].classList.add('laughing')
+      cells[jos.currentPosition].classList.add('laughing')
+      cells[guy.currentPosition].classList.add('laughing')
+      clearInterval(playerMovement)
+      clearInterval(charMovement)
+      clearInterval(noaMovement)
+      clearInterval(josMovement)
+      clearInterval(guyMovement)
+      livesDisplayHeader.style.color = '#FF3B28'
+      resetGameButon.style.display = 'block'
+      soundTrack.pause()
+      playerLostMusic.play()
+    }
+
+    // player won
+    if (pelletsLeft <= 0) {
+      cells[player.currentPosition].classList.add('celebration')
+      cells[char.currentPosition].classList.add(scaredClass)
+      cells[noa.currentPosition].classList.add(scaredClass)
+      cells[jos.currentPosition].classList.add(scaredClass)
+      cells[guy.currentPosition].classList.add(scaredClass)
+      clearInterval(playerMovement)
+      clearInterval(charMovement)
+      clearInterval(noaMovement)
+      clearInterval(josMovement)
+      clearInterval(guyMovement)
+      scoreDisplayHeader.style.color = '#4CFE21'
+      resetGameButon.style.display = 'block'
+      scaredCharFx.pause() 
+      scaredNoaFx.pause() 
+      scaredJosFx.pause() 
+      scaredGuyFx.pause() 
+      soundTrack.pause()
+      playerWonMusic.play()
+      // ? BONUS: if you win, reset the game and increase ghost speed
+    }
   }
 
   function resetGame() {
