@@ -214,7 +214,7 @@ function init() {
         return [nextCell % width, nextCell / width]
       }
 
-      if (!mazeArray.includes(noa.currentPosition + direction) && !(cells[noa.currentPosition + direction].classList.contains(char.className) || cells[noa.currentPosition + direction].classList.contains(jos.className) || cells[noa.currentPosition + direction].classList.contains(guy.className) || !cells[noa.currentPosition + direction].classList.contains(scaredClass) || cells[noa.currentPosition + direction].classList.contains(scaredClass))) {
+      if (!mazeArray.includes(noa.currentPosition + direction) && !(cells[noa.currentPosition + direction].classList.contains(char.className) || cells[noa.currentPosition + direction].classList.contains(jos.className) || cells[noa.currentPosition + direction].classList.contains(guy.className) || cells[noa.currentPosition + direction].classList.contains(scaredClass) || cells[noa.currentPosition + direction].classList.contains(scaredClass))) {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.currentPosition += direction       
 
