@@ -26,6 +26,9 @@ function init() {
   let josMovement = null
   let guyMovement = null
 
+  let scaredCharTimer = null
+  let charCount = 17
+
   
   // * Grid variables
   const width = 20
@@ -449,32 +452,65 @@ function init() {
   }
 
   function handleScaredGhosts() {
-    scaredGhostFx.play() 
+    //scaredGhostFx.play() 
 
-    cells[char.currentPosition].classList.remove(char.className)
-    char.className = scaredClass
-    cells[noa.currentPosition].classList.remove(noa.className)
-    noa.className = scaredClass
-    cells[jos.currentPosition].classList.remove(jos.className)
-    jos.className = scaredClass
-    cells[guy.currentPosition].classList.remove(guy.className)
-    guy.className = scaredClass
+    //let charCount = 17
+    // let scaredCharTimer = null
+
+    const noaCount = 17
+    let scaredNoaTimer = null
+
+    const josCount = 17
+    let scaredJosTimer = null
+
+    const guyCount = 17
+    let scaredGuyTimer = null
+
+    scaredCharTimer = setInterval(() => {
+      charCount--
+      cells[char.currentPosition].classList.remove(char.className)
+      char.className = scaredClass
+      scaredGhostFx.play() 
+      //play noise
+      console.log(charCount)
+      if (charCount < 0) {
+        cells[char.currentPosition].classList.remove(scaredClass)
+        char.className = 'char'
+        scaredGhostFx.pause() 
+        clearInterval(scaredCharTimer)
+        charCount = 17
+      }
+    }, 1000)
+
+
+
+    // cells[char.currentPosition].classList.remove(char.className)
+    // char.className = scaredClass
+
+    // cells[noa.currentPosition].classList.remove(noa.className)
+    // noa.className = scaredClass
+
+    // cells[jos.currentPosition].classList.remove(jos.className)
+    // jos.className = scaredClass
+
+    // cells[guy.currentPosition].classList.remove(guy.className)
+    // guy.className = scaredClass
 
     // ? change each target position for ghost to starting position
 
     // ! BUG: timer acts weird if superpelet triggered within 17 seconds
     
-    setTimeout(() => {
-      cells[char.currentPosition].classList.remove(scaredClass)
-      char.className = 'char'
-      cells[noa.currentPosition].classList.remove(scaredClass)
-      noa.className = 'noa'
-      cells[jos.currentPosition].classList.remove(scaredClass)
-      jos.className = 'jos'
-      cells[guy.currentPosition].classList.remove(scaredClass)
-      guy.className = 'guy'
+    // setTimeout(() => {
+    //   cells[char.currentPosition].classList.remove(scaredClass)
+    //   char.className = 'char'
+    //   cells[noa.currentPosition].classList.remove(scaredClass)
+    //   noa.className = 'noa'
+    //   cells[jos.currentPosition].classList.remove(scaredClass)
+    //   jos.className = 'jos'
+    //   cells[guy.currentPosition].classList.remove(scaredClass)
+    //   guy.className = 'guy'
 
-    }, 17000)
+    // }, 17000)
   }
 
   function handleGhostCollision(position) {
@@ -495,6 +531,11 @@ function init() {
         char.currentPosition = char.startingPosition
         //char.add(char.currentPosition)
         ghostEatenFx.play()
+        clearInterval(scaredCharTimer)
+        cells[char.currentPosition].classList.remove(scaredClass)
+        char.className = 'char'
+        scaredGhostFx.pause()
+        charCount = 17
       }
 
       if (player.currentPosition === noa.currentPosition) {
