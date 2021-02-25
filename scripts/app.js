@@ -14,7 +14,8 @@ function init() {
   // * Audio
   const soundTrack = document.querySelector('.soundtrack')
   const playerEatenFx = document.querySelector('.player-eaten-fx')
-  const scaredGhostFx = document.querySelector('.ghost-eaten-fx')
+  const scaredGhostFx = document.querySelector('.ghosts-scared')
+  const ghostEatenFx = document.querySelector('.ghost-eaten')
 
   // * Timers
   let playerMovement = null
@@ -119,8 +120,8 @@ function init() {
   const char = {
     name: 'Char',
     className: 'char',
-    startingPosition: ghostHomeArray[0],
-    currentPosition: ghostHomeArray[0],
+    startingPosition: ghostHomeArray[3],
+    currentPosition: ghostHomeArray[3],
     speed: 270,
     positionX: function() {
       return char.currentPosition % width
@@ -304,8 +305,8 @@ function init() {
   const guy = {
     name: 'Guy',
     className: 'guy',
-    startingPosition: ghostHomeArray[3],
-    currentPosition: ghostHomeArray[3],
+    startingPosition: ghostHomeArray[0],
+    currentPosition: ghostHomeArray[0],
     speed: 400,
     add(position) {
       //console.log('guy added')
@@ -524,13 +525,15 @@ function init() {
         superPellet.classList.add(superPelletEatenClass)
         //superPellet.setAttribute('data-score', superPelletScoreValue)     
         handleScaredGhosts()
-        scaredGhostFx.play() 
+        //scaredGhostFx.play() 
       }
     })
   }
   // ! BUG: super pellet scared ghost triggered when empty
 
   function handleScaredGhosts() {
+    scaredGhostFx.play() 
+
     cells[char.currentPosition].classList.remove(char.className)
     char.className = scaredClass
     cells[noa.currentPosition].classList.remove(noa.className)
@@ -539,7 +542,8 @@ function init() {
     jos.className = scaredClass
     cells[guy.currentPosition].classList.remove(guy.className)
     guy.className = scaredClass
-    //game sound fex src equals right sound
+
+    //change each target position for ghost to starting position
 
     // ! BUG: timer acts weird if superpelet triggered within 17 seconds
     
@@ -554,25 +558,6 @@ function init() {
       guy.className = 'guy'
 
     }, 17000)
-
-    // if (player.currentPosition === char.currentPosition) {
-    //   char.currentPosition = char.startingPosition
-    // }
-
-    // if (player.currentPosition === noa.currentPosition) {
-    //   noa.currentPosition = noa.startingPosition
-    // }
-
-    // if (player.currentPosition === jos.currentPosition) {
-    //   jos.currentPosition = jos.startingPosition
-    // }
-
-    // if (player.currentPosition === guy.currentPosition) {
-    //   guy.currentPosition = guy.startingPosition
-    // }
-    //if player eats ghost while fridghtened
-
-    // + send ghost back home
   }
 
   function handleGhostCollision(position) {
@@ -594,24 +579,28 @@ function init() {
         char.remove(char.currentPosition)
         char.currentPosition = char.startingPosition
         //char.add(char.currentPosition)
+        ghostEatenFx.play()
       }
 
       if (player.currentPosition === noa.currentPosition) {
         noa.remove(noa.currentPosition)
         noa.currentPosition = noa.startingPosition
         //noa.add(noa.currentPosition)
+        ghostEatenFx.play()
       }
 
       if (player.currentPosition === jos.currentPosition) {
         jos.remove(jos.currentPosition)
         jos.currentPosition = jos.startingPosition
         //jos.add(jos.currentPosition)
+        ghostEatenFx.play()
       }
 
       if (player.currentPosition === guy.currentPosition) {
         guy.remove(guy.currentPosition)
         guy.currentPosition = guy.startingPosition
         //guy.add(guy.currentPosition)
+        ghostEatenFx.play()
       }
 
     }
