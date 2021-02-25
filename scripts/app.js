@@ -471,11 +471,7 @@ function init() {
   }
 
   function handleScaredGhosts() {
-    //sort out individual ghosts scared sounds
-
     if (scaredCharTimer) {
-      //clearInterval(scaredCharTimer)
-      //scaredCharTimer = null
       charCount = 17
     } else {
       scaredCharTimer = setInterval(() => {
@@ -493,23 +489,7 @@ function init() {
       }, 1000)
     }
 
-    // scaredCharTimer = setInterval(() => {
-    //   charCount--
-    //   cells[char.currentPosition].classList.remove(char.className)
-    //   char.className = scaredClass
-    //   scaredGhostFx.play() 
-    //   if (charCount < 0) {
-    //     cells[char.currentPosition].classList.remove(scaredClass)
-    //     char.className = 'char'
-    //     scaredGhostFx.pause() 
-    //     clearInterval(scaredCharTimer)
-    //     charCount = 17
-    //   }
-    // }, 1000)
-
     if (scaredNoaTimer) {
-      //clearInterval(scaredNoaTimer)
-      //scaredNoaTimer = null
       noaCount = 17
     } else {
       scaredNoaTimer = setInterval(() => {
@@ -526,23 +506,8 @@ function init() {
         }
       }, 1000)
     }
-    // scaredNoaTimer = setInterval(() => {
-    //   noaCount--
-    //   cells[noa.currentPosition].classList.remove(noa.className)
-    //   noa.className = scaredClass
-    //   scaredGhostFx.play() 
-    //   if (noaCount < 0) {
-    //     cells[noa.currentPosition].classList.remove(scaredClass)
-    //     noa.className = 'noa'
-    //     scaredGhostFx.pause() 
-    //     clearInterval(scaredNoaTimer)
-    //     noaCount = 17
-    //   }
-    // }, 1000)
 
     if (scaredJosTimer) {
-      //clearInterval(scaredJosTimer)
-      //scaredJosTimer = null
       josCount = 17
     } else {
       scaredJosTimer = setInterval(() => {
@@ -560,23 +525,7 @@ function init() {
       }, 1000)
     }
 
-    // scaredJosTimer = setInterval(() => {
-    //   josCount--
-    //   cells[jos.currentPosition].classList.remove(jos.className)
-    //   jos.className = scaredClass
-    //   scaredGhostFx.play() 
-    //   if (josCount < 0) {
-    //     cells[jos.currentPosition].classList.remove(scaredClass)
-    //     jos.className = 'jos'
-    //     scaredGhostFx.pause() 
-    //     clearInterval(scaredJosTimer)
-    //     josCount = 17
-    //   }
-    // }, 1000)
-
     if (scaredGuyTimer) {
-      //clearInterval(scaredGuyTimer)
-      //scaredGuyTimer = null
       guyCount = 17
     } else {
       scaredGuyTimer = setInterval(() => {
@@ -593,20 +542,6 @@ function init() {
         }
       }, 1000)
     }
-
-    // scaredGuyTimer = setInterval(() => {
-    //   guyCount--
-    //   cells[guy.currentPosition].classList.remove(guy.className)
-    //   guy.className = scaredClass
-    //   scaredGhostFx.play() 
-    //   if (guyCount < 0) {
-    //     cells[guy.currentPosition].classList.remove(scaredClass)
-    //     guy.className = 'guy'
-    //     scaredGhostFx.pause() 
-    //     clearInterval(scaredGuyTimer)
-    //     guyCount = 17
-    //   }
-    // }, 1000)
   }
 
   function handleGhostCollision(position) {
