@@ -122,7 +122,7 @@ function init() {
     currentPosition: ghostHomeArray[4],
     speed: 270,
     positionX: function() {
-      return Math.floor(char.currentPosition % width)
+      return char.currentPosition % width
     },
     positionY: function() {
       return char.currentPosition / width
@@ -141,7 +141,7 @@ function init() {
       let direction = directions[Math.floor(Math.random() * directions.length)]
       
       function getNextMoveCoordinates(nextCell) {
-        return [Math.floor(nextCell % width), nextCell / width]
+        return [nextCell % width, nextCell / width]
       }
 
       if (!mazeArray.includes(char.currentPosition + direction)) {
@@ -184,7 +184,7 @@ function init() {
     currentPosition: ghostHomeArray[1],
     speed: 320,
     positionX: function() {
-      return Math.floor(noa.currentPosition % width)
+      return noa.currentPosition % width
     },
     positionY: function() {
       return noa.currentPosition / width
@@ -202,7 +202,7 @@ function init() {
       let direction = directions[Math.floor(Math.random() * directions.length)]
 
       function getNextMoveCoordinates(nextCell) {
-        return [Math.floor(nextCell % width), nextCell / width]
+        return [nextCell % width, nextCell / width]
       }
 
       if (!mazeArray.includes(noa.currentPosition + direction)) {
@@ -245,7 +245,7 @@ function init() {
     currentPosition: ghostHomeArray[0],
     speed: 320,
     positionX: function() {
-      return Math.floor(jos.currentPosition % width)
+      return jos.currentPosition % width
     },
     positionY: function() {
       return jos.currentPosition / width
@@ -263,7 +263,7 @@ function init() {
       let direction = directions[Math.floor(Math.random() * directions.length)]
 
       function getNextMoveCoordinates(nextCell) {
-        return [Math.floor(nextCell % width), nextCell / width]
+        return [nextCell % width, nextCell / width]
       }
 
       if (!mazeArray.includes(jos.currentPosition + direction)) {
@@ -271,12 +271,12 @@ function init() {
         jos.currentPosition += direction
 
         const dX = Math.abs(player.positionX() - jos.positionX())
-        const dY = Math.abs((player.positionY() - 80)  - jos.positionY())
+        const dY = Math.abs((player.positionY() - 4)  - jos.positionY())
         const distance = Math.sqrt(dX * dX + dY * dY)
         //console.log('distance', distance)
         const josNextMoveCoordinates =  getNextMoveCoordinates(jos.currentPosition + direction)
         const dXN = Math.abs(player.positionX() - josNextMoveCoordinates[0])
-        const dYN = Math.abs((player.positionY() - 80) - josNextMoveCoordinates[1])
+        const dYN = Math.abs((player.positionY() - 4) - josNextMoveCoordinates[1])
         const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
         //console.log('distanceNext', distanceNext)
       
