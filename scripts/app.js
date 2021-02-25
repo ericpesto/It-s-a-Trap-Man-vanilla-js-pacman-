@@ -118,10 +118,9 @@ function init() {
   const char = {
     name: 'Char',
     className: 'char',
-    startingPosition: ghostHomeArray[0],
-    currentPosition: ghostHomeArray[0],
-    speed: 300,
-    targetCoordinates: [player.positionX(), player.positionY()],
+    startingPosition: ghostHomeArray[4],
+    currentPosition: ghostHomeArray[4],
+    speed: 270,
     positionX: function() {
       return Math.floor(char.currentPosition % width)
     },
@@ -149,19 +148,16 @@ function init() {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
 
-        let dX = Math.abs(player.positionX() - char.positionX())
-        let dY = Math.abs(player.positionY() - char.positionY())
-        let distance = Math.sqrt(dX * dX + dY * dY)
+        const dX = Math.abs(player.positionX() - char.positionX())
+        const dY = Math.abs(player.positionY() - char.positionY())
+        const distance = Math.sqrt(dX * dX + dY * dY)
         //console.log('distance', distance)
-
         const charNextMoveCoordinates =  getNextMoveCoordinates(char.currentPosition + direction)
-
-        let dXN = Math.abs(player.positionX() - charNextMoveCoordinates[0])
-        let dYN = Math.abs(player.positionY() - charNextMoveCoordinates[1])
-        let distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
+        const dXN = Math.abs(player.positionX() - charNextMoveCoordinates[0])
+        const dYN = Math.abs(player.positionY() - charNextMoveCoordinates[1])
+        const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
         //console.log('distanceNext', distanceNext)
       
-
         if (distanceNext < distance && !mazeArray.includes(char.currentPosition + direction)) {
           char.currentPosition += direction
           char.add(char.currentPosition)
@@ -186,8 +182,7 @@ function init() {
     className: 'noa',
     startingPosition: ghostHomeArray[1],
     currentPosition: ghostHomeArray[1],
-    speed: 300,
-    targetCoordinates: [player.positionX(), player.positionY()],
+    speed: 320,
     positionX: function() {
       return Math.floor(noa.currentPosition % width)
     },
@@ -214,18 +209,15 @@ function init() {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.currentPosition += direction       
 
-        const dX = Math.abs(player.positionX() - noa.positionX())
+        const dX = Math.abs((player.positionX() + 4) - noa.positionX())
         const dY = Math.abs(player.positionY() - noa.positionY())
         const distance = Math.sqrt(dX * dX + dY * dY)
         //console.log('distance', distance)
-
         const noaNextMoveCoordinates =  getNextMoveCoordinates(noa.currentPosition + direction)
-
-        const dXN = Math.abs(player.positionX() - noaNextMoveCoordinates[0])
+        const dXN = Math.abs((player.positionX() + 4) - noaNextMoveCoordinates[0])
         const dYN = Math.abs(player.positionY() - noaNextMoveCoordinates[1])
         const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
         //console.log('distanceNext', distanceNext)
-      
 
         if (distanceNext < distance && !mazeArray.includes(noa.currentPosition + direction)) {
           noa.currentPosition += direction
@@ -239,27 +231,25 @@ function init() {
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
         noa.add(noa.currentPosition)
-        
       }
 
       handleGhostCollision(noa.currentPosition)
       handleTeleport(noa.currentPosition, noa)
     }
   }
-  //const josCoordinates = [jos.positionX(), jos.positionY()]
+
   const jos = {
     name: 'Jos',
     className: 'jos',
-    startingPosition: ghostHomeArray[4],
-    currentPosition: ghostHomeArray[4],
-    speed: 200,
+    startingPosition: ghostHomeArray[0],
+    currentPosition: ghostHomeArray[0],
+    speed: 320,
     positionX: function() {
       return Math.floor(jos.currentPosition % width)
     },
     positionY: function() {
       return jos.currentPosition / width
     },
-    targetCoordinates: [player.positionX(), player.positionY()],
     add(position) {
       //console.log('jos added')
       cells[position].classList.add(jos.className)
@@ -281,14 +271,12 @@ function init() {
         jos.currentPosition += direction
 
         const dX = Math.abs(player.positionX() - jos.positionX())
-        const dY = Math.abs(player.positionY() - jos.positionY())
+        const dY = Math.abs((player.positionY() - 80)  - jos.positionY())
         const distance = Math.sqrt(dX * dX + dY * dY)
         //console.log('distance', distance)
-
         const josNextMoveCoordinates =  getNextMoveCoordinates(jos.currentPosition + direction)
-
         const dXN = Math.abs(player.positionX() - josNextMoveCoordinates[0])
-        const dYN = Math.abs(player.positionY() - josNextMoveCoordinates[1])
+        const dYN = Math.abs((player.positionY() - 80) - josNextMoveCoordinates[1])
         const distanceNext = Math.sqrt(dXN * dXN + dYN * dYN)
         //console.log('distanceNext', distanceNext)
       
@@ -317,7 +305,7 @@ function init() {
     className: 'guy',
     startingPosition: ghostHomeArray[5],
     currentPosition: ghostHomeArray[5],
-    speed: 300,
+    speed: 400,
     add(position) {
       //console.log('guy added')
       cells[position].classList.add(guy.className)
