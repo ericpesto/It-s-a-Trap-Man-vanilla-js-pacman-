@@ -9,6 +9,8 @@ function init() {
   const scoreDisplayHeader = document.querySelector('.score-header')
   const gridWrapper = document.querySelector('.grid-wrapper')
   const resetGameButon = document.querySelector('.reset-game')
+  const opacityWrapper = document.querySelector('.opacity-wrapper')
+  const main =  document.querySelector('main')
 
   // * Audio
   const soundTrack = document.querySelector('.soundtrack')
@@ -331,6 +333,25 @@ function init() {
     }
   }
 
+
+  function startGame() {
+    createGrid(player.startPosition) 
+    introPage.style.display = 'none'
+    opacityWrapper.style.opacity = '1'
+    gridWrapper.style.display = 'flex'
+    soundTrack.play()
+
+    // * Start timers
+    setTimeout(() => {
+      // start noise ( 3 second counter noise)
+      playerMovement = setInterval(player.move, player.speed)
+      charMovement = setInterval(char.move, char.speed)
+      noaMovement = setInterval(noa.move, noa.speed)
+      josMovement = setInterval(jos.move, jos.speed)
+      guyMovement = setInterval(guy.move, guy.speed)
+    }, 1000)
+  }
+
   function handleGameState() {
     if (player.lives <= 0) {
       // game over
@@ -364,23 +385,6 @@ function init() {
       resetGameButon.style.display = 'block'
       // ! if you win, reset the game and increase ghost speed, might have to store ghost speed as variable yu can then add to
     }
-  }
-  
-  function startGame() {
-    createGrid(player.startPosition) 
-    introPage.style.display = 'none'
-    gridWrapper.style.display = 'flex'
-    soundTrack.play()
-
-    // * Start timers
-    setTimeout(() => {
-      // start noise ( 3 second counter noise)
-      playerMovement = setInterval(player.move, player.speed)
-      charMovement = setInterval(char.move, char.speed)
-      noaMovement = setInterval(noa.move, noa.speed)
-      josMovement = setInterval(jos.move, jos.speed)
-      guyMovement = setInterval(guy.move, guy.speed)
-    }, 1000)
   }
 
   function resetGame() {
