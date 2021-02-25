@@ -35,7 +35,7 @@ function init() {
   const ghostHomeClass = 'ghost-home'
   const portalLocations = [180,199]
   const portalClass = 'portal'
-  const superPelletLocations = [84,95,276,263]
+  const superPelletLocations = [84,95,283,296]
   const playerTrack = mazeArray.concat(ghostHomeArray)
   const pelletTrack = mazeArray.concat(ghostHomeArray, portalLocations, superPelletLocations)
 
