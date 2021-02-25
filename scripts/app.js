@@ -456,26 +456,29 @@ function init() {
         if (cells[superPellet.id].classList.contains(superPelletClass)) { 
           superPellet.classList.remove(superPelletClass)
           superPellet.classList.add(superPelletEatenClass)
-          handleScaredGhosts()
+          //handleScaredGhosts()
+          handleScaredChar()
+          handleScaredNoa()
+          handleScaredJos()
+          handleScaredGuy()
         } 
       }
     })
   }
 
-  function handleScaredGhosts() {
-    //sort out individual ghosts scared sounds
-
+  function handleScaredChar() {
     if (scaredCharTimer) {
       clearInterval(scaredCharTimer)
-      scaredCharTimer = null
+      //scaredCharTimer = null
       charCount = 17
     } else {
       scaredCharTimer = setInterval(() => {
         charCount--
+        console.log(charCount)
         cells[char.currentPosition].classList.remove(char.className)
         char.className = scaredClass
         scaredCharFx.play() 
-        if (charCount < 0) {
+        if (charCount <= 0) {
           cells[char.currentPosition].classList.remove(scaredClass)
           char.className = 'char'
           scaredCharFx.pause() 
@@ -484,23 +487,12 @@ function init() {
         }
       }, 1000)
     }
+  }
 
-    // scaredCharTimer = setInterval(() => {
-    //   charCount--
-    //   cells[char.currentPosition].classList.remove(char.className)
-    //   char.className = scaredClass
-    //   scaredGhostFx.play() 
-    //   if (charCount < 0) {
-    //     cells[char.currentPosition].classList.remove(scaredClass)
-    //     char.className = 'char'
-    //     scaredGhostFx.pause() 
-    //     clearInterval(scaredCharTimer)
-    //     charCount = 17
-    //   }
-    // }, 1000)
+  function handleScaredNoa() {
     if (scaredNoaTimer) {
       clearInterval(scaredNoaTimer)
-      scaredNoaTimer = null
+      //scaredNoaTimer = null
       noaCount = 17
     } else {
       scaredNoaTimer = setInterval(() => {
@@ -508,7 +500,7 @@ function init() {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.className = scaredClass
         scaredNoaFx.play() 
-        if (noaCount < 0) {
+        if (noaCount <= 0) {
           cells[noa.currentPosition].classList.remove(scaredClass)
           noa.className = 'noa'
           scaredNoaFx.pause() 
@@ -517,23 +509,12 @@ function init() {
         }
       }, 1000)
     }
-    // scaredNoaTimer = setInterval(() => {
-    //   noaCount--
-    //   cells[noa.currentPosition].classList.remove(noa.className)
-    //   noa.className = scaredClass
-    //   scaredGhostFx.play() 
-    //   if (noaCount < 0) {
-    //     cells[noa.currentPosition].classList.remove(scaredClass)
-    //     noa.className = 'noa'
-    //     scaredGhostFx.pause() 
-    //     clearInterval(scaredNoaTimer)
-    //     noaCount = 17
-    //   }
-    // }, 1000)
+  }
 
+  function handleScaredJos() {
     if (scaredJosTimer) {
       clearInterval(scaredJosTimer)
-      scaredJosTimer = null
+      //scaredJosTimer = null
       josCount = 17
     } else {
       scaredJosTimer = setInterval(() => {
@@ -541,7 +522,7 @@ function init() {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.className = scaredClass
         scaredJosFx.play() 
-        if (josCount < 0) {
+        if (josCount <= 0) {
           cells[jos.currentPosition].classList.remove(scaredClass)
           jos.className = 'jos'
           scaredJosFx.pause() 
@@ -550,24 +531,12 @@ function init() {
         }
       }, 1000)
     }
+  }
 
-    // scaredJosTimer = setInterval(() => {
-    //   josCount--
-    //   cells[jos.currentPosition].classList.remove(jos.className)
-    //   jos.className = scaredClass
-    //   scaredGhostFx.play() 
-    //   if (josCount < 0) {
-    //     cells[jos.currentPosition].classList.remove(scaredClass)
-    //     jos.className = 'jos'
-    //     scaredGhostFx.pause() 
-    //     clearInterval(scaredJosTimer)
-    //     josCount = 17
-    //   }
-    // }, 1000)
-
+  function handleScaredGuy() {
     if (scaredGuyTimer) {
       clearInterval(scaredGuyTimer)
-      scaredGuyTimer = null
+      //scaredGuyTimer = null
       guyCount = 17
     } else {
       scaredGuyTimer = setInterval(() => {
@@ -575,7 +544,7 @@ function init() {
         cells[guy.currentPosition].classList.remove(guy.className)
         guy.className = scaredClass
         scaredGuyFx.play() 
-        if (guyCount < 0) {
+        if (guyCount <= 0) {
           cells[guy.currentPosition].classList.remove(scaredClass)
           guy.className = 'guy'
           scaredGuyFx.pause() 
@@ -584,21 +553,8 @@ function init() {
         }
       }, 1000)
     }
-
-    // scaredGuyTimer = setInterval(() => {
-    //   guyCount--
-    //   cells[guy.currentPosition].classList.remove(guy.className)
-    //   guy.className = scaredClass
-    //   scaredGhostFx.play() 
-    //   if (guyCount < 0) {
-    //     cells[guy.currentPosition].classList.remove(scaredClass)
-    //     guy.className = 'guy'
-    //     scaredGhostFx.pause() 
-    //     clearInterval(scaredGuyTimer)
-    //     guyCount = 17
-    //   }
-    // }, 1000)
   }
+
 
   function handleGhostCollision(position) {
     // for normal collision
@@ -730,7 +686,10 @@ function init() {
       clearInterval(guyMovement)
       scoreDisplayHeader.style.color = '#4CFE21'
       resetGameButon.style.display = 'block'
-      scaredGhostFx.pause() 
+      scaredCharFx.pause() 
+      scaredNoaFx.pause() 
+      scaredJosFx.pause() 
+      scaredGuyFx.pause() 
       soundTrack.pause()
       playerWonMusic.play()
       // ? BONUS: if you win, reset the game and increase ghost speed
