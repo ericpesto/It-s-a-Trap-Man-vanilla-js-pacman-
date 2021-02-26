@@ -347,17 +347,18 @@ function init() {
         cells[guy.currentPosition].classList.remove(guy.className)
         guy.currentPosition += direction       
 
-        const dX = Math.abs((player.positionX() + 8) - guy.positionX())
-        const dY = Math.abs((player.positionY() - 8) - guy.positionY())
+        const dX = Math.abs((char.positionX() + 8) - guy.positionX())
+        const dY = Math.abs((char.positionY() - 8) - guy.positionY())
         // const distance = Math.sqrt((dX * dX) + (dY * dY))
         const distance = Math.sqrt(dX + dY)
         //console.log('distance', distance)
         const guyNextMoveCoordinates =  getNextMoveCoordinates(guy.currentPosition + direction)
-        const dXN = Math.abs((player.positionX() + 8) - guyNextMoveCoordinates[0])
-        const dYN = Math.abs((player.positionY() - 8) - guyNextMoveCoordinates[1])
+        const dXN = Math.abs((char.positionX() + 8) - guyNextMoveCoordinates[0])
+        const dYN = Math.abs((char.positionY() - 8) - guyNextMoveCoordinates[1])
         // const distanceNext = Math.sqrt((dXN * dXN) + (dYN * dYN))
         const distanceNext = Math.sqrt(dXN + dYN)
         //console.log('distanceNext', distanceNext)
+
 
         if (distanceNext < distance && !mazeArray.includes(guy.currentPosition + direction) && !(cells[guy.currentPosition + direction].classList.contains(char.className) || cells[guy.currentPosition + direction].classList.contains(noa.className) || cells[guy.currentPosition + direction].classList.contains(jos.className) || cells[guy.currentPosition + direction].classList.contains(scaredClass))) {
           guy.currentPosition += direction
