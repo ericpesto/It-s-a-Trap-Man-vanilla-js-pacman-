@@ -25,6 +25,7 @@ body {
 
 .hero-ghosts {
   width: 48vmax;
+  max-width: 820px;
 }
 
 .hero-player {
