@@ -502,6 +502,8 @@ function init() {
           scaredJosTimer = null
           clearInterval(scaredGuyTimer)
           scaredGuyTimer = null
+
+          console.log('ghosts scared')
           handleScaredGhosts()
         } 
       }
@@ -645,6 +647,8 @@ function init() {
         guy.className = 'guy'
         scaredGuyFx.pause()
         guyCount = 17
+        // ! incase guy bug comes back
+        //player.lives += 1
       }
     }
   }
