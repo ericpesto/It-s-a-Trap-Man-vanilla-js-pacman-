@@ -157,6 +157,7 @@ function init() {
         cells[char.currentPosition].classList.remove(char.className)
         char.currentPosition += direction
 
+        //Char targets the players coordinates
         const dX = Math.abs(player.positionX() - char.positionX())
         const dY = Math.abs(player.positionY() - char.positionY())
         const distance = Math.sqrt(dX + dY)
@@ -219,6 +220,7 @@ function init() {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.currentPosition += direction       
 
+        //Noa targets 4 tiles to the right of player
         const dX = Math.abs((player.positionX() + 4) - noa.positionX())
         const dY = Math.abs(player.positionY() - noa.positionY())
         // const distance = Math.sqrt((dX * dX) + (dY * dY))
@@ -282,6 +284,7 @@ function init() {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.currentPosition += direction
 
+        //Jos targets 4 tiles above the player
         const dX = Math.abs(player.positionX() - jos.positionX())
         const dY = Math.abs((player.positionY() - 4)  - jos.positionY())
         //const distance = Math.sqrt((dX * dX) + (dY * dY))
@@ -347,6 +350,7 @@ function init() {
         cells[guy.currentPosition].classList.remove(guy.className)
         guy.currentPosition += direction       
 
+        // Guy targets char's position, but above by 8 tiles and right by 8
         const dX = Math.abs((char.positionX() + 8) - guy.positionX())
         const dY = Math.abs((char.positionY() - 8) - guy.positionY())
         // const distance = Math.sqrt((dX * dX) + (dY * dY))
