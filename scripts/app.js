@@ -215,7 +215,7 @@ function init() {
         return [nextCell % width, nextCell / width]
       }
 
-      if (!mazeArray.includes(noa.currentPosition + direction) && !(cells[noa.currentPosition + direction].classList.contains(char.className) || cells[noa.currentPosition + direction].classList.contains(jos.className) || cells[noa.currentPosition + direction].classList.contains(guy.className) || cells[noa.currentPosition + direction].classList.contains(scaredClass) || cells[noa.currentPosition + direction].classList.contains(scaredClass))) {
+      if (!mazeArray.includes(noa.currentPosition + direction) && !(cells[noa.currentPosition + direction].classList.contains(char.className) || cells[noa.currentPosition + direction].classList.contains(jos.className) || cells[noa.currentPosition + direction].classList.contains(guy.className) || cells[noa.currentPosition + direction].classList.contains(scaredClass))) {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.currentPosition += direction       
 
@@ -303,6 +303,7 @@ function init() {
         }
 
         jos.add(jos.currentPosition)
+
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
         jos.add(jos.currentPosition)
@@ -320,6 +321,12 @@ function init() {
     startingPosition: ghostHomeArray[0],
     currentPosition: ghostHomeArray[0],
     speed: 400,
+    positionX: function() {
+      return guy.currentPosition % width
+    },
+    positionY: function() {
+      return guy.currentPosition / width
+    },
     add(position) {
       //console.log('guy added')
       cells[position].classList.add(guy.className)
@@ -331,14 +338,48 @@ function init() {
     move() {
       const directions = [-1, +1, -width, +width]
       let direction = directions[Math.floor(Math.random() * directions.length)]
-  
+
+      function getNextMoveCoordinates(nextCell) {
+        return [nextCell % width, nextCell / width]
+      }
+
       if (!mazeArray.includes(guy.currentPosition + direction) && !(cells[guy.currentPosition + direction].classList.contains(char.className) || cells[guy.currentPosition + direction].classList.contains(noa.className) || cells[guy.currentPosition + direction].classList.contains(jos.className) || cells[guy.currentPosition + direction].classList.contains(scaredClass))) {
         cells[guy.currentPosition].classList.remove(guy.className)
-        guy.currentPosition += direction
-        cells[guy.currentPosition].classList.add(guy.className)
+        guy.currentPosition += direction       
+
+        const dX = Math.abs((player.positionX() + 8) - guy.positionX())
+        const dY = Math.abs((player.positionY() - 8) - guy.positionY())
+        // const distance = Math.sqrt((dX * dX) + (dY * dY))
+        const distance = Math.sqrt(dX + dY)
+        //console.log('distance', distance)
+        const guyNextMoveCoordinates =  getNextMoveCoordinates(guy.currentPosition + direction)
+        const dXN = Math.abs((player.positionX() + 8) - guyNextMoveCoordinates[0])
+        const dYN = Math.abs((player.positionY() - 8) - guyNextMoveCoordinates[1])
+        // const distanceNext = Math.sqrt((dXN * dXN) + (dYN * dYN))
+        const distanceNext = Math.sqrt(dXN + dYN)
+        //console.log('distanceNext', distanceNext)
+
+        if (distanceNext < distance && !mazeArray.includes(guy.currentPosition + direction) && !(cells[guy.currentPosition + direction].classList.contains(char.className) || cells[guy.currentPosition + direction].classList.contains(noa.className) || cells[guy.currentPosition + direction].classList.contains(jos.className) || cells[guy.currentPosition + direction].classList.contains(scaredClass))) {
+          guy.currentPosition += direction
+          guy.add(guy.currentPosition)
+        } else {
+          guy.add(guy.currentPosition)
+          direction = directions[Math.floor(Math.random() * directions.length)]
+        }
+
+        guy.add(guy.currentPosition)
       } else {
         direction = directions[Math.floor(Math.random() * directions.length)]
+        guy.add(guy.currentPosition)
       }
+
+      // if (!mazeArray.includes(guy.currentPosition + direction) && !(cells[guy.currentPosition + direction].classList.contains(char.className) || cells[guy.currentPosition + direction].classList.contains(noa.className) || cells[guy.currentPosition + direction].classList.contains(jos.className) || cells[guy.currentPosition + direction].classList.contains(scaredClass))) {
+      //   cells[guy.currentPosition].classList.remove(guy.className)
+      //   guy.currentPosition += direction
+      //   cells[guy.currentPosition].classList.add(guy.className)
+      // } else {
+      //   direction = directions[Math.floor(Math.random() * directions.length)]
+      // }
 
       handleGhostCollision(guy.currentPosition)
       handleTeleport(guy.currentPosition, guy)
@@ -476,7 +517,7 @@ function init() {
         cells[char.currentPosition].classList.remove(char.className)
         char.className = scaredClass
         scaredCharFx.play() 
-        if (charCount < 0) {
+        if (charCount <= 0) {
           cells[char.currentPosition].classList.remove(scaredClass)
           char.className = 'char'
           scaredCharFx.pause() 
@@ -494,7 +535,7 @@ function init() {
         cells[noa.currentPosition].classList.remove(noa.className)
         noa.className = scaredClass
         scaredNoaFx.play() 
-        if (noaCount < 0) {
+        if (noaCount <= 0) {
           cells[noa.currentPosition].classList.remove(scaredClass)
           noa.className = 'noa'
           scaredNoaFx.pause() 
@@ -512,7 +553,7 @@ function init() {
         cells[jos.currentPosition].classList.remove(jos.className)
         jos.className = scaredClass
         scaredJosFx.play() 
-        if (josCount < 0) {
+        if (josCount <= 0) {
           cells[jos.currentPosition].classList.remove(scaredClass)
           jos.className = 'jos'
           scaredJosFx.pause() 
@@ -530,7 +571,7 @@ function init() {
         cells[guy.currentPosition].classList.remove(guy.className)
         guy.className = scaredClass
         scaredGuyFx.play() 
-        if (guyCount < 0) {
+        if (guyCount <= 0) {
           cells[guy.currentPosition].classList.remove(scaredClass)
           guy.className = 'guy'
           scaredGuyFx.pause() 
