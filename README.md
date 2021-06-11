@@ -1,1 +1,3 @@
-# Vanilla Javascript PacMan (code challenge: built in 7 days)
+# Vanilla Javascript PacMan
+
+(code challenge: built in 7 days)
